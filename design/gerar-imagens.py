@@ -1,7 +1,7 @@
-"""Gera a imagem de compartilhamento (Open Graph) e o ícone para iPhone.
+"""Gera a imagem de compartilhamento (Open Graph) com o logo oficial.
 
 Uso, na raiz do projeto:  python3 design/gerar-imagens.py
-Quando o logo oficial chegar, troque o marcador "CV" pelo logo e rode de novo.
+Rode antes o design/recortar-logo.py (ele gera o logo sem fundo e os ícones).
 """
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -30,10 +30,13 @@ def glow(size, center, radius, color, alpha):
     return layer.filter(ImageFilter.GaussianBlur(radius * 0.45))
 
 
-def mark(draw, x, y, s):
-    draw.rounded_rectangle((x, y, x + s, y + s), radius=int(s * 0.25), fill=RED)
-    f = font("Arial Black.ttf", int(s * 0.36))
-    draw.text((x + s / 2, y + s / 2), "CV", font=f, fill=WHITE, anchor="mm")
+def mark(img, x, y, s):
+    """Logo oficial sobre disco branco, igual ao header do site."""
+    disc = Image.new("L", (s * 4, s * 4), 0)
+    ImageDraw.Draw(disc).ellipse((0, 0, s * 4 - 1, s * 4 - 1), fill=255)
+    img.paste(Image.new("RGBA", (s, s), WHITE + (255,)), (x, y), disc.resize((s, s), Image.LANCZOS))
+    logo = Image.open(ASSETS / "logo-cruz-vermelha-512.png").resize((s - 4, s - 4), Image.LANCZOS)
+    img.alpha_composite(logo, (x + 2, y + 2))
 
 
 def og_image():
@@ -48,10 +51,10 @@ def og_image():
         ld.line((i, h, i + h, 0), fill=(255, 255, 255, 9), width=2)
     img.alpha_composite(lines)
 
+    mark(img, 72, 58, 76)
     d = ImageDraw.Draw(img)
-    mark(d, 72, 64, 64)
-    d.text((152, 70), "Cruz Vermelha", font=font("Arial Bold.ttf", 30), fill=WHITE)
-    d.text((152, 108), "FILIAL CRICIÚMA", font=font("Arial.ttf", 18), fill=MUTED)
+    d.text((164, 70), "Cruz Vermelha", font=font("Arial Bold.ttf", 30), fill=WHITE)
+    d.text((164, 108), "FILIAL CRICIÚMA", font=font("Arial.ttf", 18), fill=MUTED)
 
     title = font("Arial Narrow Bold.ttf", 96)
     y = 210
@@ -71,15 +74,6 @@ def og_image():
     img.convert("RGB").save(ASSETS / "cruz-vermelha-criciuma-og.jpg", quality=88, optimize=True, progressive=True)
 
 
-def touch_icon():
-    s = 180
-    img = Image.new("RGB", (s, s), RED)
-    d = ImageDraw.Draw(img)
-    d.text((s / 2, s / 2), "CV", font=font("Arial Black.ttf", 66), fill=WHITE, anchor="mm")
-    img.save(ASSETS / "apple-touch-icon.png", optimize=True)
-
-
 if __name__ == "__main__":
     og_image()
-    touch_icon()
-    print("Imagens geradas em", ASSETS)
+    print("Imagem de compartilhamento gerada em", ASSETS)

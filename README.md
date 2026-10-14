@@ -13,8 +13,8 @@ js/pontos-page.js        lista, mapa (Leaflet + OpenStreetMap) e lembrete na age
 js/pontos.js             DADOS dos pontos de coleta
 js/config.js             CONFIG: projeto e chave pública do Supabase
 supabase/                SQL da tabela de doadores e passo a passo
-assets/                  favicon, ícone do iPhone e imagem de compartilhamento
-design/gerar-imagens.py  gera a imagem de compartilhamento e o ícone
+assets/                  logo, favicon, ícone do iPhone e imagem de compartilhamento
+design/                  logo original, recorte do logo e gerador da imagem de compartilhamento
 ```
 
 Bibliotecas por CDN, com versão fixa: GSAP 3.12.5 + ScrollTrigger (cdnjs), Lenis 1.1.13 e Leaflet 1.9.4 (unpkg).
@@ -44,8 +44,14 @@ Os blocos `<div class="ph" data-label="Foto: ...">` marcam onde entra cada foto.
 
 Na linha do tempo, não mexa no HTML: preencha `data-photo-src="assets/..."` no `<li class="tl-event">` (o `data-photo-label` vira o texto alternativo). Exporte em WebP, com até 1600 px no lado maior. A foto do hero não deve ter `loading="lazy"`.
 
-### Trocar o logo provisório
-O marcador vermelho "CV" está no header, no menu, no rodapé (index e pontos de coleta) e na 404. Substitua o `<span class="logo__mark">` pelo SVG oficial da filial. Depois atualize `assets/favicon.svg` e rode `python3 design/gerar-imagens.py`.
+### Logo
+O logo oficial da Cruz Vermelha Brasileira foi recortado do fundo branco por `design/recortar-logo.py` (entrada: `design/logo-cvb-original.jpg`). Ele gera `assets/logo-cruz-vermelha-*.png/webp`, o `favicon-48.png` e o `apple-touch-icon.png`. Se a filial mandar uma versão própria (de preferência em SVG ou PNG transparente), troque o original e rode:
+
+```bash
+python3 design/recortar-logo.py && python3 design/gerar-imagens.py
+```
+
+No site o logo fica sobre um disco branco (`.logo__img`), para não sumir nos fundos escuros.
 
 ### Publicar no GitHub Pages
 1. Crie o repositório `cruz-vermelha-criciuma` e envie os arquivos.
@@ -75,7 +81,8 @@ E no `404.html` troque `/cruz-vermelha-criciuma/` por `/`.
 Detalhes e fontes no `CONTEUDO.md` (documento interno, fora do repositório).
 
 - [ ] **Pix:** uma matéria de 2024 cita Pix no CNPJ para a Fábrica de Fraldas. O site diz "não pedimos doações em dinheiro". Confirmar a regra atual.
-- [ ] **Logo oficial e fotos:** fachada, Fábrica de Fraldas, voluntários, triagem, entrega de quinta (sem rostos), comboio do RS e uma foto antiga da filial.
+- [x] **Logo:** logo oficial da CVB aplicado (fundo removido).
+- [ ] **Fotos:** fachada, Fábrica de Fraldas, voluntários, triagem, entrega de quinta (sem rostos), comboio do RS e uma foto antiga da filial.
 - [ ] **Pino do mapa:** está no ponto da rua dado pelo OpenStreetMap. Ajustar para o número 15 em `js/pontos.js`.
 - [ ] **CEP:** o CNPJ registra 88805-228, o OpenStreetMap dá 88805-085 para a rua.
 - [ ] **Farmácia Solidária, primeiros socorros e kits para bebês:** confirmar se seguem ativos. Medicamentos estão fora da lista "o que doar" até lá.
