@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guia visual · Cruz Vermelha Criciúma</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:ital,opsz,wght@1,8..60,400&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Estilos só do guia */
+    .sg-head { padding: 120px 0 40px; }
+    .sg-block { padding: 56px 0; border-top: 1px solid var(--line); }
+    .sg-block > .container > h2 { font-size: 1.6rem; margin-bottom: 28px; }
+    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+    .swatch { border-radius: var(--radius); overflow: hidden; box-shadow: 0 0 0 1px var(--line); background: #fff; }
+    .swatch div { height: 88px; }
+    .swatch p { margin: 0; padding: 10px 12px; font-size: 0.82rem; line-height: 1.4; }
+    .swatch code { color: var(--graphite); }
+    .row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+    .grid-3 { display: grid; gap: 20px; }
+    @media (min-width: 760px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+    .dark-box { padding: 32px; border-radius: var(--radius); background: var(--ink); }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></symbol>
+  </svg>
+
+  <header class="sg-head">
+    <div class="container">
+      <span class="eyebrow">Etapa 2 · identidade e base</span>
+      <h1>Guia visual</h1>
+      <p class="lead">Cores, tipografia e componentes do site. Esta página é só para revisão e não vai ao ar.</p>
+      <a class="link-arrow" href="index.html">Ver a página com header e rodapé <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </header>
+
+  <section class="sg-block">
+    <div class="container">
+      <h2>Cores</h2>
+      <div class="swatches">
+        <div class="swatch"><div style="background:var(--red)"></div><p><b>Vermelho</b><br><code>#E1141E</code> · destaques</p></div>
+        <div class="swatch"><div style="background:var(--red-deep)"></div><p><b>Vermelho profundo</b><br><code>#B20E17</code> · botões e texto</p></div>
+        <div class="swatch"><div style="background:var(--red-dark)"></div><p><b>Vermelho escuro</b><br><code>#8E0B12</code> · hover</p></div>
+        <div class="swatch"><div style="background:var(--red-soft)"></div><p><b>Rosa suave</b><br><code>#FCE8E9</code> · fundos</p></div>
+        <div class="swatch"><div style="background:var(--paper)"></div><p><b>Papel</b><br><code>#FAF8F5</code> · fundo</p></div>
+        <div class="swatch"><div style="background:var(--paper-2)"></div><p><b>Papel 2</b><br><code>#F2EEE8</code> · seções alternadas</p></div>
+        <div class="swatch"><div style="background:var(--graphite)"></div><p><b>Grafite</b><br><code>#4D4D55</code> · texto secundário</p></div>
+        <div class="swatch"><div style="background:var(--ink)"></div><p><b>Tinta</b><br><code>#18181B</code> · texto e seções escuras</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sg-block">
+    <div class="container">
+      <h2>Tipografia</h2>
+      <span class="eyebrow">Eyebrow · rótulo de seção</span>
+      <h1 style="font-size:clamp(2.6rem,8vw,5.4rem)">Há 42 anos, Criciúma não enfrenta nada sozinha.</h1>
+      <h2>Título de seção com <span class="serif text-red">itálico editorial</span></h2>
+      <h3>Título de card · Fábrica de Fraldas Solidária</h3>
+      <p class="lead">Texto de abertura (lead). A Cruz Vermelha Criciúma é feita por voluntários e mantida por doações da comunidade.</p>
+      <p style="max-width:38em">Texto corrido em Archivo 17px. Desde 2019, voluntários produzem cerca de 4 mil fraldas geriátricas por mês, entregues de graça a pessoas acamadas e a instituições de longa permanência para idosos.</p>
+      <p class="serif" style="font-size:2rem;margin:0">8 de dezembro de 1984</p>
+    </div>
+  </section>
+
+  <section class="sg-block">
+    <div class="container">
+      <h2>Botões e links</h2>
+      <div class="row" style="margin-bottom:24px">
+        <button class="btn btn--primary btn--lg" type="button" data-open-donation>Quero doar para a Cruz Vermelha <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <button class="btn btn--primary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg> Quero doar</button>
+        <button class="btn btn--primary btn--sm" type="button">Pequeno</button>
+        <a class="btn btn--outline" href="#">Contorno</a>
+        <a class="link-arrow" href="#">Link com seta <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="dark-box row">
+        <button class="btn btn--primary" type="button">Sobre fundo escuro</button>
+        <button class="btn btn--light" type="button">Claro</button>
+        <a class="btn btn--outline-light" href="#">Contorno claro</a>
+        <span class="tag tag--dark">Selo escuro</span>
+      </div>
+      <div class="row" style="margin-top:24px">
+        <span class="tag">42 anos em Criciúma</span>
+        <span class="tag">Confirmar com a filial</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sg-block">
+    <div class="container">
+      <h2>Cards (passe o mouse)</h2>
+      <div class="grid-3" data-stagger>
+        <article class="card" data-reveal>
+          <div class="card__icon"><svg class="icon" aria-hidden="true"><use href="#i-box"/></svg></div>
+          <h3>Fábrica de Fraldas Solidária</h3>
+          <p>Cerca de 4 mil fraldas geriátricas por mês, feitas por voluntários e entregues de graça.</p>
+          <p class="card__meta">Desde 2019</p>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card__icon"><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg></div>
+          <h3>Farmácia Solidária</h3>
+          <p>Medicamentos doados chegam gratuitamente a quem não teria como comprar.</p>
+          <p class="card__meta">Desde 2006</p>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card__icon"><svg class="icon" aria-hidden="true"><use href="#i-box"/></svg></div>
+          <h3>Campanha do Agasalho</h3>
+          <p>Roupas de inverno, cobertores e calçados para enfrentar o frio da região e da Serra.</p>
+          <p class="card__meta">Todo inverno</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sg-block">
+    <div class="container">
+      <h2>Placeholders de foto</h2>
+      <div class="grid-3">
+        <div class="ph" data-label="Foto: fachada da sede"></div>
+        <div class="ph" data-label="Foto: Fábrica de Fraldas" style="--ratio:1/1"></div>
+        <div class="ph ph--light" data-label="Foto: voluntários"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sg-block">
+    <div class="container">
+      <h2>Animações de entrada</h2>
+      <h2 data-split style="font-size:clamp(2rem,5vw,3.4rem);max-width:16ch">Título que sobe palavra por palavra ao rolar.</h2>
+      <div class="grid-3" data-stagger style="margin-top:28px">
+        <div class="ph ph--light" data-reveal data-label="Sobe"></div>
+        <div class="ph ph--light" data-reveal="scale" data-label="Escala"></div>
+        <div class="ph ph--light" data-reveal="fade" data-label="Fade"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sg-block" style="padding-bottom:120px">
+    <div class="container">
+      <h2>Modal</h2>
+      <button class="btn btn--primary" type="button" data-open-donation>Abrir o modal de doação</button>
+    </div>
+  </section>
+
+  <div class="modal" id="donation-modal" aria-hidden="true">
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="donation-title">
+      <button class="modal__close" type="button" data-close-modal aria-label="Fechar"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+      <h2 id="donation-title">Que bom que você quer ajudar!</h2>
+      <p class="lead">Deixe seu nome e telefone. Em seguida mostramos onde entregar sua doação.</p>
+      <form id="donation-form" novalidate>
+        <div class="field">
+          <label for="f-nome">Nome completo</label>
+          <input id="f-nome" name="nome" type="text" autocomplete="name" required>
+          <span class="field__error" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="f-telefone">Telefone/WhatsApp</label>
+          <input id="f-telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(48) 9____-____" aria-invalid="true" required>
+          <span class="field__error" aria-live="polite">Exemplo de erro: informe um telefone com DDD.</span>
+        </div>
+        <label class="check">
+          <input type="checkbox" name="consentimento" required>
+          <span>Autorizo a Cruz Vermelha Criciúma a usar meu nome e telefone para entrar em contato sobre doações e campanhas. Posso pedir a exclusão dos meus dados a qualquer momento.</span>
+        </label>
+        <button class="btn btn--primary btn--lg btn--block" type="submit">Ver pontos de coleta <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <p class="form-note">Não pedimos doações em dinheiro.</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- O guia não tem header; o main.js ignora o que não encontra -->
+  <script src="js/main.js" defer></script>
+</body>
+</html>
