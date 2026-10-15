@@ -9,11 +9,21 @@ Cada contato deixado no formulário do site cai no Supabase e, na mesma hora, vi
 - **WhatsApp:** abre a conversa com uma mensagem de agradecimento pronta.
 - **Status:** lista com Novo, Contatado, Doou e Sem retorno, cada um com uma cor. A equipe atualiza à mão.
 
+## Aba Painel
+
+A primeira aba resume tudo e se atualiza sozinha, sem ninguém mexer:
+
+- **4 números no topo:** contatos recebidos, últimos 7 dias, % já contatados e quantos doaram.
+- **4 gráficos:** contatos por dia (30 dias), status dos contatos (rosca), contatos por mês e dias da semana com mais contatos.
+- **Últimos contatos:** os 8 mais recentes, com nome, telefone e status.
+
+As cores seguem o site. A equipe só trabalha na aba **Doadores**, mudando o status; o painel acompanha. Se algum gráfico for apagado sem querer, use **Cruz Vermelha → Refazer o painel**.
+
 ## Instalar (uma vez, cerca de 5 minutos)
 
 1. **Restrinja o acesso.** Na planilha, clique em **Compartilhar → Acesso geral → Restrito**. Ela vai guardar nomes e telefones (LGPD). Adicione só quem precisa.
 2. **Cole o script.** Abra **Extensões → Apps Script**, apague o conteúdo de `Código.gs`, cole o conteúdo de [`Code.gs`](Code.gs) e salve (ícone de disquete).
-3. **Configure.** Volte para a planilha e recarregue a página. Vai aparecer o menu **Cruz Vermelha**. Clique em **Cruz Vermelha → Configurar planilha** e autorize o acesso quando o Google pedir. Isso cria e formata a aba **Doadores**.
+3. **Configure.** Volte para a planilha e recarregue a página. Vai aparecer o menu **Cruz Vermelha**. Clique em **Cruz Vermelha → Configurar planilha** e autorize o acesso quando o Google pedir. Isso cria e formata as abas **Doadores** e **Painel**.
 4. **Publique.** No Apps Script, clique em **Implantar → Nova implantação → engrenagem → App da Web**:
    - Executar como: **Eu**
    - Quem pode acessar: **Qualquer pessoa**

@@ -3,18 +3,31 @@
  *
  * Recebe cada contato novo do site (via gatilho do Supabase) e grava uma linha na aba "Doadores",
  * com link de WhatsApp pronto e coluna de status para a equipe acompanhar.
+ * A aba "Painel" resume tudo em números e gráficos, que se atualizam sozinhos.
  * Instalação: planilha/LEIA-ME.md
  */
 
 var ABA = 'Doadores';
 var CABECALHO = ['Data', 'Nome', 'Telefone', 'WhatsApp', 'Status', 'Origem', 'ID'];
 var STATUS = ['Novo', 'Contatado', 'Doou', 'Sem retorno'];
+var PAINEL = 'Painel';
+var DADOS = '_dados_painel'; // aba oculta com as contas dos gráficos
+
+// Cores do site
+var VERMELHO = '#B20E17';
+var VERMELHO_VIVO = '#E1141E';
+var TINTA = '#18181B';
+var GRAFITE = '#4D4D55';
+var PAPEL = '#FAF8F5';
+var LINHA = '#E4E0DA';
+var CORES_STATUS = ['#B20E17', '#E8A93B', '#0B7A3B', '#9A9A9A']; // Novo, Contatado, Doou, Sem retorno
 
 /** Menu "Cruz Vermelha" na planilha. */
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu('Cruz Vermelha')
     .addItem('Configurar planilha', 'configurar')
+    .addItem('Refazer o painel', 'montarPainel')
     .addItem('Adicionar linha de teste', 'linhaDeTeste')
     .addToUi();
 }
@@ -48,13 +61,168 @@ function configurar() {
   });
   sh.setConditionalFormatRules(regras);
 
+  // Linhas zebradas para facilitar a leitura
+  sh.getBandings().forEach(function (b) { b.remove(); });
+  sh.getRange(2, 1, linhas, CABECALHO.length)
+    .applyRowBanding(SpreadsheetApp.BandingTheme.LIGHT_GREY, false, false)
+    .setFirstRowColor('#FFFFFF').setSecondRowColor(PAPEL);
+  sh.setTabColor(VERMELHO);
+
   if (!sh.getFilter()) sh.getRange(1, 1, sh.getMaxRows(), CABECALHO.length).createFilter();
+
+  montarPainel();
 
   // Remove a "Página1" vazia, se existir
   var vazia = ss.getSheetByName('Página1') || ss.getSheetByName('Sheet1');
   if (vazia && vazia.getLastRow() === 0 && ss.getSheets().length > 1) ss.deleteSheet(vazia);
 
-  SpreadsheetApp.getUi().alert('Planilha configurada. Agora publique como app da Web (passo 4 do LEIA-ME).');
+  SpreadsheetApp.getUi().alert('Planilha e painel configurados. Agora publique como app da Web (passo 4 do LEIA-ME).');
+}
+
+/* Painel -------------------------------------------------------------------- */
+
+/** Monta (ou refaz) a aba "Painel": números principais, 4 gráficos e últimos contatos. */
+function montarPainel() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var dados = prepararDados_(ss);
+
+  var p = ss.getSheetByName(PAINEL);
+  if (p) {
+    p.getCharts().forEach(function (c) { p.removeChart(c); });
+    p.clear();
+    p.getRange(1, 1, p.getMaxRows(), p.getMaxColumns()).breakApart();
+  } else {
+    p = ss.insertSheet(PAINEL, 0);
+  }
+  p.setHiddenGridlines(true);
+  p.setTabColor(TINTA);
+  p.getRange(1, 1, p.getMaxRows(), p.getMaxColumns()).setBackground(PAPEL).setFontFamily('Archivo').setFontColor(TINTA);
+  p.setColumnWidth(1, 24);
+  for (var c = 2; c <= 13; c++) p.setColumnWidth(c, 92);
+  p.setColumnWidth(14, 24);
+
+  // Título
+  p.getRange('B2').setValue('Cruz Vermelha Criciúma · Painel de doadores').setFontSize(22).setFontWeight('bold');
+  p.getRange('B3').setValue('Atualiza sozinho a cada contato deixado no site. Para mudar o status de alguém, use a aba Doadores.')
+    .setFontColor(GRAFITE).setFontSize(10);
+  p.setRowHeight(2, 40);
+
+  // Cartões com os números principais
+  var cartoes = [
+    ['CONTATOS RECEBIDOS', '=COUNTA(Doadores!B2:B)', '0', 'desde o lançamento do site'],
+    ['ÚLTIMOS 7 DIAS', '=COUNTIFS(Doadores!A2:A,">="&(TODAY()-6))', '0', 'contando hoje'],
+    ['JÁ CONTATADOS', '=IFERROR((COUNTIF(Doadores!E2:E,"Contatado")+COUNTIF(Doadores!E2:E,"Doou"))/COUNTA(Doadores!B2:B),0)', '0%', 'status Contatado ou Doou'],
+    ['DOARAM', '=COUNTIF(Doadores!E2:E,"Doou")', '0', 'status Doou']
+  ];
+  cartoes.forEach(function (cfg, i) {
+    var col = 2 + i * 3;
+    var bloco = p.getRange(5, col, 3, 3);
+    bloco.setBackground('#FFFFFF').setBorder(true, true, true, true, false, false, LINHA, SpreadsheetApp.BorderStyle.SOLID);
+    p.getRange(5, col, 1, 3).merge().setValue(cfg[0]).setFontSize(9).setFontWeight('bold').setFontColor(GRAFITE).setVerticalAlignment('bottom');
+    p.getRange(6, col, 1, 3).merge().setFormula(cfg[1]).setNumberFormat(cfg[2]).setFontSize(30).setFontWeight('bold')
+      .setFontColor(i === 3 ? '#0B7A3B' : VERMELHO).setVerticalAlignment('middle');
+    p.getRange(7, col, 1, 3).merge().setValue(cfg[3]).setFontSize(9).setFontColor(GRAFITE).setVerticalAlignment('top');
+    // Faixa vermelha no topo de cada cartão
+    p.getRange(5, col, 1, 3).setBorder(true, null, null, null, null, null, i === 3 ? '#0B7A3B' : VERMELHO, SpreadsheetApp.BorderStyle.SOLID_THICK);
+  });
+  p.setRowHeight(5, 26);
+  p.setRowHeight(6, 52);
+  p.setRowHeight(7, 24);
+  p.getRange('B5:M7').setHorizontalAlignment('left');
+
+  // Gráficos
+  var base = function (tipo, faixa, linha, coluna, largura, titulo) {
+    return p.newChart().setChartType(tipo).addRange(faixa).setNumHeaders(1)
+      .setPosition(linha, coluna, 0, 0)
+      .setOption('title', titulo)
+      .setOption('titleTextStyle', { color: TINTA, fontSize: 14, bold: true })
+      .setOption('width', largura).setOption('height', 300)
+      .setOption('backgroundColor', '#FFFFFF')
+      .setOption('fontName', 'Archivo')
+      .setOption('legend', { position: 'none' })
+      .setOption('vAxis', { minValue: 0, format: '0', gridlines: { color: '#EEEAE4' }, textStyle: { color: GRAFITE } })
+      .setOption('hAxis', { textStyle: { color: GRAFITE } });
+  };
+
+  p.insertChart(base(Charts.ChartType.COLUMN, dados.getRange('A1:B31'), 9, 2, 640, 'Contatos por dia · últimos 30 dias')
+    .setOption('colors', [VERMELHO]).setOption('hAxis', { format: 'dd/MM', textStyle: { color: GRAFITE } }).build());
+
+  p.insertChart(base(Charts.ChartType.PIE, dados.getRange('D1:E5'), 9, 9, 450, 'Status dos contatos')
+    .setOption('pieHole', 0.55).setOption('colors', CORES_STATUS)
+    .setOption('legend', { position: 'right', textStyle: { color: TINTA } })
+    .setOption('pieSliceText', 'value').build());
+
+  p.insertChart(base(Charts.ChartType.COLUMN, dados.getRange('G1:H13'), 26, 2, 640, 'Contatos por mês')
+    .setOption('colors', [TINTA]).setOption('hAxis', { format: 'MMM/yy', textStyle: { color: GRAFITE } }).build());
+
+  p.insertChart(base(Charts.ChartType.BAR, dados.getRange('J1:K8'), 26, 9, 450, 'Dias da semana com mais contatos')
+    .setOption('colors', [VERMELHO_VIVO]).setOption('hAxis', { minValue: 0, format: '0', textStyle: { color: GRAFITE } }).build());
+
+  // Últimos contatos
+  p.getRange('B43').setValue('Últimos contatos').setFontSize(14).setFontWeight('bold');
+  p.getRange('B44:H44').setValues([['Data', '', 'Nome', '', '', 'Telefone', 'Status']])
+    .setFontSize(9).setFontWeight('bold').setFontColor(GRAFITE)
+    .setBorder(null, null, true, null, null, null, LINHA, SpreadsheetApp.BorderStyle.SOLID);
+  // Sem mesclar células: a fórmula da data preenche B45:B52 de uma vez e o texto transborda para as colunas vazias ao lado
+  // Os 8 contatos mais recentes, montados por fórmula (sempre atualizados)
+  p.getRange('B45').setFormula('=IFERROR(INDEX(SORTN(FILTER(Doadores!A2:A,Doadores!A2:A<>""),8,0,1,FALSE)),"Nenhum contato ainda")');
+  for (var i = 0; i < 8; i++) {
+    var row = 45 + i;
+    var data = 'B' + row;
+    p.getRange('D' + row).setFormula('=IF(' + data + '="","",IFERROR(INDEX(Doadores!B2:B,MATCH(' + data + ',Doadores!A2:A,0)),""))');
+    p.getRange('G' + row).setFormula('=IF(' + data + '="","",IFERROR(INDEX(Doadores!C2:C,MATCH(' + data + ',Doadores!A2:A,0)),""))');
+    p.getRange('H' + row).setFormula('=IF(' + data + '="","",IFERROR(INDEX(Doadores!E2:E,MATCH(' + data + ',Doadores!A2:A,0)),""))');
+  }
+  p.getRange('B45:B52').setNumberFormat('dd/MM/yyyy HH:mm');
+  p.getRange('B45:H52').setFontSize(10).setBorder(null, null, true, null, null, true, '#EEEAE4', SpreadsheetApp.BorderStyle.SOLID);
+  p.getRange('B45:H52').setVerticalAlignment('middle');
+  for (var rr = 45; rr <= 52; rr++) p.setRowHeight(rr, 26);
+
+  ss.setActiveSheet(p);
+  p.setActiveSelection('A1');
+}
+
+/** Aba oculta com as contas que alimentam os gráficos (fórmulas, então se atualiza sozinha). */
+function prepararDados_(ss) {
+  var d = ss.getSheetByName(DADOS) || ss.insertSheet(DADOS);
+  d.clear();
+  var A = 'Doadores!$A$2:$A';
+
+  // Por dia (últimos 30 dias)
+  d.getRange('A1:B1').setValues([['Dia', 'Contatos']]);
+  for (var i = 0; i < 30; i++) {
+    var r = i + 2;
+    d.getRange('A' + r).setFormula('=TODAY()-' + (29 - i));
+    d.getRange('B' + r).setFormula('=COUNTIFS(' + A + ',">="&A' + r + ',' + A + ',"<"&(A' + r + '+1))');
+  }
+  d.getRange('A2:A31').setNumberFormat('dd/MM');
+
+  // Por status
+  d.getRange('D1:E1').setValues([['Status', 'Contatos']]);
+  STATUS.forEach(function (s, i) {
+    d.getRange('D' + (i + 2)).setValue(s);
+    d.getRange('E' + (i + 2)).setFormula('=COUNTIF(Doadores!$E$2:$E,D' + (i + 2) + ')');
+  });
+
+  // Por mês (últimos 12 meses)
+  d.getRange('G1:H1').setValues([['Mês', 'Contatos']]);
+  for (var m = 0; m < 12; m++) {
+    var rm = m + 2;
+    d.getRange('G' + rm).setFormula('=EDATE(DATE(YEAR(TODAY()),MONTH(TODAY()),1),-' + (11 - m) + ')');
+    d.getRange('H' + rm).setFormula('=COUNTIFS(' + A + ',">="&G' + rm + ',' + A + ',"<"&EDATE(G' + rm + ',1))');
+  }
+  d.getRange('G2:G13').setNumberFormat('MMM/yy');
+
+  // Por dia da semana
+  var dias = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+  d.getRange('J1:K1').setValues([['Dia da semana', 'Contatos']]);
+  dias.forEach(function (nome, i) {
+    d.getRange('J' + (i + 2)).setValue(nome);
+    d.getRange('K' + (i + 2)).setFormula('=SUMPRODUCT((' + A + '<>"")*(WEEKDAY(' + A + ')=' + (i + 1) + '))');
+  });
+
+  d.hideSheet();
+  return d;
 }
 
 /** Chamado pelo Supabase a cada contato novo. */
