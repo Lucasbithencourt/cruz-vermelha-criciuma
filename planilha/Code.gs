@@ -22,6 +22,15 @@ var PAPEL = '#FAF8F5';
 var LINHA = '#E4E0DA';
 var CORES_STATUS = ['#B20E17', '#E8A93B', '#0B7A3B', '#9A9A9A']; // Novo, Contatado, Doou, Sem retorno
 
+/**
+ * Fórmulas são escritas com vírgula; em planilhas em português o separador é ponto e vírgula.
+ * Nenhuma fórmula deste script tem vírgula dentro de texto entre aspas, então a troca é segura.
+ */
+function f_(formula) {
+  var locale = SpreadsheetApp.getActiveSpreadsheet().getSpreadsheetLocale() || 'en_US';
+  return /^en/.test(locale) ? formula : formula.replace(/,/g, ';');
+}
+
 /** Menu "Cruz Vermelha" na planilha. */
 function onOpen() {
   SpreadsheetApp.getUi()
@@ -76,7 +85,12 @@ function configurar() {
   var vazia = ss.getSheetByName('Página1') || ss.getSheetByName('Sheet1');
   if (vazia && vazia.getLastRow() === 0 && ss.getSheets().length > 1) ss.deleteSheet(vazia);
 
-  SpreadsheetApp.getUi().alert('Planilha e painel configurados. Agora publique como app da Web (passo 4 do LEIA-ME).');
+  // O aviso só aparece quando roda pelo menu da planilha; pelo botão Executar do Apps Script ele é pulado
+  try {
+    SpreadsheetApp.getUi().alert('Planilha e painel configurados. Agora publique como app da Web (passo 4 do LEIA-ME).');
+  } catch (e) {
+    console.log('Planilha e painel configurados.');
+  }
 }
 
 /* Painel -------------------------------------------------------------------- */
@@ -119,7 +133,7 @@ function montarPainel() {
     var bloco = p.getRange(5, col, 3, 3);
     bloco.setBackground('#FFFFFF').setBorder(true, true, true, true, false, false, LINHA, SpreadsheetApp.BorderStyle.SOLID);
     p.getRange(5, col, 1, 3).merge().setValue(cfg[0]).setFontSize(9).setFontWeight('bold').setFontColor(GRAFITE).setVerticalAlignment('bottom');
-    p.getRange(6, col, 1, 3).merge().setFormula(cfg[1]).setNumberFormat(cfg[2]).setFontSize(30).setFontWeight('bold')
+    p.getRange(6, col, 1, 3).merge().setFormula(f_(cfg[1])).setNumberFormat(cfg[2]).setFontSize(30).setFontWeight('bold')
       .setFontColor(i === 3 ? '#0B7A3B' : VERMELHO).setVerticalAlignment('middle');
     p.getRange(7, col, 1, 3).merge().setValue(cfg[3]).setFontSize(9).setFontColor(GRAFITE).setVerticalAlignment('top');
     // Faixa vermelha no topo de cada cartão
@@ -165,13 +179,13 @@ function montarPainel() {
     .setBorder(null, null, true, null, null, null, LINHA, SpreadsheetApp.BorderStyle.SOLID);
   // Sem mesclar células: a fórmula da data preenche B45:B52 de uma vez e o texto transborda para as colunas vazias ao lado
   // Os 8 contatos mais recentes, montados por fórmula (sempre atualizados)
-  p.getRange('B45').setFormula('=IFERROR(INDEX(SORTN(FILTER(Doadores!A2:A,Doadores!A2:A<>""),8,0,1,FALSE)),"Nenhum contato ainda")');
+  p.getRange('B45').setFormula(f_('=IFERROR(INDEX(SORTN(FILTER(Doadores!A2:A,Doadores!A2:A<>""),8,0,1,FALSE)),"Nenhum contato ainda")'));
   for (var i = 0; i < 8; i++) {
     var row = 45 + i;
     var data = 'B' + row;
-    p.getRange('D' + row).setFormula('=IF(' + data + '="","",IFERROR(INDEX(Doadores!B2:B,MATCH(' + data + ',Doadores!A2:A,0)),""))');
-    p.getRange('G' + row).setFormula('=IF(' + data + '="","",IFERROR(INDEX(Doadores!C2:C,MATCH(' + data + ',Doadores!A2:A,0)),""))');
-    p.getRange('H' + row).setFormula('=IF(' + data + '="","",IFERROR(INDEX(Doadores!E2:E,MATCH(' + data + ',Doadores!A2:A,0)),""))');
+    p.getRange('D' + row).setFormula(f_('=IF(' + data + '="","",IFERROR(INDEX(Doadores!B2:B,MATCH(' + data + ',Doadores!A2:A,0)),""))'));
+    p.getRange('G' + row).setFormula(f_('=IF(' + data + '="","",IFERROR(INDEX(Doadores!C2:C,MATCH(' + data + ',Doadores!A2:A,0)),""))'));
+    p.getRange('H' + row).setFormula(f_('=IF(' + data + '="","",IFERROR(INDEX(Doadores!E2:E,MATCH(' + data + ',Doadores!A2:A,0)),""))'));
   }
   p.getRange('B45:B52').setNumberFormat('dd/MM/yyyy HH:mm');
   p.getRange('B45:H52').setFontSize(10).setBorder(null, null, true, null, null, true, '#EEEAE4', SpreadsheetApp.BorderStyle.SOLID);
@@ -192,8 +206,8 @@ function prepararDados_(ss) {
   d.getRange('A1:B1').setValues([['Dia', 'Contatos']]);
   for (var i = 0; i < 30; i++) {
     var r = i + 2;
-    d.getRange('A' + r).setFormula('=TODAY()-' + (29 - i));
-    d.getRange('B' + r).setFormula('=COUNTIFS(' + A + ',">="&A' + r + ',' + A + ',"<"&(A' + r + '+1))');
+    d.getRange('A' + r).setFormula(f_('=TODAY()-' + (29 - i)));
+    d.getRange('B' + r).setFormula(f_('=COUNTIFS(' + A + ',">="&A' + r + ',' + A + ',"<"&(A' + r + '+1))'));
   }
   d.getRange('A2:A31').setNumberFormat('dd/MM');
 
@@ -201,15 +215,15 @@ function prepararDados_(ss) {
   d.getRange('D1:E1').setValues([['Status', 'Contatos']]);
   STATUS.forEach(function (s, i) {
     d.getRange('D' + (i + 2)).setValue(s);
-    d.getRange('E' + (i + 2)).setFormula('=COUNTIF(Doadores!$E$2:$E,D' + (i + 2) + ')');
+    d.getRange('E' + (i + 2)).setFormula(f_('=COUNTIF(Doadores!$E$2:$E,D' + (i + 2) + ')'));
   });
 
   // Por mês (últimos 12 meses)
   d.getRange('G1:H1').setValues([['Mês', 'Contatos']]);
   for (var m = 0; m < 12; m++) {
     var rm = m + 2;
-    d.getRange('G' + rm).setFormula('=EDATE(DATE(YEAR(TODAY()),MONTH(TODAY()),1),-' + (11 - m) + ')');
-    d.getRange('H' + rm).setFormula('=COUNTIFS(' + A + ',">="&G' + rm + ',' + A + ',"<"&EDATE(G' + rm + ',1))');
+    d.getRange('G' + rm).setFormula(f_('=EDATE(DATE(YEAR(TODAY()),MONTH(TODAY()),1),-' + (11 - m) + ')'));
+    d.getRange('H' + rm).setFormula(f_('=COUNTIFS(' + A + ',">="&G' + rm + ',' + A + ',"<"&EDATE(G' + rm + ',1))'));
   }
   d.getRange('G2:G13').setNumberFormat('MMM/yy');
 
@@ -218,7 +232,7 @@ function prepararDados_(ss) {
   d.getRange('J1:K1').setValues([['Dia da semana', 'Contatos']]);
   dias.forEach(function (nome, i) {
     d.getRange('J' + (i + 2)).setValue(nome);
-    d.getRange('K' + (i + 2)).setFormula('=SUMPRODUCT((' + A + '<>"")*(WEEKDAY(' + A + ')=' + (i + 1) + '))');
+    d.getRange('K' + (i + 2)).setFormula(f_('=SUMPRODUCT((' + A + '<>"")*(WEEKDAY(' + A + ')=' + (i + 1) + '))'));
   });
 
   d.hideSheet();
