@@ -2,6 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /styleguide.html
 Disallow: /supabase/
+Disallow: /planilha/
 Disallow: /design/
 
 Sitemap: https://lucasbithencourt.github.io/cruz-vermelha-criciuma/sitemap.xml

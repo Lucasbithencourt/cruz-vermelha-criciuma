@@ -334,7 +334,7 @@
 
   // Foto do programa em destaque desliza dentro da moldura
   if (hasGsap && !reduceMotion && document.querySelector('.program-feature')) {
-    window.gsap.fromTo('.program-feature__media .ph', { yPercent: -8 }, {
+    window.gsap.fromTo('.program-feature__media > *', { yPercent: -8 }, {
       yPercent: 8,
       ease: 'none',
       scrollTrigger: { trigger: '.program-feature', start: 'top bottom', end: 'bottom top', scrub: true }

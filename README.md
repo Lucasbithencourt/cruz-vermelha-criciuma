@@ -12,7 +12,8 @@ js/main.js               rolagem suave, header, menu, reveals, contadores, linha
 js/pontos-page.js        lista, mapa (Leaflet + OpenStreetMap) e lembrete na agenda
 js/pontos.js             DADOS dos pontos de coleta
 js/config.js             CONFIG: projeto e chave pública do Supabase
-supabase/                SQL da tabela de doadores e passo a passo
+supabase/                SQL da tabela de doadores, gatilho da planilha e passo a passo
+planilha/                Apps Script da planilha Google de doadores e passo a passo
 assets/                  logo, favicon, ícone do iPhone e imagem de compartilhamento
 design/                  logo original, recorte do logo e gerador da imagem de compartilhamento
 ```
@@ -31,6 +32,9 @@ Depois é só abrir http://localhost:4330.
 
 ### Ligar o Supabase (contatos de doadores)
 Siga [supabase/LEIA-ME.md](supabase/LEIA-ME.md): rode o `doadores.sql` no SQL Editor e cole a chave **pública** em `js/config.js`. **Enquanto `supabaseKey` estiver vazio, os contatos não são salvos** (o formulário funciona e o console avisa). Nunca use a `service_role`/`secret` no site.
+
+### Planilha Google de doadores
+Cada contato também vira uma linha numa planilha, com link de WhatsApp e status. Instalação em [planilha/LEIA-ME.md](planilha/LEIA-ME.md).
 
 ### Incluir ou alterar um ponto de coleta
 Edite `js/pontos.js`. A lista e o mapa se montam sozinhos; com mais de um ponto, o mapa enquadra todos. Coordenadas: no Google Maps, clique com o botão direito no local e copie.
