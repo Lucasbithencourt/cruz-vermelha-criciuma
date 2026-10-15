@@ -94,3 +94,5 @@ Detalhes e fontes no `CONTEUDO.md` (documento interno, fora do repositório).
 - [ ] **Pontos de coleta parceiros**, se houver.
 - [ ] **Uso dos nomes dos parceiros** na seção "Quem caminha com a gente" e autorização para logos.
 - [x] **Supabase:** tabela `doadores` criada e chave pública em `js/config.js` (testado em 14/10/2026: inserção 201; leitura, exclusão e envios inválidos bloqueados).
+- [x] **Planilha Google:** script instalado, app da Web publicado e gatilho do Supabase criado (testado ponta a ponta em 15/10/2026).
+- [ ] **Compartilhamento da planilha:** deixar como Restrito e liberar só a equipe (ela guarda nomes e telefones).
