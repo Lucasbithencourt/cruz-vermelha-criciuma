@@ -52,6 +52,15 @@ python3 design/gerar-paginas-campanha.py
 
 Para uma campanha nova: copie um modelo de `design/paginas/`, inclua a pasta em `PAGINAS` no gerador, coloque as imagens em `assets/campanhas/<nome>/` e adicione um cartão na seção **Campanhas** do `index.html` (a mais recente primeiro). Parceiros e equipe ficam em listas no próprio gerador.
 
+### Medidor da campanha Abrace uma História
+Os números da arrecadação e os pontos de coleta da campanha ficam em `dados/abrace-uma-historia.json`. Para atualizar, edite o arquivo no GitHub (ícone de lápis): mude o `arrecadado` de cada item e a data `atualizado_em` (DD/MM/AAAA), e faça o commit. A Vercel publica sozinha e a página lê o arquivo novo, sem rodar o gerador.
+- Um medidor por item (quilo, litro e unidade não se somam). Todos começam em 0: nunca preencha número estimado.
+- Os dois itens mais longe da meta ganham o selo "precisamos mais"; item que bate a meta mostra "Meta atingida, obrigado!".
+- Ponto de coleta ainda não confirmado: use `"confirmado": false` e ele aparece com o selo "a confirmar".
+
+### Medição de acessos e UTM
+O site carrega o Vercel Web Analytics (sem cookies) quando está na Vercel. Para ver os dados, ative em Vercel > projeto > Analytics. Os links divulgados devem levar `utm_source`, `utm_medium` e `utm_campaign`, por exemplo `?utm_source=instagram&utm_medium=stories&utm_campaign=abrace`. O canal também vai junto do contato salvo (coluna `origem`). Para usar o Google Analytics 4, coloque o ID em `googleAnalyticsId` no `js/config.js`.
+
 ### Banner do topo (hero)
 O topo da página principal abre no banner da campanha atual, que fica 10 s, e depois alterna com o institucional (7 s). O tempo de cada slide fica em `data-duracao` e o slide de abertura é o que tem `data-inicial`. Para trocar a campanha, edite o slide da campanha em `index.html` e o rótulo do botão no `hero-pager`.
 

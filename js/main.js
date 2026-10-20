@@ -26,6 +26,40 @@
   }
   window.CV = { lenis: lenis, reduceMotion: reduceMotion, hasGsap: hasGsap };
 
+  /* Canal de origem (UTM) e medição de acessos ------------------------------ */
+  // Guarda os utm_* da página de entrada durante a visita: o contato salvo leva o canal junto.
+  var utm = '';
+  try {
+    var params = new URLSearchParams(location.search);
+    var canal = ['utm_source', 'utm_medium', 'utm_campaign'].map(function (k) { return params.get(k); }).filter(Boolean);
+    if (canal.length) sessionStorage.setItem('cv-utm', canal.join(' / '));
+    utm = sessionStorage.getItem('cv-utm') || '';
+  } catch (err) {}
+  window.CV.utm = utm;
+
+  // Vercel Web Analytics: sem cookies, lê os utm_* da URL sozinho. Ativar em Vercel > projeto > Analytics.
+  // Fora da Vercel (localhost, GitHub Pages) não carrega.
+  var cfgSite = window.CV_CONFIG || {};
+  var naVercel = /\.vercel\.app$|cruzvermelhacriciuma\.org\.br$/.test(location.hostname);
+  if (naVercel) {
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    var va = document.createElement('script');
+    va.defer = true;
+    va.src = '/_vercel/insights/script.js';
+    document.head.appendChild(va);
+  }
+  // Google Analytics 4 (opcional): só carrega se houver um ID em js/config.js
+  if (naVercel && cfgSite.googleAnalyticsId) {
+    var ga = document.createElement('script');
+    ga.async = true;
+    ga.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(cfgSite.googleAnalyticsId);
+    document.head.appendChild(ga);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', cfgSite.googleAnalyticsId);
+  }
+
   // Âncoras internas passam pelo Lenis para manter a rolagem suave e descontar o header
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a[href^="#"]');
@@ -404,6 +438,16 @@
         el.src = ev.dataset.photoSrc;
         el.alt = ev.dataset.photoLabel || '';
         el.loading = 'lazy';
+        // Imagens de acervo (data-photo-credit) levam o crédito por cima da foto
+        if (ev.dataset.photoCredit) {
+          var fig = document.createElement('figure');
+          fig.className = 'tl-photo';
+          var cap = document.createElement('figcaption');
+          cap.textContent = ev.dataset.photoCredit;
+          fig.appendChild(el);
+          fig.appendChild(cap);
+          el = fig;
+        }
       } else {
         el = document.createElement('div');
         el.className = 'ph';
@@ -716,6 +760,9 @@
     // A anon key antiga é um JWT e vai também no Authorization; a publishable key nova dispensa
     if (/^eyJ/.test(cfg.supabaseKey)) headers.Authorization = 'Bearer ' + cfg.supabaseKey;
 
+    // Canal de origem da visita (utm_*), junto da página ou da opção do chat
+    if (window.CV.utm && row.origem) row.origem += ' · ' + window.CV.utm;
+
     // Limite de espera: se a rede travar, a pessoa não fica presa no botão
     var controller = 'AbortController' in window ? new AbortController() : null;
     var timer = controller && setTimeout(function () { controller.abort(); }, 4000);
@@ -826,6 +873,6 @@
 
   /* Ano do rodapé ---------------------------------------------------------- */
 
-  var year = document.querySelector('[data-year]');
+  var year = document.querySelector('[data-ano-atual]'); // não usar data-year: é o atributo dos eventos da linha do tempo
   if (year) year.textContent = new Date().getFullYear();
 })();

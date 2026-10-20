@@ -27,8 +27,32 @@ PARCEIROS_ABRACE = [
     ('Toro Mídia', 'toro-midia'), ('Le Fil Uniformes', 'le-fil'),
 ]
 LOGOS_CLAROS = {'engeplus'}  # logo branco: vai em cartão escuro
-EQUIPE_ABRACE = ['Ana Júlia Manarin', 'Jéssica Loureiro', 'Letícia Ghisi', 'Maria Eduarda Anzolin',
-                 'Maria Eduarda Neto', 'Nathalia Zanellato', 'Valéria Ferreira']
+# Turma de Publicidade e Propaganda da UniSATC, por área (lista enviada pela turma)
+EQUIPE_ABRACE = [
+    ('Coordenação', 'vermelho', [
+        ('Débora', 'captação'), ('Gabriele', 'redes sociais'), ('Júlia Machado', 'design'),
+        ('Júlia Schuter', 'design'), ('Letícia Ghisi', 'redação'), ('Nathalia', 'design'), ('Pietra', 'guerrilha'),
+    ]),
+    ('Design', 'verde', [
+        ('Amanda', ''), ('Beatriz', ''), ('Inaia', ''), ('Jose', ''), ('Lucas de Bithencourt', ''),
+        ('Maria Eduarda Anzolin', ''), ('Nathieli', ''), ('Valeria', ''),
+    ]),
+    ('Site', 'rosa', [
+        ('Lucas de Bithencourt', ''),
+    ]),
+    ('Redação', 'rosa', [
+        ('Jessica', ''), ('Lara', ''), ('Letícia Diecks', ''), ('Lia', ''), ('Loise', ''), ('Ricardo', ''), ('Vitor', ''),
+    ]),
+    ('Captação e edição de vídeo', 'amarelo', [
+        ('Aguinaldo', 'edição'), ('Ana Clara Ponini', 'captação e edição'), ('Arthur', 'edição'), ('Davi', 'edição'),
+        ('Eduarda', 'captação'), ('Ellen', 'captação'), ('Gabrieli', 'edição'), ('Isabela', 'captação'),
+        ('Júlia Farias', 'captação'), ('Maria Eduarda Colombo', 'edição'), ('Maria Luiza', 'edição'),
+        ('Roberta', 'edição'), ('Tainá', 'edição'),
+    ]),
+    ('Relacionamento e tecnologia', 'vermelho', [
+        ('Alice', 'RP'), ('Ana Julia', 'WhatsApp'), ('Maria Eduarda Neto', 'WhatsApp'), ('Keila', 'programação'),
+    ]),
+]
 
 E = html.escape
 
@@ -75,14 +99,20 @@ def parceiros_abrace(base):
     return '\n'.join(linhas)
 
 
-def nomes(lista, tag_numero=False):
-    linhas = []
-    for i, n in enumerate(lista, 1):
-        if tag_numero:
-            linhas.append(f'          <li class="ec-player" data-reveal="scale"><span class="ec-player__num" aria-hidden="true">{i}</span><span class="ec-player__name">{E(n)}</span></li>')
-        else:
-            linhas.append(f'          <li data-reveal="fade">{E(n)}</li>')
-    return '\n'.join(linhas)
+def equipe(grupos):
+    blocos = []
+    for area, cor, pessoas in grupos:
+        itens = []
+        for nome, funcao in pessoas:
+            extra = f'<small>{E(funcao)}</small>' if funcao else ''
+            itens.append(f'              <li>{E(nome)}{extra}</li>')
+        blocos.append(f'''          <div class="camp-team__group camp-team__group--{cor}" data-reveal>
+            <h3>{E(area)} <span>{len(pessoas)}</span></h3>
+            <ul class="camp-team__names">
+{chr(10).join(itens)}
+            </ul>
+          </div>''')
+    return '\n'.join(blocos)
 
 
 def ler_modelo(caminho):
@@ -113,7 +143,7 @@ def main():
         familias = fontes + (('&family=' + extra) if extra and ('family=' + familia_extra) not in ('family=' + fontes) else '')
         corpo = (corpo.replace('{{BASE}}', base)
                  .replace('{{PARCEIROS_ABRACE}}', parceiros_abrace(base))
-                 .replace('{{EQUIPE_ABRACE}}', nomes(EQUIPE_ABRACE))
+                 .replace('{{EQUIPE_ABRACE}}', equipe(EQUIPE_ABRACE))
                  )
         assert '{{' not in corpo, f'marcador sem valor em {modelo}'
 

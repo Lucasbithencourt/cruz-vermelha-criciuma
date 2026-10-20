@@ -174,12 +174,11 @@
   </div>
 
   <main id="conteudo">
-    <!-- PENDENTE (confirmar com a filial e a turma):
-         - período exato da campanha (hoje: "Campanha de Natal 2026", tirado do spot de rádio)
-         - pontos de coleta além da sede (hoje: só a sede)
-         - meta de arrecadação (sem meta, a barra de progresso fica de fora)
+    <!-- Metas, valores arrecadados e pontos de coleta: dados/abrace-uma-historia.json (a equipe edita só esse arquivo).
+         PENDENTE (confirmar com a filial e a turma):
+         - pontos de coleta além da sede
          - fotos reais da ação (hoje: peças gráficas e vídeo manifesto)
-         - autorização das alunas para os nomes nos créditos -->
+         - autorização da turma para os nomes nos créditos -->
 
     <!-- Abertura ------------------------------------------------------------------>
     <section class="ab-hero" id="topo">
@@ -189,18 +188,18 @@
 
       <div class="container ab-hero__grid">
         <div class="ab-hero__text">
-          <span class="ab-badge" data-reveal="fade">Campanha de Natal 2026 · Cruz Vermelha + UniSATC</span>
+          <span class="ab-badge" data-reveal="fade">Campanha de Natal · arrecadação até 20 de dezembro</span>
           <h1 class="ab-hero__title" data-reveal style="--i:1">
             <img src="../assets/campanhas/abrace/logo-branco.webp" alt="Abrace uma História" width="900" height="396">
           </h1>
-          <p class="ab-tag" data-reveal style="--i:2">sua <b>doação</b> faz a <b>diferença!</b></p>
+          <p class="ab-tag" data-reveal style="--i:2">a <b>solidariedade</b> é a verdadeira <b>magia</b> deste natal</p>
           <p class="ab-hero__lead" data-reveal style="--i:3">Doe alimentos e brinquedos para a Cruz Vermelha e ajude a levar o espírito de Natal para famílias que também merecem vivê-lo.</p>
           <div class="ab-hero__actions" data-reveal style="--i:4">
-            <button class="btn btn--light btn--lg" type="button" data-open-donation>
-              Quero doar
+            <a class="btn btn--light btn--lg" href="#onde-doar">
+              Ajude também
               <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
-            </button>
-            <a class="btn btn--outline-light btn--lg" href="#o-que-doar">Ver o que doar</a>
+            </a>
+            <a class="btn btn--outline-light btn--lg" href="#metas">Ver as metas</a>
           </div>
         </div>
         <figure class="ab-hero__kv" data-reveal="scale" style="--i:2">
@@ -245,35 +244,56 @@
       </div>
     </section>
 
-    <!-- O que doar e onde ----------------------------------------------------------->
-    <section class="section ab-doar" id="o-que-doar" aria-labelledby="ab-doar-titulo">
-      <div class="container ab-doar__grid">
-        <div>
-          <h2 id="ab-doar-titulo" class="ab-doar__title" data-split>Doe aqui</h2>
-          <ul class="ab-pills" data-stagger>
-            <li class="ab-pill ab-pill--verde" data-reveal="scale">leite</li>
-            <li class="ab-pill ab-pill--amarelo" data-reveal="scale">farinha de trigo</li>
-            <li class="ab-pill ab-pill--rosa" data-reveal="scale">óleo de soja</li>
-            <li class="ab-pill ab-pill--verde" data-reveal="scale">café</li>
-            <li class="ab-pill ab-pill--amarelo" data-reveal="scale">brinquedos usados</li>
-            <li class="ab-pill ab-pill--rosa" data-reveal="scale">farinha de mandioca</li>
-          </ul>
-          <p class="ab-doar__note" data-reveal>Alimentos dentro da validade e com a embalagem fechada. Brinquedos usados em bom estado.</p>
+    <!-- Metas por item ------------------------------------------------------------->
+    <!-- Um medidor por item: quilo, litro e unidade não se somam. Os números vêm do JSON. -->
+    <section class="section ab-metas" id="metas" aria-labelledby="ab-metas-titulo" data-metas data-src="../dados/abrace-uma-historia.json">
+      <img class="ab-star ab-star--7" src="../assets/campanhas/abrace/estrela-verde.webp" alt="" width="220" height="225" data-drift="-30">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal="fade">Medidor de arrecadação</span>
+          <h2 id="ab-metas-titulo" data-split>quanto já chegou de cada item.</h2>
+          <p class="ab-metas__data" data-reveal style="--i:2"><span data-metas-data>Carregando os números…</span> · arrecadação até <b data-metas-prazo>20/12/2026</b></p>
         </div>
+        <p class="ab-metas__aviso" data-metas-aviso hidden></p>
+        <ul class="ab-metas__lista" data-metas-lista aria-live="polite"></ul>
+        <noscript><p class="ab-metas__aviso">Ative o JavaScript para ver o medidor de arrecadação.</p></noscript>
+      </div>
+    </section>
 
-        <!-- PENDENTE: incluir os pontos de coleta parceiros, se houver -->
-        <aside class="ab-where" data-reveal="scale">
-          <h3>Onde entregar</h3>
-          <ul class="ab-where__info">
-            <li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span><b>Sede da Cruz Vermelha Criciúma</b>Rua Antônio Benedet de Angelo, 15 · Pinheirinho</span></li>
-            <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span><b>Quintas-feiras, das 13h às 17h</b>Exceto feriados</span></li>
-          </ul>
-          <a class="btn btn--primary btn--block" href="../pontos-de-coleta.html">
-            Ver no mapa
+    <!-- Por que esses itens --------------------------------------------------------->
+    <section class="section section--alt ab-porque" aria-labelledby="ab-porque-titulo">
+      <div class="container ab-porque__grid">
+        <h2 id="ab-porque-titulo" data-split>por que esses itens?</h2>
+        <div>
+          <p class="lead" data-reveal>As cestas básicas costumam chegar com arroz e feijão. O que quase sempre falta é o que completa a mesa: farinha, café, óleo e leite.</p>
+          <p data-reveal style="--i:1">Por isso a campanha pede esses alimentos, e brinquedos usados em bom estado para que o Natal das crianças também tenha um presente.</p>
+          <p class="ab-porque__nota" data-reveal style="--i:2">Alimentos dentro da validade e com a embalagem fechada.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Onde doar ------------------------------------------------------------------->
+    <!-- A lista vem de "pontos_de_coleta" no JSON. "confirmado": false mostra o selo "a confirmar". -->
+    <section class="section ab-onde" id="onde-doar" aria-labelledby="ab-onde-titulo">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal="fade">Pontos de coleta</span>
+          <h2 id="ab-onde-titulo" data-split>onde doar.</h2>
+        </div>
+        <ul class="ab-onde__lista" data-pontos-lista>
+          <li class="ab-ponto">
+            <h3>Sede da Cruz Vermelha Criciúma</h3>
+            <p><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Rua Antônio Benedet de Angelo, 15 · Pinheirinho · Criciúma</p>
+            <p><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>Quintas-feiras, das 13h às 17h (exceto feriados)</p>
+          </li>
+        </ul>
+        <div class="ab-onde__acoes" data-reveal>
+          <a class="btn btn--primary" href="../pontos-de-coleta.html">
+            Ver a sede no mapa
             <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
           </a>
           <p class="ab-where__no">Não pedimos doações em dinheiro.</p>
-        </aside>
+        </div>
       </div>
     </section>
 
@@ -326,24 +346,87 @@
     </section>
 
     <!-- Quem criou ------------------------------------------------------------------>
-    <!-- PENDENTE: confirmar a autorização das alunas para os nomes -->
+    <!-- PENDENTE: confirmar com a turma a grafia dos nomes e a autorização para publicá-los -->
     <section class="section section--alt camp-team" aria-labelledby="ab-equipe-titulo">
       <div class="container camp-team__grid">
-        <div>
+        <div class="camp-team__head">
           <span class="eyebrow" data-reveal="fade">Quem criou a campanha</span>
-          <h2 id="ab-equipe-titulo" data-split>Feita por alunas de Publicidade e Propaganda.</h2>
-          <p data-reveal style="--i:2">Projeto Integrador do curso de Publicidade e Propaganda da UniSATC, criado para a Cruz Vermelha Criciúma.</p>
+          <h2 id="ab-equipe-titulo" data-split>feita por estudantes de publicidade e propaganda.</h2>
+          <p data-reveal style="--i:2">Projeto Integrador do curso de Publicidade e Propaganda da UniSATC, criado para a Cruz Vermelha Criciúma por uma turma de 39 estudantes.</p>
           <img class="camp-team__logo" src="../assets/campanhas/unisatc-preto.webp" alt="UniSATC" width="600" height="159" loading="lazy" data-reveal style="--i:3">
         </div>
-        <ul class="camp-team__names" data-stagger>
-          <li data-reveal="fade">Ana Júlia Manarin</li>
-          <li data-reveal="fade">Jéssica Loureiro</li>
-          <li data-reveal="fade">Letícia Ghisi</li>
-          <li data-reveal="fade">Maria Eduarda Anzolin</li>
-          <li data-reveal="fade">Maria Eduarda Neto</li>
-          <li data-reveal="fade">Nathalia Zanellato</li>
-          <li data-reveal="fade">Valéria Ferreira</li>
-        </ul>
+        <div class="camp-team__groups">
+          <div class="camp-team__group camp-team__group--vermelho" data-reveal>
+            <h3>Coordenação <span>7</span></h3>
+            <ul class="camp-team__names">
+              <li>Débora<small>captação</small></li>
+              <li>Gabriele<small>redes sociais</small></li>
+              <li>Júlia Machado<small>design</small></li>
+              <li>Júlia Schuter<small>design</small></li>
+              <li>Letícia Ghisi<small>redação</small></li>
+              <li>Nathalia<small>design</small></li>
+              <li>Pietra<small>guerrilha</small></li>
+            </ul>
+          </div>
+          <div class="camp-team__group camp-team__group--verde" data-reveal>
+            <h3>Design <span>8</span></h3>
+            <ul class="camp-team__names">
+              <li>Amanda</li>
+              <li>Beatriz</li>
+              <li>Inaia</li>
+              <li>Jose</li>
+              <li>Lucas de Bithencourt</li>
+              <li>Maria Eduarda Anzolin</li>
+              <li>Nathieli</li>
+              <li>Valeria</li>
+            </ul>
+          </div>
+          <div class="camp-team__group camp-team__group--rosa" data-reveal>
+            <h3>Site <span>1</span></h3>
+            <ul class="camp-team__names">
+              <li>Lucas de Bithencourt</li>
+            </ul>
+          </div>
+          <div class="camp-team__group camp-team__group--rosa" data-reveal>
+            <h3>Redação <span>7</span></h3>
+            <ul class="camp-team__names">
+              <li>Jessica</li>
+              <li>Lara</li>
+              <li>Letícia Diecks</li>
+              <li>Lia</li>
+              <li>Loise</li>
+              <li>Ricardo</li>
+              <li>Vitor</li>
+            </ul>
+          </div>
+          <div class="camp-team__group camp-team__group--amarelo" data-reveal>
+            <h3>Captação e edição de vídeo <span>13</span></h3>
+            <ul class="camp-team__names">
+              <li>Aguinaldo<small>edição</small></li>
+              <li>Ana Clara Ponini<small>captação e edição</small></li>
+              <li>Arthur<small>edição</small></li>
+              <li>Davi<small>edição</small></li>
+              <li>Eduarda<small>captação</small></li>
+              <li>Ellen<small>captação</small></li>
+              <li>Gabrieli<small>edição</small></li>
+              <li>Isabela<small>captação</small></li>
+              <li>Júlia Farias<small>captação</small></li>
+              <li>Maria Eduarda Colombo<small>edição</small></li>
+              <li>Maria Luiza<small>edição</small></li>
+              <li>Roberta<small>edição</small></li>
+              <li>Tainá<small>edição</small></li>
+            </ul>
+          </div>
+          <div class="camp-team__group camp-team__group--vermelho" data-reveal>
+            <h3>Relacionamento e tecnologia <span>4</span></h3>
+            <ul class="camp-team__names">
+              <li>Alice<small>RP</small></li>
+              <li>Ana Julia<small>WhatsApp</small></li>
+              <li>Maria Eduarda Neto<small>WhatsApp</small></li>
+              <li>Keila<small>programação</small></li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -353,10 +436,24 @@
       <img class="ab-star ab-star--6" src="../assets/campanhas/abrace/estrela-amarela.webp" alt="" width="220" height="225" data-drift="-30">
       <div class="container">
         <h2 data-split>Neste Natal, faça parte de uma história.</h2>
-        <button class="btn btn--light btn--lg" type="button" data-open-donation data-reveal style="--i:3">
-          Quero doar
+        <a class="btn btn--light btn--lg" href="#onde-doar" data-reveal style="--i:3">
+          Ajude também
           <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
-        </button>
+        </a>
+      </div>
+    </section>
+
+    <!-- Marcas: o emblema da Cruz Vermelha entra só como o arquivo oficial, sem alterações -->
+    <section class="ab-marcas" aria-label="Realização">
+      <div class="container ab-marcas__grid">
+        <div class="ab-marcas__item">
+          <span>realização</span>
+          <img src="../assets/logo-cruz-vermelha-512.png" alt="Cruz Vermelha Brasileira · Filial Criciúma" width="512" height="512" loading="lazy">
+        </div>
+        <div class="ab-marcas__item">
+          <span>parceria</span>
+          <img src="../assets/campanhas/unisatc-preto.webp" alt="UniSATC" width="600" height="159" loading="lazy">
+        </div>
       </div>
     </section>
   </main>
@@ -427,8 +524,9 @@
       </div>
 
       <div class="footer-bottom">
-        <p>© <span data-year>2026</span> Cruz Vermelha Brasileira · Filial Criciúma · CNPJ 11.408.025/0001-45</p>
+        <p>© <span data-ano-atual>2026</span> Cruz Vermelha Brasileira · Filial Criciúma · CNPJ 11.408.025/0001-45</p>
         <p>O emblema da Cruz Vermelha é protegido por lei.</p>
+        <p class="footer-credit">Design e criação do site: <b>Lucas de Bithencourt</b></p>
       </div>
 
       <p class="footer-mark" aria-hidden="true">Desde 1984</p>

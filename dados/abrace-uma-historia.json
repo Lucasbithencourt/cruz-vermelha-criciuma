@@ -1,0 +1,21 @@
+{
+  "_como_editar": "Atualize só os números de 'arrecadado' e a data de 'atualizado_em' (DD/MM/AAAA). Não use ponto de milhar: escreva 1250, não 1.250. Para casas decimais use ponto: 12.5. Pontos de coleta: copie um bloco { } inteiro para adicionar outro.",
+  "atualizado_em": "20/10/2026",
+  "prazo": "20/12/2026",
+  "itens": [
+    { "item": "Farinha de trigo", "unidade": "kg", "meta": 600, "arrecadado": 0 },
+    { "item": "Farinha de mandioca", "unidade": "kg", "meta": 600, "arrecadado": 0 },
+    { "item": "Café", "unidade": "kg", "meta": 100, "arrecadado": 0 },
+    { "item": "Óleo de soja", "unidade": "litros", "meta": 500, "arrecadado": 0 },
+    { "item": "Leite em caixa", "unidade": "litros", "meta": 600, "arrecadado": 0 },
+    { "item": "Brinquedos usados", "detalhe": "em bom estado", "unidade": "unidades", "meta": 500, "arrecadado": 0 }
+  ],
+  "pontos_de_coleta": [
+    {
+      "nome": "Sede da Cruz Vermelha Criciúma",
+      "endereco": "Rua Antônio Benedet de Angelo, 15 · Pinheirinho · Criciúma",
+      "horario": "Quintas-feiras, das 13h às 17h (exceto feriados)",
+      "confirmado": true
+    }
+  ]
+}
