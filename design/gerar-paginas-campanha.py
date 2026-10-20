@@ -43,9 +43,28 @@ def ajustar_caminhos(trecho, base):
     """Trechos copiados do index.html: âncoras viram links para a página principal e arquivos ganham o prefixo."""
     trecho = re.sub(r'href="#(?!i-|conteudo)(topo)"', 'href="' + base + 'index.html"', trecho)
     trecho = re.sub(r'href="#(?!i-|conteudo)([a-z-]+)"', r'href="' + base + r'index.html#\1"', trecho)
-    trecho = re.sub(r'(href|src|action|poster)="(assets/|css/|js/|pontos-de-coleta\.html)', r'\1="' + base + r'\2', trecho)
+    # Qualquer caminho relativo (arquivos, páginas e pastas de campanha) ganha o prefixo da pasta
+    trecho = re.sub(r'(href|src|action|poster)="(?!https?:|#|/|mailto:|tel:|data:|\.\./|index\.html)([^"]+)"', r'\1="' + base + r'\2"', trecho)
     trecho = re.sub(r'srcset="([^"]+)"', lambda m: 'srcset="' + re.sub(r'(^|, )assets/', r'\1' + base + 'assets/', m.group(1)) + '"', trecho)
     return trecho
+
+
+def sem_formulario(trecho):
+    """Páginas sem o formulário de doação: os botões "Quero doar" levam à lista de pontos de coleta."""
+    return re.sub(r'<button( class="[^"]*")? type="button" data-open-donation>(.*?)</button>',
+                  lambda m: '<a%s href="#pontos">%s</a>' % (m.group(1) or '', m.group(2)), trecho, flags=re.S)
+
+
+def atualizar_pontos(topo_index):
+    """Leva o menu atual do index.html para pontos-de-coleta.html (mesma pasta, sem formulário)."""
+    caminho = ROOT / 'pontos-de-coleta.html'
+    pagina = caminho.read_text(encoding='utf-8')
+    antigo = bloco(pagina, '  <header class="site-header">', '  <main id="conteudo">')
+    novo = sem_formulario(ajustar_caminhos(topo_index, ''))
+    novo = novo.replace('<use href="#i-heart"/></svg>\n          Quero doar', '<use href="#i-pin"/></svg>\n          Pontos de coleta')
+    novo = novo.replace('Quero doar para a Cruz Vermelha', 'Ver pontos de coleta')
+    caminho.write_text(pagina.replace(antigo, novo), encoding='utf-8')
+    print('menu atualizado:', caminho.relative_to(ROOT))
 
 
 def parceiros_abrace(base):
@@ -82,6 +101,8 @@ def main():
     chat = bloco(index, '  <!-- Chat de boas-vindas', '  <!-- Modal de doação.')
     modal = bloco(index, '  <!-- Modal de doação.', '  <script src=')
     fontes = re.search(r'family=([^"&]+(?:&family=[^"&]+)*)&display=swap', index).group(1)
+
+    atualizar_pontos(topo)
 
     for modelo, pasta in PAGINAS.items():
         meta, corpo = ler_modelo(ROOT / 'design' / 'paginas' / modelo)

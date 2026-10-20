@@ -91,6 +91,88 @@
     });
   }
 
+  /* Menus suspensos (Campanhas e Como ajudar) ------------------------------ */
+  // Abrem com clique/toque, teclado ou mouse em cima; fecham com Esc, clique fora, ao rolar ou ao escolher.
+
+  var dropItems = document.querySelectorAll('.nav__item--drop');
+  var fecharTimer = null;
+
+  function setDrop(item, open) {
+    item.classList.toggle('is-open', open);
+    item.querySelector('.nav__trigger').setAttribute('aria-expanded', String(open));
+  }
+  function fecharDrops(exceto) {
+    dropItems.forEach(function (it) { if (it !== exceto) setDrop(it, false); });
+  }
+
+  dropItems.forEach(function (item) {
+    var trigger = item.querySelector('.nav__trigger');
+    var panel = item.querySelector('.nav__drop');
+
+    trigger.addEventListener('click', function (e) {
+      // Com o mouse o menu já abriu ao passar por cima: o clique não deve fechá-lo
+      if (e.pointerType === 'mouse' && item.classList.contains('is-open')) return;
+      var abrir = !item.classList.contains('is-open');
+      fecharDrops(item);
+      setDrop(item, abrir);
+    });
+
+    // Mouse: abre ao passar, fecha com um pequeno atraso para dar tempo de chegar ao painel
+    item.addEventListener('pointerenter', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      clearTimeout(fecharTimer);
+      fecharDrops(item);
+      setDrop(item, true);
+    });
+    item.addEventListener('pointerleave', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      fecharTimer = setTimeout(function () { setDrop(item, false); }, 180);
+    });
+
+    // Escolher uma opção fecha o menu
+    panel.addEventListener('click', function (e) {
+      if (e.target.closest('a, button')) setDrop(item, false);
+    });
+
+    // Foco saindo do item fecha
+    item.addEventListener('focusout', function (e) {
+      if (!item.contains(e.relatedTarget)) setDrop(item, false);
+    });
+
+    item.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && item.classList.contains('is-open')) {
+        setDrop(item, false);
+        trigger.focus();
+      }
+      // Seta para baixo no botão entra no painel
+      if (e.key === 'ArrowDown' && e.target === trigger) {
+        e.preventDefault();
+        setDrop(item, true);
+        var primeiro = panel.querySelector('a, button');
+        if (primeiro) primeiro.focus();
+      }
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.nav__item--drop')) fecharDrops();
+  });
+  window.addEventListener('scroll', function () {
+    if (document.querySelector('.nav__item--drop.is-open')) fecharDrops();
+  }, { passive: true });
+
+  // Menu do celular: grupos em sanfona
+  document.querySelectorAll('.mm-toggle').forEach(function (btn) {
+    var group = btn.closest('.mm-group');
+    var sub = document.getElementById(btn.getAttribute('aria-controls'));
+    btn.addEventListener('click', function () {
+      var abrir = !group.classList.contains('is-open');
+      group.classList.toggle('is-open', abrir);
+      btn.setAttribute('aria-expanded', String(abrir));
+      if (abrir) sub.removeAttribute('inert'); else sub.setAttribute('inert', '');
+    });
+  });
+
   /* Link ativo no menu conforme a seção visível ---------------------------- */
 
   var navLinks = document.querySelectorAll('.nav__link[href^="#"]');

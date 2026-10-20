@@ -54,6 +54,7 @@
     <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
     <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></symbol>
     <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/><path d="M9 8.5c.2-.4.5-.5.8-.5h.5c.2 0 .4.1.5.4l.6 1.5c.1.2 0 .5-.1.6l-.5.6c.6 1.2 1.6 2.1 2.8 2.7l.6-.5c.2-.2.4-.2.6-.1l1.5.7c.3.1.4.3.4.5v.5c0 .4-.2.7-.5.9-.5.3-1.2.4-1.8.2-2.7-.8-4.8-2.9-5.6-5.6-.2-.6-.1-1.3.2-1.9z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
   </svg>
 
   <header class="site-header">
@@ -72,8 +73,49 @@
           <li><a class="nav__link" href="../index.html#o-que-fazemos">O que fazemos</a></li>
           <li><a class="nav__link" href="../index.html#sede">A sede</a></li>
           <li><a class="nav__link" href="../index.html#na-midia">Na mídia</a></li>
-          <li><a class="nav__link" href="../index.html#campanhas">Campanhas</a></li>
-          <li><a class="nav__link" href="../index.html#como-ajudar">Como ajudar</a></li>
+          <!-- Menus suspensos: abrem com clique, toque ou ao passar o mouse (js/main.js, bloco "Menus suspensos") -->
+          <li class="nav__item nav__item--drop">
+            <button class="nav__link nav__trigger" type="button" aria-expanded="false" aria-controls="drop-campanhas">
+              Campanhas <svg class="icon nav__chevron" aria-hidden="true"><use href="#i-chevron"/></svg>
+            </button>
+            <div class="nav__drop nav__drop--campanhas" id="drop-campanhas">
+              <a class="drop-camp drop-camp--abrace" href="../abrace-uma-historia/">
+                <span class="drop-camp__badge"><span class="dot" aria-hidden="true"></span>Acontecendo agora</span>
+                <img src="../assets/campanhas/abrace/logo-branco.webp" alt="Abrace uma História" width="900" height="396" loading="lazy">
+                <span class="drop-camp__meta">Campanha de Natal 2026</span>
+              </a>
+              <a class="drop-camp drop-camp--campo" href="../entreemcampo/">
+                <span class="drop-camp__badge">Encerrada</span>
+                <img src="../assets/campanhas/entre-em-campo/escudo.webp" alt="" width="600" height="801" loading="lazy">
+                <span class="drop-camp__name">Entre em Campo</span>
+                <span class="drop-camp__meta">Maio e junho de 2026</span>
+              </a>
+              <a class="drop-all" href="../index.html#campanhas">Ver todas as campanhas <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
+          </li>
+          <li class="nav__item nav__item--drop">
+            <button class="nav__link nav__trigger" type="button" aria-expanded="false" aria-controls="drop-ajudar">
+              Como ajudar <svg class="icon nav__chevron" aria-hidden="true"><use href="#i-chevron"/></svg>
+            </button>
+            <div class="nav__drop nav__drop--lista" id="drop-ajudar">
+              <button class="drop-link" type="button" data-open-donation>
+                <span class="drop-link__icon"><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg></span>
+                <span><b>Quero doar</b>Deixe seu contato e veja onde entregar</span>
+              </button>
+              <a class="drop-link" href="../pontos-de-coleta.html">
+                <span class="drop-link__icon"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg></span>
+                <span><b>Pontos de coleta</b>Endereço, horário e mapa</span>
+              </a>
+              <a class="drop-link" href="../index.html#como-ajudar">
+                <span class="drop-link__icon"><svg class="icon" aria-hidden="true"><use href="#i-basket"/></svg></span>
+                <span><b>O que doar</b>Os itens que a gente recebe</span>
+              </a>
+              <a class="drop-link" href="https://wa.me/5548999541370?text=Ol%C3%A1!%20Quero%20ser%20volunt%C3%A1rio%20da%20Cruz%20Vermelha%20Crici%C3%BAma." target="_blank" rel="noopener">
+                <span class="drop-link__icon"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg></span>
+                <span><b>Seja voluntário</b>Fale com a gente no WhatsApp</span>
+              </a>
+            </div>
+          </li>
         </ul>
       </nav>
 
@@ -90,14 +132,37 @@
     <div class="progress" aria-hidden="true"></div>
   </header>
 
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true" data-lenis-prevent>
     <ul class="mobile-menu__list">
       <li><a href="../index.html#historia"><span>01</span>História</a></li>
       <li><a href="../index.html#o-que-fazemos"><span>02</span>O que fazemos</a></li>
       <li><a href="../index.html#sede"><span>03</span>A sede</a></li>
       <li><a href="../index.html#na-midia"><span>04</span>Na mídia</a></li>
-      <li><a href="../index.html#campanhas"><span>05</span>Campanhas</a></li>
-      <li><a href="../index.html#como-ajudar"><span>06</span>Como ajudar</a></li>
+      <li class="mm-group">
+        <button class="mm-toggle" type="button" aria-expanded="false" aria-controls="mm-campanhas">
+          <span>05</span>Campanhas <svg class="icon mm-toggle__chevron" aria-hidden="true"><use href="#i-chevron"/></svg>
+        </button>
+        <div class="mm-sub" id="mm-campanhas" inert>
+          <ul>
+            <li><a href="../abrace-uma-historia/">Abrace uma História <small>Acontecendo agora</small></a></li>
+            <li><a href="../entreemcampo/">Entre em Campo <small>Encerrada</small></a></li>
+            <li><a href="../index.html#campanhas">Ver todas as campanhas</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mm-group">
+        <button class="mm-toggle" type="button" aria-expanded="false" aria-controls="mm-ajudar">
+          <span>06</span>Como ajudar <svg class="icon mm-toggle__chevron" aria-hidden="true"><use href="#i-chevron"/></svg>
+        </button>
+        <div class="mm-sub" id="mm-ajudar" inert>
+          <ul>
+            <li><button type="button" data-open-donation>Quero doar</button></li>
+            <li><a href="../pontos-de-coleta.html">Pontos de coleta</a></li>
+            <li><a href="../index.html#como-ajudar">O que doar</a></li>
+            <li><a href="https://wa.me/5548999541370?text=Ol%C3%A1!%20Quero%20ser%20volunt%C3%A1rio%20da%20Cruz%20Vermelha%20Crici%C3%BAma." target="_blank" rel="noopener">Seja voluntário</a></li>
+          </ul>
+        </div>
+      </li>
     </ul>
     <div class="mobile-menu__foot">
       <button class="btn btn--primary btn--lg btn--block" type="button" data-open-donation>
