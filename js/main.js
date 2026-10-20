@@ -253,7 +253,7 @@
   }
 
   /* Hero: slides (institucional e campanha) -------------------------------- */
-  // Troca sozinho a cada 7 s, com barra de progresso. Pausa com o mouse em cima, com o foco
+  // Abre no banner da campanha (data-inicial) e troca sozinho no tempo de cada slide (data-duracao), com barra de progresso. Pausa com o mouse em cima, com o foco
   // dentro ou fora da tela; o botão de pausa para de vez. Com movimento reduzido, não troca sozinho.
 
   var heroEl = document.querySelector('.hero');
@@ -261,8 +261,11 @@
   if (slides.length > 1) {
     var pagerItems = heroEl.querySelectorAll('[data-slide]');
     var pauseBtn = heroEl.querySelector('[data-hero-pause]');
-    var DURACAO = 7000;
-    var atual = 0;
+    var inicial = Array.prototype.indexOf.call(slides, heroEl.querySelector('.hero-slide[data-inicial]'));
+    var atual = Math.max(inicial, 0);
+    var duracao = function () { return Number(slides[atual].dataset.duracao) || 7000; };
+    // Botão do pager de cada slide (a ordem dos botões segue a ordem de exibição, não a do HTML)
+    var barraDe = function (n) { return heroEl.querySelector('[data-slide="' + n + '"] .hero-pager__bar span'); };
     var decorrido = 0;
     var ultimo = null;
     var pausadoPeloUsuario = reduceMotion;
@@ -277,7 +280,8 @@
         sl.setAttribute('aria-hidden', String(!ativo));
         if (ativo) sl.removeAttribute('inert'); else sl.setAttribute('inert', '');
       });
-      pagerItems.forEach(function (b, n) {
+      pagerItems.forEach(function (b) {
+        var n = Number(b.dataset.slide);
         b.classList.toggle('is-active', n === atual);
         if (n === atual) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
         b.querySelector('.hero-pager__bar span').style.setProperty('--p', n === atual && pausadoPeloUsuario ? 1 : 0);
@@ -290,9 +294,8 @@
       ultimo = agora;
       if (!pausadoPeloUsuario && !segurando) {
         decorrido += dt;
-        var barra = pagerItems[atual].querySelector('.hero-pager__bar span');
-        barra.style.setProperty('--p', Math.min(decorrido / DURACAO, 1).toFixed(3));
-        if (decorrido >= DURACAO) irPara(atual + 1);
+        barraDe(atual).style.setProperty('--p', Math.min(decorrido / duracao(), 1).toFixed(3));
+        if (decorrido >= duracao()) irPara(atual + 1);
       }
       requestAnimationFrame(tique);
     };
@@ -305,7 +308,7 @@
       pausadoPeloUsuario = pausar;
       pauseBtn.setAttribute('aria-pressed', String(pausar));
       pauseBtn.setAttribute('aria-label', pausar ? 'Retomar a troca automática' : 'Pausar a troca automática');
-      if (pausar) pagerItems[atual].querySelector('.hero-pager__bar span').style.setProperty('--p', 1);
+      if (pausar) barraDe(atual).style.setProperty('--p', 1);
     };
     pauseBtn.addEventListener('click', function () { marcarPausa(!pausadoPeloUsuario); });
     if (reduceMotion) marcarPausa(true);
@@ -332,7 +335,7 @@
       }, { threshold: 0.3 }).observe(heroEl);
     }
 
-    irPara(0);
+    irPara(atual);
     requestAnimationFrame(tique);
   }
 

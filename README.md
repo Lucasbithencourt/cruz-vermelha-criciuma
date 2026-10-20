@@ -53,7 +53,7 @@ python3 design/gerar-paginas-campanha.py
 Para uma campanha nova: copie um modelo de `design/paginas/`, inclua a pasta em `PAGINAS` no gerador, coloque as imagens em `assets/campanhas/<nome>/` e adicione um cartão na seção **Campanhas** do `index.html` (a mais recente primeiro). Parceiros e equipe ficam em listas no próprio gerador.
 
 ### Banner do topo (hero)
-O topo da página principal alterna dois slides a cada 7 s: o institucional e a campanha atual. Para trocar a campanha, edite o slide 2 em `index.html` (bloco "Slide 2") e o rótulo do botão no `hero-pager`.
+O topo da página principal abre no banner da campanha atual, que fica 10 s, e depois alterna com o institucional (7 s). O tempo de cada slide fica em `data-duracao` e o slide de abertura é o que tem `data-inicial`. Para trocar a campanha, edite o slide da campanha em `index.html` e o rótulo do botão no `hero-pager`.
 
 ### Incluir ou alterar um ponto de coleta
 Edite `js/pontos.js`. A lista e o mapa se montam sozinhos; com mais de um ponto, o mapa enquadra todos. Coordenadas: no Google Maps, clique com o botão direito no local e copie.
