@@ -1,6 +1,6 @@
 // Cruz Vermelha Criciúma · chat de boas-vindas.
-// Aparece depois da primeira dobra, abre sozinho uma vez por visita, conversa com mensagens prontas
-// e leva ao WhatsApp da filial com o texto já escrito conforme o objetivo escolhido.
+// Aparece depois da primeira dobra, abre sozinho uma vez por visita, conversa com mensagens prontas,
+// pede nome e WhatsApp (com autorização) e leva ao WhatsApp da filial com o texto já escrito.
 (function () {
   var root = document.querySelector('[data-chat]');
   if (!root) return;
@@ -140,17 +140,125 @@
     }));
   }
 
+  /* Mini questionário: nome, WhatsApp e autorização ------------------------ */
+
+  var composer = root.querySelector('[data-chat-composer]');
+  var input = root.querySelector('[data-chat-input]');
+  var inputLabel = root.querySelector('[data-chat-label]');
+  var contato = null; // fica guardado na conversa: quem troca de opção não responde de novo
+
+  function maskPhone(value) {
+    var d = value.replace(/\D/g, '').replace(/^55(?=\d{10,11}$)/, '').slice(0, 11);
+    if (d.length <= 2) return d.length ? '(' + d : '';
+    if (d.length <= 6) return '(' + d.slice(0, 2) + ') ' + d.slice(2);
+    if (d.length <= 10) return '(' + d.slice(0, 2) + ') ' + d.slice(2, 6) + '-' + d.slice(6);
+    return '(' + d.slice(0, 2) + ') ' + d.slice(2, 7) + '-' + d.slice(7);
+  }
+  input.addEventListener('input', function () {
+    if (input.type === 'tel') input.value = maskPhone(input.value);
+  });
+
+  // Mostra o campo, espera uma resposta válida e devolve o texto
+  function ask(cfg) {
+    return new Promise(function (resolve) {
+      input.value = '';
+      input.type = cfg.type;
+      input.placeholder = cfg.placeholder;
+      input.autocomplete = cfg.autocomplete;
+      input.inputMode = cfg.type === 'tel' ? 'tel' : 'text';
+      inputLabel.textContent = cfg.label;
+      composer.hidden = false;
+      setTimeout(function () { input.focus({ preventScroll: true }); }, 50);
+
+      composer.onsubmit = function (e) {
+        e.preventDefault();
+        var value = input.value.trim();
+        var erro = cfg.validate(value);
+        if (erro) {
+          botSay(erro);
+          input.focus({ preventScroll: true });
+          return;
+        }
+        composer.hidden = true;
+        composer.onsubmit = null;
+        bubble(value, 'user');
+        resolve(value);
+      };
+    });
+  }
+
+  function pedirContato() {
+    if (contato) return Promise.resolve(contato);
+    var nome;
+    return botSay('Antes de te passar o contato, como você se chama?')
+      .then(function () {
+        return ask({
+          type: 'text', placeholder: 'Seu nome', autocomplete: 'name', label: 'Seu nome',
+          validate: function (v) { return v.length >= 2 && /[a-zA-ZÀ-ÿ]/.test(v) ? null : 'Pode me dizer seu nome?'; }
+        });
+      })
+      .then(function (v) {
+        nome = v;
+        return botSay('Prazer, ' + v.split(/\s+/)[0] + '! Qual é o seu WhatsApp, com DDD?');
+      })
+      .then(function () {
+        return ask({
+          type: 'tel', placeholder: '(48) 99999-9999', autocomplete: 'tel', label: 'Seu WhatsApp com DDD',
+          validate: function (v) {
+            var n = v.replace(/\D/g, '').length;
+            return n >= 10 && n <= 11 ? null : 'Confere o número? Ele precisa ter DDD, como (48) 99999-9999.';
+          }
+        });
+      })
+      .then(function (telefone) {
+        return botSay('Posso guardar seu nome e telefone para a equipe da Cruz Vermelha falar com você? Eles ficam só com a filial.')
+          .then(function () {
+            return new Promise(function (resolve) {
+              choices([
+                { label: 'Sim, pode guardar', onPick: function (w) { w.remove(); bubble('Sim, pode guardar', 'user'); resolve(true); } },
+                { label: 'Prefiro não', onPick: function (w) { w.remove(); bubble('Prefiro não', 'user'); resolve(false); } }
+              ]);
+            });
+          })
+          .then(function (autorizou) {
+            contato = { nome: nome, telefone: telefone, autorizou: autorizou };
+            return contato;
+          });
+      });
+  }
+
+  function salvar(opt) {
+    if (!contato.autorizou || !window.CV || !window.CV.saveDonor) return Promise.resolve();
+    // Não segura a conversa se a gravação demorar ou falhar
+    return window.CV.saveDonor({
+      nome: contato.nome,
+      telefone: contato.telefone,
+      consentimento: true,
+      origem: 'chat: ' + opt.label
+    }).catch(function (err) { console.error('Contato do chat não foi salvo:', err); });
+  }
+
   function pick(opt, wrap) {
     if (busy) return;
     busy = true;
     wrap.remove();
     bubble(opt.label, 'user');
-    sayAll(opt.replies).then(function () {
-      whatsappCard(opt.whatsapp);
-      var next = [{ label: 'Escolher outra opção', onPick: function (w) { w.remove(); showOptions(); } }];
-      if (opt.extra) next.unshift({ label: opt.extra.label, donation: true, onPick: function () { close(); } });
-      return wait(300).then(function () { choices(next); });
-    }).then(function () { busy = false; });
+    var jaTinha = !!contato;
+    sayAll(opt.replies)
+      .then(pedirContato)
+      .then(function () {
+        salvar(opt);
+        if (jaTinha) return wait(150);
+        return botSay(contato.autorizou ? 'Prontinho, obrigado! Agora é só chamar a gente:' : 'Tudo bem, não vamos guardar seus dados. É só chamar a gente:');
+      })
+      .then(function () {
+        // A mensagem do WhatsApp já vai com o nome de quem está falando
+        whatsappCard(opt.whatsapp.replace('Olá! ', 'Olá! Sou ' + contato.nome + '. '));
+        var next = [{ label: 'Escolher outra opção', onPick: function (w) { w.remove(); showOptions(); } }];
+        if (opt.extra) next.unshift({ label: opt.extra.label, donation: true, onPick: function () { close(); } });
+        return wait(300).then(function () { choices(next); });
+      })
+      .then(function () { busy = false; });
   }
 
   function run() {

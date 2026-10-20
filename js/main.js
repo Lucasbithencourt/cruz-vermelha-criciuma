@@ -566,6 +566,9 @@
     });
   }
 
+  // O chat (js/chat.js) usa a mesma gravação para os contatos que deixa na conversa
+  window.CV.saveDonor = saveDonor;
+
   /* Formulário de doação --------------------------------------------------- */
   // Valida, grava no Supabase e leva aos pontos de coleta.
 

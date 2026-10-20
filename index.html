@@ -916,6 +916,14 @@
         </button>
       </header>
       <div class="chat__body" data-chat-body data-lenis-prevent role="log" aria-live="polite"></div>
+      <!-- Campo de resposta: aparece quando o chat pede nome e telefone -->
+      <form class="chat__composer" data-chat-composer hidden novalidate>
+        <label class="visually-hidden" for="chat-input" data-chat-label>Sua resposta</label>
+        <input id="chat-input" type="text" autocomplete="off" data-chat-input>
+        <button type="submit" aria-label="Enviar resposta">
+          <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </button>
+      </form>
     </section>
 
     <button class="chat__launcher" type="button" data-chat-toggle aria-expanded="false" aria-controls="chat-panel" aria-label="Abrir conversa com a Cruz Vermelha Criciúma">

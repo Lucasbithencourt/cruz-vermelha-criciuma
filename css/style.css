@@ -2431,6 +2431,44 @@ img.tl-event__media { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; borde
 /* Verde escuro para o texto pequeno: o verde do WhatsApp não tem contraste suficiente sobre branco */
 .chat__wa small { display: block; font-size: 0.8rem; color: #0B7A3B; }
 
+/* Campo de resposta do chat (nome e telefone) */
+.chat__composer {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px 12px;
+  border-top: 1px solid var(--line);
+  background: #fff;
+}
+.chat__composer[hidden] { display: none; }
+.chat__composer input {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  padding: 0 16px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px; /* 16px evita o zoom automático no iPhone ao focar */
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.chat__composer input:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(225, 20, 30, 0.12); }
+.chat__composer button {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--red-deep);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.3s var(--ease-out);
+}
+@media (hover: hover) { .chat__composer button:hover { background: var(--red); transform: scale(1.06); } }
+
 @media (min-width: 640px) {
   .chat { right: 24px; bottom: 24px; }
 }
