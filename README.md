@@ -5,11 +5,16 @@ Site estático da Cruz Vermelha Brasileira, Filial Criciúma. HTML, CSS e JS pur
 ```
 index.html               página principal (hero, números, história, programas, princípios, sede, mídia, parceiros, como ajudar)
 pontos-de-coleta.html    destino do formulário: agradecimento, lista de pontos, mapa e dicas
+abrace-uma-historia/     página da campanha de Natal 2026 (gerada)
+entreemcampo/            página da campanha Entre em Campo, mesmo endereço do site antigo (gerada)
 404.html                 página de erro (noindex, caminhos absolutos)
 styleguide.html          guia visual para revisão (não vai para buscadores)
 css/style.css            estilos, mobile first (breakpoints 640px, 960px)
 js/main.js               rolagem suave, header, menu, reveals, contadores, linha do tempo, princípios, mídia, formulário
 js/pontos-page.js        lista, mapa (Leaflet + OpenStreetMap) e lembrete na agenda
+js/chat.js               chat de boas-vindas (pede nome e WhatsApp antes do contato)
+js/video.js              player do vídeo do YouTube com controles do site
+js/campanha.js           galeria e animações das páginas de campanha
 js/pontos.js             DADOS dos pontos de coleta
 js/config.js             CONFIG: projeto e chave pública do Supabase
 supabase/                SQL da tabela de doadores, gatilho da planilha e passo a passo
@@ -35,6 +40,15 @@ Siga [supabase/LEIA-ME.md](supabase/LEIA-ME.md): rode o `doadores.sql` no SQL Ed
 
 ### Planilha Google de doadores
 Cada contato também vira uma linha numa planilha, com link de WhatsApp e status. Instalação em [planilha/LEIA-ME.md](planilha/LEIA-ME.md).
+
+### Páginas de campanha (UniSATC)
+As páginas `abrace-uma-historia/` e `entreemcampo/` são **geradas**: o conteúdo fica em `design/paginas/*.html` e o topo, menu, rodapé, chat e formulário vêm do `index.html`. Depois de mudar qualquer um deles, rode:
+
+```bash
+python3 design/gerar-paginas-campanha.py
+```
+
+Para uma campanha nova: copie um modelo de `design/paginas/`, inclua a pasta em `PAGINAS` no gerador, coloque as imagens em `assets/campanhas/<nome>/` e adicione um cartão na seção **Campanhas** do `index.html` (a mais recente primeiro). Parceiros e equipe ficam em listas no próprio gerador.
 
 ### Incluir ou alterar um ponto de coleta
 Edite `js/pontos.js`. A lista e o mapa se montam sozinhos; com mais de um ponto, o mapa enquadra todos. Coordenadas: no Google Maps, clique com o botão direito no local e copie.
@@ -81,6 +95,21 @@ E no `404.html` troque `/cruz-vermelha-criciuma/` por `/`.
 - **Peso da página principal:** cerca de 150 KB comprimidos, sem contar fotos (HTML 14 KB, CSS 14 KB, JS próprio 8 KB, bibliotecas 50 KB).
 
 ## Pendências com a filial
+
+**Campanha Abrace uma História**
+- [ ] Período exato (hoje o site diz "Campanha de Natal 2026", tirado do spot de rádio).
+- [ ] Pontos de coleta além da sede, se houver.
+- [ ] Meta de arrecadação (para uma barra de progresso).
+- [ ] Fotos reais da ação.
+- [ ] Autorização das 7 alunas para os nomes nos créditos.
+
+**Campanha Entre em Campo**
+- [ ] Datas exatas (hoje: "maio e junho de 2026", pelas datas dos arquivos do site antigo).
+- [ ] Resultado: quanto foi arrecadado.
+- [ ] Fotos reais (as imagens do site antigo parecem ilustrações).
+- [ ] Autorização da equipe para os 17 nomes da escalação.
+
+**Geral**
 
 Detalhes e fontes no `CONTEUDO.md` (documento interno, fora do repositório).
 

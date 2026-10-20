@@ -1,0 +1,132 @@
+<!--
+title: Entre em Campo · Campanha da Cruz Vermelha Criciúma com a UniSATC
+description: Campanha Entre em Campo, da Cruz Vermelha Criciúma com o curso de Publicidade e Propaganda da UniSATC: alimentos, agasalhos e medicamentos com 16 pontos de coleta.
+og: assets/campanhas/entre-em-campo/kv.webp
+bodyclass: camp camp--campo
+fonts:
+theme: #003A8F
+-->
+  <main id="conteudo">
+    <!-- PENDENTE (confirmar com a filial e a turma):
+         - datas exatas da campanha (hoje: "maio e junho de 2026", pelas datas dos arquivos do site antigo)
+         - resultado: quanto foi arrecadado
+         - fotos reais da ação (as imagens do site antigo parecem ilustrações da campanha)
+         - autorização da equipe para os nomes da escalação -->
+
+    <!-- Abertura ------------------------------------------------------------------>
+    <section class="ec-hero" id="topo">
+      <div class="container ec-hero__grid">
+        <div class="ec-hero__text">
+          <span class="ec-badge" data-reveal="fade">Campanha encerrada · maio e junho de 2026</span>
+          <h1 class="ec-hero__title" data-split>É hora de virar o jogo.</h1>
+          <p class="ec-hero__lead" data-reveal style="--i:3">Não é só futebol. É humanidade. A Entre em Campo levou a energia do futebol para a solidariedade e chamou Criciúma para jogar junto com a Cruz Vermelha.</p>
+          <div class="ec-hero__actions" data-reveal style="--i:4">
+            <a class="btn btn--light btn--lg" href="{{BASE}}abrace-uma-historia/">
+              Ver a campanha atual
+              <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+            <button class="btn btn--outline-light btn--lg" type="button" data-open-donation>Quero doar</button>
+          </div>
+        </div>
+        <div class="ec-hero__shield" data-reveal="scale" style="--i:2">
+          <img src="{{BASE}}assets/campanhas/entre-em-campo/escudo.webp" alt="Escudo da campanha Entre em Campo" width="600" height="801">
+        </div>
+      </div>
+      <div class="ec-hero__stripe" aria-hidden="true"><span></span><span></span><span></span></div>
+    </section>
+
+    <!-- Sobre ----------------------------------------------------------------------->
+    <section class="section ec-about" aria-labelledby="ec-about-titulo">
+      <div class="container ec-about__grid">
+        <figure class="ec-about__img" data-reveal="scale">
+          <img src="{{BASE}}assets/campanhas/entre-em-campo/kv.webp" alt="Voluntária da Cruz Vermelha entrando no estádio pelo túnel, com os dizeres Não é só futebol, é humanidade" width="900" height="900" loading="lazy">
+        </figure>
+        <div>
+          <span class="eyebrow" data-reveal="fade">Sobre a campanha</span>
+          <h2 id="ec-about-titulo" data-split>Mudar vidas também é um jogo de equipe.</h2>
+          <p class="lead" data-reveal style="--i:2">Promovida pelo curso de Publicidade e Propaganda da UniSATC, a Entre em Campo convidou a comunidade a assumir um compromisso com quem mais precisa na região.</p>
+          <p data-reveal style="--i:3">Escolas, comércios, clubes e empresas viraram pontos de coleta, e cada doação entrou em campo para ajudar famílias em vulnerabilidade.</p>
+          <p class="ec-hashtag" data-reveal style="--i:4">#VemSerCruzVermelha</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- O que foi arrecadado -------------------------------------------------------->
+    <section class="section section--alt ec-items" aria-labelledby="ec-items-titulo">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal="fade">O que a campanha arrecadou</span>
+          <h2 id="ec-items-titulo" data-split>Três frentes, um só time.</h2>
+        </div>
+        <ul class="ec-items__grid" data-stagger>
+          <li class="ec-item" data-reveal>
+            <span class="ec-item__num">01</span>
+            <h3>Alimentos</h3>
+            <p>Arroz, feijão, macarrão, óleo, farinha, leite em pó e enlatados, lacrados e dentro da validade.</p>
+          </li>
+          <li class="ec-item" data-reveal>
+            <span class="ec-item__num">02</span>
+            <h3>Agasalhos</h3>
+            <p>Roupas infantis e adultas em bom estado, cobertores, meias, toucas e calçados fechados.</p>
+          </li>
+          <li class="ec-item" data-reveal>
+            <span class="ec-item__num">03</span>
+            <h3>Medicamentos</h3>
+            <p>Analgésicos, anti-inflamatórios, xaropes e outros de uso comum. Vencidos também foram recebidos, para descarte correto.</p>
+          </li>
+        </ul>
+        <!-- PENDENTE: resultado da campanha (ex.: "X kg de alimentos, Y peças de roupa") -->
+      </div>
+    </section>
+
+    <!-- Escalação ------------------------------------------------------------------->
+    <section class="ec-lineup" aria-labelledby="ec-lineup-titulo">
+      <div class="container">
+        <div class="section-head section-head--center">
+          <span class="eyebrow" data-reveal="fade">Quem criou a campanha</span>
+          <h2 id="ec-lineup-titulo" data-split>Escalação Cruz Vermelha</h2>
+          <p class="lead" data-reveal style="--i:3">Turma de Publicidade e Propaganda da UniSATC.</p>
+        </div>
+        <ol class="ec-lineup__grid" data-stagger>
+{{EQUIPE_CAMPO}}
+        </ol>
+        <img class="ec-lineup__logo" src="{{BASE}}assets/campanhas/unisatc-branco.webp" alt="UniSATC" width="600" height="159" loading="lazy" data-reveal>
+      </div>
+    </section>
+
+    <!-- Pontos de coleta / parceiros ------------------------------------------------>
+    <section class="section ec-partners" aria-labelledby="ec-partners-titulo">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal="fade">Parceiros</span>
+          <h2 id="ec-partners-titulo" data-split>16 pontos de coleta espalhados pela cidade.</h2>
+          <p class="lead" data-reveal style="--i:3">Empresas, escolas e instituições que abriram as portas para receber as doações.</p>
+        </div>
+        <ul class="ec-partners__grid" data-stagger>
+{{PARCEIROS_CAMPO}}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Galeria --------------------------------------------------------------------->
+    <section class="section section--alt ec-gallery" aria-label="Peças da campanha">
+      <div class="container ec-gallery__grid" data-stagger>
+        <figure data-reveal="clip"><img src="{{BASE}}assets/campanhas/entre-em-campo/doacoes.webp" alt="Peça da campanha: cesta de alimentos sendo entregue a um menino num campo de futebol" width="900" height="900" loading="lazy"></figure>
+        <figure data-reveal="clip"><img src="{{BASE}}assets/campanhas/entre-em-campo/voluntariado.webp" alt="Peça da campanha: voluntária da Cruz Vermelha sorrindo e apertando a mão de um torcedor" width="900" height="900" loading="lazy"></figure>
+        <figure data-reveal="clip"><img src="{{BASE}}assets/campanhas/entre-em-campo/equipe.webp" alt="Peça da campanha: voluntários da Cruz Vermelha abraçados em roda" width="1000" height="750" loading="lazy"></figure>
+      </div>
+    </section>
+
+    <!-- Fechamento ------------------------------------------------------------------>
+    <section class="ec-cta">
+      <div class="container">
+        <img class="ec-cta__sign" src="{{BASE}}assets/campanhas/entre-em-campo/assinatura-branco.webp" alt="" width="774" height="490" loading="lazy" data-reveal="scale">
+        <h2 data-split>O jogo continua. Agora é Natal.</h2>
+        <p class="lead" data-reveal style="--i:3">A nova campanha da Cruz Vermelha com a UniSATC já está em campo.</p>
+        <a class="btn btn--light btn--lg" href="{{BASE}}abrace-uma-historia/" data-reveal style="--i:4">
+          Conhecer a Abrace uma História
+          <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+    </section>
+  </main>

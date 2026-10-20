@@ -1,0 +1,180 @@
+<!--
+title: Abrace uma História · Campanha de Natal da Cruz Vermelha Criciúma
+description: Campanha de Natal da Cruz Vermelha Criciúma com a UniSATC. Doe leite, farinha, óleo, café e brinquedos usados e faça parte da história de uma família.
+og: assets/campanhas/abrace/kv-foto.webp
+bodyclass: camp camp--abrace
+fonts: Quicksand:wght@500;600;700
+theme: #DA291C
+-->
+  <main id="conteudo">
+    <!-- PENDENTE (confirmar com a filial e a turma):
+         - período exato da campanha (hoje: "Campanha de Natal 2026", tirado do spot de rádio)
+         - pontos de coleta além da sede (hoje: só a sede)
+         - meta de arrecadação (sem meta, a barra de progresso fica de fora)
+         - fotos reais da ação (hoje: peças gráficas e vídeo manifesto)
+         - autorização das alunas para os nomes nos créditos -->
+
+    <!-- Abertura ------------------------------------------------------------------>
+    <section class="ab-hero" id="topo">
+      <img class="ab-star ab-star--1" src="{{BASE}}assets/campanhas/abrace/estrela-amarela.webp" alt="" width="220" height="225" data-drift="-30">
+      <img class="ab-star ab-star--2" src="{{BASE}}assets/campanhas/abrace/estrela-rosa.webp" alt="" width="220" height="225" data-drift="40">
+      <img class="ab-star ab-star--3" src="{{BASE}}assets/campanhas/abrace/estrela-verde.webp" alt="" width="220" height="225" data-drift="-50">
+
+      <div class="container ab-hero__grid">
+        <div class="ab-hero__text">
+          <span class="ab-badge" data-reveal="fade">Campanha de Natal 2026 · Cruz Vermelha + UniSATC</span>
+          <h1 class="ab-hero__title" data-reveal style="--i:1">
+            <img src="{{BASE}}assets/campanhas/abrace/logo-branco.webp" alt="Abrace uma História" width="900" height="396">
+          </h1>
+          <p class="ab-tag" data-reveal style="--i:2">sua <b>doação</b> faz a <b>diferença!</b></p>
+          <p class="ab-hero__lead" data-reveal style="--i:3">Doe alimentos e brinquedos para a Cruz Vermelha e ajude a levar o espírito de Natal para famílias que também merecem vivê-lo.</p>
+          <div class="ab-hero__actions" data-reveal style="--i:4">
+            <button class="btn btn--light btn--lg" type="button" data-open-donation>
+              Quero doar
+              <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </button>
+            <a class="btn btn--outline-light btn--lg" href="#o-que-doar">Ver o que doar</a>
+          </div>
+        </div>
+        <figure class="ab-hero__kv" data-reveal="scale" style="--i:2">
+          <img src="{{BASE}}assets/campanhas/abrace/kv-foto.webp" alt="Mãos entregando uma sacola de alimentos, com a marca Abrace uma História" width="900" height="1125">
+        </figure>
+      </div>
+    </section>
+
+    <!-- Conceito ------------------------------------------------------------------>
+    <section class="section ab-intro" aria-labelledby="ab-intro-titulo">
+      <div class="container ab-intro__grid">
+        <h2 id="ab-intro-titulo" data-split>Abraçar histórias é uma forma de cuidar.</h2>
+        <div class="ab-intro__text">
+          <p class="lead" data-reveal>A Cruz Vermelha e a UniSATC se unem para conectar pessoas em busca de um bem comum: fazer o bem por meio da solidariedade.</p>
+          <p data-reveal style="--i:1">Por trás de cada necessidade existe uma história, e quase sempre a gente não a conhece. Doar não é só entregar alguma coisa: é acolher a vida de alguém e fazer a diferença naquele momento.</p>
+          <img class="ab-heart" src="{{BASE}}assets/campanhas/abrace/coracao.webp" alt="" width="240" height="214" data-reveal="scale" style="--i:2">
+        </div>
+      </div>
+    </section>
+
+    <!-- Pergunta da campanha -------------------------------------------------------->
+    <section class="ab-quote" aria-label="A pergunta da campanha">
+      <img class="ab-star ab-star--4" src="{{BASE}}assets/campanhas/abrace/estrela-amarela.webp" alt="" width="220" height="225" data-drift="-40">
+      <div class="container">
+        <p class="ab-quote__text" data-split>Você consegue lembrar de uma coisa que alguém fez por você e nunca esqueceu?</p>
+        <p class="ab-quote__sub" data-reveal style="--i:3">Neste Natal, você pode ser essa lembrança para alguém.</p>
+      </div>
+    </section>
+
+    <!-- Manifesto ------------------------------------------------------------------>
+    <section class="section ab-video" aria-labelledby="ab-video-titulo">
+      <div class="container">
+        <div class="section-head section-head--center">
+          <span class="eyebrow" data-reveal="fade">Manifesto</span>
+          <h2 id="ab-video-titulo" data-split>Até onde chega um abraço?</h2>
+        </div>
+        <figure class="ab-video__frame" data-reveal="scale">
+          <video controls playsinline preload="none" poster="{{BASE}}assets/campanhas/abrace/manifesto-poster.jpg" width="1280" height="720">
+            <source src="{{BASE}}assets/campanhas/abrace/manifesto.mp4" type="video/mp4">
+          </video>
+        </figure>
+      </div>
+    </section>
+
+    <!-- O que doar e onde ----------------------------------------------------------->
+    <section class="section ab-doar" id="o-que-doar" aria-labelledby="ab-doar-titulo">
+      <div class="container ab-doar__grid">
+        <div>
+          <h2 id="ab-doar-titulo" class="ab-doar__title" data-split>Doe aqui</h2>
+          <ul class="ab-pills" data-stagger>
+            <li class="ab-pill ab-pill--verde" data-reveal="scale">leite</li>
+            <li class="ab-pill ab-pill--amarelo" data-reveal="scale">farinha de trigo</li>
+            <li class="ab-pill ab-pill--rosa" data-reveal="scale">óleo de soja</li>
+            <li class="ab-pill ab-pill--verde" data-reveal="scale">café</li>
+            <li class="ab-pill ab-pill--amarelo" data-reveal="scale">brinquedos usados</li>
+            <li class="ab-pill ab-pill--rosa" data-reveal="scale">farinha de mandioca</li>
+          </ul>
+          <p class="ab-doar__note" data-reveal>Alimentos dentro da validade e com a embalagem fechada. Brinquedos usados em bom estado.</p>
+        </div>
+
+        <!-- PENDENTE: incluir os pontos de coleta parceiros, se houver -->
+        <aside class="ab-where" data-reveal="scale">
+          <h3>Onde entregar</h3>
+          <ul class="ab-where__info">
+            <li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span><b>Sede da Cruz Vermelha Criciúma</b>Rua Antônio Benedet de Angelo, 15 · Pinheirinho</span></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span><b>Quintas-feiras, das 13h às 17h</b>Exceto feriados</span></li>
+          </ul>
+          <a class="btn btn--primary btn--block" href="{{BASE}}pontos-de-coleta.html">
+            Ver no mapa
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+          <p class="ab-where__no">Não pedimos doações em dinheiro.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Peças da campanha ----------------------------------------------------------->
+    <section class="section ab-pecas" aria-labelledby="ab-pecas-titulo">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal="fade">A campanha nas ruas e nas redes</span>
+          <h2 id="ab-pecas-titulo" data-split>Duas forças unidas por um mesmo propósito.</h2>
+        </div>
+      </div>
+      <!-- Faixa que rola na horizontal: arrastar no celular, rolar ou usar as setas no computador -->
+      <div class="ab-gallery" data-gallery tabindex="0" aria-label="Peças da campanha" data-lenis-prevent-horizontal>
+        <figure><img src="{{BASE}}assets/campanhas/abrace/carrossel-1.webp" alt="Post: A Cruz Vermelha e a UniSATC se unem para fazer o bem por meio da solidariedade" width="900" height="1200" loading="lazy"></figure>
+        <figure><img src="{{BASE}}assets/campanhas/abrace/carrossel-2.webp" alt="Post: Abraçar histórias é uma forma de cuidar" width="900" height="1200" loading="lazy"></figure>
+        <figure class="ab-gallery__wide"><video autoplay muted loop playsinline preload="none" poster="{{BASE}}assets/campanhas/abrace/telao-poster.jpg" width="1280" height="720" aria-label="Telão animado da campanha"><source src="{{BASE}}assets/campanhas/abrace/telao.mp4" type="video/mp4"></video></figure>
+        <figure><img src="{{BASE}}assets/campanhas/abrace/carrossel-3.webp" alt="Post: Toda contribuição pode fazer parte de uma história" width="900" height="1200" loading="lazy"></figure>
+        <figure><img src="{{BASE}}assets/campanhas/abrace/cartaz.webp" alt="Cartaz Doe aqui, com a lista de alimentos e brinquedos" width="900" height="1273" loading="lazy"></figure>
+        <figure><img src="{{BASE}}assets/campanhas/abrace/doe.webp" alt="Post: Doe leite, farinha de trigo, óleo de soja, café, brinquedos usados e farinha de mandioca" width="900" height="1200" loading="lazy"></figure>
+        <figure><img src="{{BASE}}assets/campanhas/abrace/banner.webp" alt="Banner: doe alimentos e brinquedos" width="900" height="971" loading="lazy"></figure>
+        <figure><img src="{{BASE}}assets/campanhas/abrace/manifesto-capa.webp" alt="Capa do manifesto Abrace uma História" width="900" height="1600" loading="lazy"></figure>
+        <figure><img src="{{BASE}}assets/campanhas/abrace/carrossel-4.webp" alt="Post da campanha Abrace uma História" width="900" height="1200" loading="lazy"></figure>
+      </div>
+      <div class="container ab-gallery__nav" aria-hidden="true">
+        <button type="button" data-gallery-prev tabindex="-1" aria-label="Peça anterior"><svg class="icon"><use href="#i-arrow"/></svg></button>
+        <button type="button" data-gallery-next tabindex="-1" aria-label="Próxima peça"><svg class="icon"><use href="#i-arrow"/></svg></button>
+      </div>
+    </section>
+
+    <!-- Parceiros ------------------------------------------------------------------->
+    <section class="section ab-parceiros" aria-labelledby="ab-parceiros-titulo">
+      <div class="container">
+        <div class="section-head section-head--center">
+          <span class="eyebrow" data-reveal="fade">Empresas apoiadoras</span>
+          <h2 id="ab-parceiros-titulo" data-split>Quem abraçou essa história com a gente.</h2>
+        </div>
+        <ul class="logo-grid" data-stagger>
+{{PARCEIROS_ABRACE}}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Quem criou ------------------------------------------------------------------>
+    <!-- PENDENTE: confirmar a autorização das alunas para os nomes -->
+    <section class="section section--alt camp-team" aria-labelledby="ab-equipe-titulo">
+      <div class="container camp-team__grid">
+        <div>
+          <span class="eyebrow" data-reveal="fade">Quem criou a campanha</span>
+          <h2 id="ab-equipe-titulo" data-split>Feita por alunas de Publicidade e Propaganda.</h2>
+          <p data-reveal style="--i:2">Projeto Integrador do curso de Publicidade e Propaganda da UniSATC, criado para a Cruz Vermelha Criciúma.</p>
+          <img class="camp-team__logo" src="{{BASE}}assets/campanhas/unisatc-preto.webp" alt="UniSATC" width="600" height="159" loading="lazy" data-reveal style="--i:3">
+        </div>
+        <ul class="camp-team__names" data-stagger>
+{{EQUIPE_ABRACE}}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Fechamento ------------------------------------------------------------------>
+    <section class="ab-cta">
+      <img class="ab-star ab-star--5" src="{{BASE}}assets/campanhas/abrace/estrela-rosa.webp" alt="" width="220" height="225" data-drift="30">
+      <img class="ab-star ab-star--6" src="{{BASE}}assets/campanhas/abrace/estrela-amarela.webp" alt="" width="220" height="225" data-drift="-30">
+      <div class="container">
+        <h2 data-split>Neste Natal, faça parte de uma história.</h2>
+        <button class="btn btn--light btn--lg" type="button" data-open-donation data-reveal style="--i:3">
+          Quero doar
+          <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </button>
+      </div>
+    </section>
+  </main>
