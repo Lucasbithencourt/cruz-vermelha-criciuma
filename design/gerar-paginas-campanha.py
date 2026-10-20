@@ -147,6 +147,9 @@ def main():
                  )
         assert '{{' not in corpo, f'marcador sem valor em {modelo}'
 
+        tem_mapa = meta.get('mapa') == 'sim'
+        leaflet_css = '\n  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">' if tem_mapa else ''
+        leaflet_js = '  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>\n' if tem_mapa else ''
         pagina = f'''<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -172,7 +175,7 @@ def main():
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family={familias}&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family={familias}&display=swap"></noscript>
-  <link rel="stylesheet" href="{base}css/style.css">
+  <link rel="stylesheet" href="{base}css/style.css">{leaflet_css}
 </head>
 <body class="{meta['bodyclass']}">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -195,7 +198,7 @@ def main():
   <script src="{base}js/config.js" defer></script>
   <script src="{base}js/main.js" defer></script>
   <script src="{base}js/chat.js" defer></script>
-  <script src="{base}js/campanha.js" defer></script>
+{leaflet_js}  <script src="{base}js/campanha.js" defer></script>
 </body>
 </html>
 '''

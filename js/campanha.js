@@ -2,14 +2,71 @@
 (function () {
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Galeria horizontal: setas avançam um item por vez --------------------- */
+  /* Galeria de peças: passa sozinha, em loop, sem fim ---------------------- */
+  // As peças são duplicadas uma vez; quando a rolagem passa da primeira volta, recua o tamanho
+  // de uma volta e ninguém percebe a emenda. Para com o mouse em cima, com o foco, ao arrastar,
+  // fora da tela e no botão de pausa. Com movimento reduzido, fica parada (as setas continuam).
 
   var gallery = document.querySelector('[data-gallery]');
   if (gallery) {
+    var VELOCIDADE = 38; // px por segundo
+    var originais = Array.prototype.slice.call(gallery.children);
+    originais.forEach(function (fig) {
+      var copia = fig.cloneNode(true);
+      copia.setAttribute('aria-hidden', 'true');
+      copia.setAttribute('data-copia', '');
+      copia.querySelectorAll('video').forEach(function (v) { v.setAttribute('preload', 'none'); });
+      gallery.appendChild(copia);
+    });
+    gallery.classList.add('is-loop');
+
+    var volta = 0; // largura de uma volta completa
+    var medir = function () {
+      var primeiraCopia = gallery.querySelector('[data-copia]');
+      volta = primeiraCopia.offsetLeft - originais[0].offsetLeft;
+    };
+    medir();
+    window.addEventListener('resize', medir);
+    gallery.querySelectorAll('img').forEach(function (img) { if (!img.complete) img.addEventListener('load', medir); });
+
+    var pos = 0; // posição com casas decimais (o scrollLeft arredonda)
+    var normalizar = function () {
+      if (volta <= 0) return;
+      if (pos >= volta) pos -= volta;
+      if (pos < 0) pos += volta;
+      gallery.scrollLeft = pos;
+    };
+
+    var pausado = reduceMotion;
+    var segurando = false; // mouse em cima, foco, arrastando ou fora da tela
+    var esperaAte = 0;     // depois de um toque ou de uma seta, espera um pouco antes de voltar a andar
+    var animSeta = null;   // deslocamento suave das setas
+    var ultimo = null;
+
+    var tique = function (agora) {
+      var dt = ultimo === null ? 0 : Math.min(agora - ultimo, 100);
+      ultimo = agora;
+      if (animSeta) {
+        var t = Math.min((agora - animSeta.inicio) / 650, 1);
+        var e = 1 - Math.pow(1 - t, 3);
+        pos = animSeta.de + (animSeta.para - animSeta.de) * e;
+        normalizar();
+        if (t >= 1) { animSeta = null; esperaAte = agora + 1500; }
+      } else if (!pausado && !segurando && agora > esperaAte) {
+        pos += VELOCIDADE * dt / 1000;
+        normalizar();
+      }
+      requestAnimationFrame(tique);
+    };
+    requestAnimationFrame(tique);
+
+    // Setas: um item por vez, no mesmo loop
     var step = function (dir) {
-      var item = gallery.querySelector('figure');
+      var item = originais[0];
       var dist = item ? item.getBoundingClientRect().width + 16 : 300;
-      gallery.scrollBy({ left: dir * dist, behavior: reduceMotion ? 'auto' : 'smooth' });
+      if (pos < dist && dir < 0) pos += volta; // voltar do começo sem bater na borda
+      animSeta = { de: pos, para: pos + dir * dist, inicio: performance.now() };
+      if (reduceMotion) { pos = animSeta.para; normalizar(); animSeta = null; }
     };
     var prev = document.querySelector('[data-gallery-prev]');
     var next = document.querySelector('[data-gallery-next]');
@@ -20,24 +77,59 @@
       if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
     });
 
+    // Botão de pausa
+    var pauseBtn = document.querySelector('[data-gallery-pause]');
+    var marcarPausa = function (p) {
+      pausado = p;
+      if (!pauseBtn) return;
+      pauseBtn.setAttribute('aria-pressed', String(p));
+      pauseBtn.setAttribute('aria-label', p ? 'Retomar a passagem das peças' : 'Pausar a passagem das peças');
+    };
+    if (pauseBtn) pauseBtn.addEventListener('click', function () { marcarPausa(!pausado); });
+    marcarPausa(pausado);
+
+    gallery.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') segurando = true; });
+    gallery.addEventListener('pointerleave', function () { segurando = false; });
+    gallery.addEventListener('focusin', function () { segurando = true; });
+    gallery.addEventListener('focusout', function () { segurando = false; });
+
+    // Toque no celular: a rolagem nativa manda; depois retoma de onde a pessoa deixou
+    gallery.addEventListener('touchstart', function () { segurando = true; }, { passive: true });
+    gallery.addEventListener('touchend', function () { segurando = false; esperaAte = performance.now() + 2500; }, { passive: true });
+    gallery.addEventListener('scroll', function () {
+      if (segurando || down) { pos = gallery.scrollLeft; if (pos >= volta || pos <= 0) normalizar(); }
+    }, { passive: true });
+
     // Arrastar com o mouse no computador
     var down = false, startX = 0, startLeft = 0, moved = false;
     gallery.addEventListener('pointerdown', function (e) {
       if (e.pointerType !== 'mouse') return;
-      down = true; moved = false; startX = e.clientX; startLeft = gallery.scrollLeft;
+      down = true; moved = false; startX = e.clientX; startLeft = pos;
       gallery.classList.add('is-dragging');
     });
     window.addEventListener('pointermove', function (e) {
       if (!down) return;
       var dx = e.clientX - startX;
       if (Math.abs(dx) > 4) moved = true;
-      gallery.scrollLeft = startLeft - dx;
+      pos = startLeft - dx;
+      normalizar();
     });
     window.addEventListener('pointerup', function () {
+      if (!down) return;
       down = false;
       gallery.classList.remove('is-dragging');
+      esperaAte = performance.now() + 1200;
     });
     gallery.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+
+    // Fora da tela, não anda
+    if ('IntersectionObserver' in window) {
+      var foraDaTela = false;
+      new IntersectionObserver(function (entries) {
+        foraDaTela = !entries[0].isIntersecting;
+        if (foraDaTela) segurando = true; else if (!gallery.matches(':hover') && !gallery.contains(document.activeElement)) segurando = false;
+      }).observe(gallery);
+    }
   }
 
   /* Estrelas e elementos que flutuam com a rolagem (data-drift = px) ------- */
@@ -127,14 +219,59 @@
       }
     };
 
+    var temCoord = function (p) { return isFinite(parseFloat(p.lat)) && isFinite(parseFloat(p.lng)); };
+
     var desenharPontos = function (pontos) {
       var lista = document.querySelector('[data-pontos-lista]');
       if (!lista || !pontos || !pontos.length) return;
-      lista.innerHTML = pontos.map(function (p) {
-        return '<li class="ab-ponto"><h3>' + esc(p.nome) + (p.confirmado === false ? '<span class="ab-ponto__selo">a confirmar</span>' : '') + '</h3>' +
+      lista.innerHTML = pontos.map(function (p, i) {
+        var rota = temCoord(p)
+          ? '<a class="ab-ponto__rota" href="https://www.google.com/maps/dir/?api=1&amp;destination=' + parseFloat(p.lat) + ',' + parseFloat(p.lng) + '" target="_blank" rel="noopener">Como chegar <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>'
+          : '';
+        return '<li class="ab-ponto"' + (temCoord(p) ? ' data-ponto="' + i + '"' : '') + '><h3>' + esc(p.nome) + (p.confirmado === false ? '<span class="ab-ponto__selo">a confirmar</span>' : '') + '</h3>' +
           (p.endereco ? '<p><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>' + esc(p.endereco) + '</p>' : '') +
-          (p.horario ? '<p><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>' + esc(p.horario) + '</p>' : '') + '</li>';
+          (p.horario ? '<p><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>' + esc(p.horario) + '</p>' : '') + rota + '</li>';
       }).join('');
+      desenharMapa(pontos, lista);
+    };
+
+    // Mapa (Leaflet + OpenStreetMap), igual ao da página de pontos de coleta
+    var desenharMapa = function (pontos, lista) {
+      var mapEl = document.querySelector('[data-pontos-mapa]');
+      var noMapa = pontos.filter(temCoord);
+      if (!mapEl || typeof window.L === 'undefined' || !noMapa.length) return;
+      mapEl.hidden = false;
+      var L = window.L;
+      var map = L.map(mapEl, { scrollWheelZoom: false });
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map);
+
+      var marcadores = {};
+      pontos.forEach(function (p, i) {
+        if (!temCoord(p)) return;
+        var icone = L.divIcon({ className: 'map-pin' + (i === 0 ? ' map-pin--main' : ''), html: '<span></span>', iconSize: [28, 28], iconAnchor: [14, 14] });
+        marcadores[i] = L.marker([parseFloat(p.lat), parseFloat(p.lng)], { icon: icone, title: p.nome }).addTo(map)
+          .bindPopup('<strong>' + esc(p.nome) + '</strong>' + (p.endereco ? '<br>' + esc(p.endereco) : '') + (p.horario ? '<br><em>' + esc(p.horario) + '</em>' : ''));
+      });
+      var lista_m = Object.keys(marcadores).map(function (k) { return marcadores[k]; });
+      if (lista_m.length === 1) map.setView(lista_m[0].getLatLng(), 16);
+      else map.fitBounds(L.featureGroup(lista_m).getBounds().pad(0.25));
+
+      // Clicar no cartão centraliza o ponto no mapa
+      lista.querySelectorAll('[data-ponto]').forEach(function (li) {
+        li.addEventListener('click', function (e) {
+          if (e.target.closest('a')) return;
+          var m = marcadores[li.dataset.ponto];
+          lista.querySelectorAll('.is-ativo').forEach(function (x) { x.classList.remove('is-ativo'); });
+          li.classList.add('is-ativo');
+          map.flyTo(m.getLatLng(), 16, { duration: reduceMotion ? 0 : 0.8 });
+          m.openPopup();
+        });
+      });
+      // O mapa nasce dentro de uma seção que pode estar animando: recalcula o tamanho quando aparece
+      setTimeout(function () { map.invalidateSize(); }, 400);
     };
 
     fetch(metas.dataset.src, { cache: 'no-cache' })

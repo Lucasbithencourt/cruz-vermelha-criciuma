@@ -2896,8 +2896,18 @@ img.tl-event__media { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; borde
 .ab-onde__acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
 .ab-onde__acoes .btn--primary { --btn-bg: var(--ab-red-deep); }
 .ab-where__no { margin: 0; font-size: 0.88rem; color: var(--graphite); }
-@media (min-width: 720px) { .ab-onde__lista { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1100px) { .ab-onde__lista { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.ab-onde__grid { display: grid; gap: 18px; margin-bottom: 26px; }
+.ab-onde__grid .ab-onde__lista { margin: 0; align-content: start; }
+.ab-onde__mapa { height: 340px; }
+.ab-ponto[data-ponto] { cursor: pointer; transition: box-shadow 0.25s; }
+.ab-ponto.is-ativo { box-shadow: inset 0 0 0 2px var(--ab-red), var(--shadow); }
+.ab-ponto__rota { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; color: var(--ab-red-deep); font-weight: 700; text-decoration: none; }
+.ab-ponto__rota:hover { text-decoration: underline; }
+@media (min-width: 720px) { .ab-onde__mapa { height: 420px; } }
+@media (min-width: 960px) {
+  .ab-onde__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 24px; }
+  .ab-onde__mapa { height: auto; min-height: 420px; }
+}
 
 /* Marcas no fim da página */
 .ab-marcas { padding: 44px 0; border-top: 1px solid var(--line); background: #fff; }
@@ -2921,6 +2931,19 @@ img.tl-event__media { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; borde
 }
 .ab-gallery::-webkit-scrollbar { display: none; }
 .ab-gallery.is-dragging { cursor: grabbing; scroll-snap-type: none; }
+/* Em loop: sem encaixe (o JS anda de pixel em pixel), sem recuo lateral e com as pontas esmaecendo */
+.ab-gallery.is-loop {
+  padding-inline: 0;
+  scroll-snap-type: none;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
+}
+@media (max-width: 719px) {
+  .ab-gallery.is-loop {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+  }
+}
 .ab-gallery:focus-visible { outline: 2px solid var(--ab-red); outline-offset: 4px; }
 .ab-gallery figure {
   flex: 0 0 auto;
@@ -2935,15 +2958,18 @@ img.tl-event__media { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; borde
 .ab-gallery figure img, .ab-gallery figure video { width: auto; height: 100%; object-fit: cover; user-select: none; -webkit-user-drag: none; }
 .ab-gallery__wide video { aspect-ratio: 16 / 9; }
 @media (hover: hover) { .ab-gallery figure:hover { transform: translateY(-6px) rotate(-1deg); } }
-.ab-gallery__nav { display: none; justify-content: flex-end; gap: 10px; }
+.ab-gallery__nav { display: flex; justify-content: flex-end; gap: 10px; }
 .ab-gallery__nav button {
   display: grid; place-items: center; width: 52px; height: 52px; border: 0; border-radius: 50%;
   background: #fff; box-shadow: inset 0 0 0 1.5px var(--line); color: var(--ink); cursor: pointer;
   transition: background 0.3s, color 0.3s;
 }
 .ab-gallery__nav button:first-child .icon { transform: rotate(180deg); }
+.ab-gallery__nav [data-gallery-pause] svg { width: 20px; height: 20px; fill: currentColor; }
+.ab-gallery__nav [data-gallery-pause] .ico-play,
+.ab-gallery__nav [data-gallery-pause][aria-pressed="true"] .ico-pause { display: none; }
+.ab-gallery__nav [data-gallery-pause][aria-pressed="true"] .ico-play { display: block; }
 @media (hover: hover) { .ab-gallery__nav button:hover { background: var(--ab-red); color: #fff; } }
-@media (min-width: 960px) and (hover: hover) { .ab-gallery__nav { display: flex; } }
 
 /* Grade de logos de parceiros */
 .logo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 0; padding: 0; list-style: none; }

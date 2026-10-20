@@ -1,5 +1,5 @@
 {
-  "_como_editar": "Atualize só os números de 'arrecadado' e a data de 'atualizado_em' (DD/MM/AAAA). Não use ponto de milhar: escreva 1250, não 1.250. Para casas decimais use ponto: 12.5. Pontos de coleta: copie um bloco { } inteiro para adicionar outro.",
+  "_como_editar": "Atualize só os números de 'arrecadado' e a data de 'atualizado_em' (DD/MM/AAAA). Não use ponto de milhar: escreva 1250, não 1.250. Para casas decimais use ponto: 12.5. Pontos de coleta: copie um bloco { } inteiro para adicionar outro. lat/lng: no Google Maps, clique com o botão direito no local e copie as coordenadas (sem elas o ponto fica fora do mapa).",
   "atualizado_em": "20/10/2026",
   "prazo": "20/12/2026",
   "itens": [
@@ -15,7 +15,9 @@
       "nome": "Sede da Cruz Vermelha Criciúma",
       "endereco": "Rua Antônio Benedet de Angelo, 15 · Pinheirinho · Criciúma",
       "horario": "Quintas-feiras, das 13h às 17h (exceto feriados)",
-      "confirmado": true
+      "confirmado": true,
+      "lat": -28.696419,
+      "lng": -49.398611
     }
   ]
 }
