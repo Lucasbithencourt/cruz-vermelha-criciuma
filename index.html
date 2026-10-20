@@ -36,8 +36,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Fontes carregadas sem bloquear a renderização -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:ital,opsz,wght@1,8..60,400&display=swap" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:ital,opsz,wght@1,8..60,400&display=swap"></noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:ital,opsz,wght@1,8..60,400&family=Quicksand:wght@500;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:ital,opsz,wght@1,8..60,400&family=Quicksand:wght@500;700&display=swap"></noscript>
   <link rel="stylesheet" href="css/style.css">
 
   <script type="application/ld+json">
@@ -159,50 +159,89 @@
   </div>
 
   <main id="conteudo">
-    <!-- Hero ---------------------------------------------------------------->
-    <section class="hero" id="topo">
-      <div class="hero__media" aria-hidden="true">
-        <!-- Foto em baixa resolução (738 px): trocar por uma versão maior quando a filial enviar -->
-        <img class="hero__img" src="assets/voluntarios-doacoes.webp" alt="" width="738" height="415" fetchpriority="high">
-      </div>
-
-      <div class="container hero__inner">
-        <div class="hero__content">
-          <span class="tag tag--dark hero__tag" data-reveal="fade">
-            <span class="dot" aria-hidden="true"></span>
-            Cruz Vermelha Brasileira · Filial Criciúma
-          </span>
-          <h1 class="hero__title" data-split>Há 42 anos, Criciúma não enfrenta nada sozinha.</h1>
-          <p class="hero__lead" data-reveal style="--i:4">A Cruz Vermelha Criciúma é feita por voluntários e mantida por doações da comunidade. Fraldas, alimentos, agasalhos e socorro em emergências, sempre de graça para quem precisa.</p>
-          <div class="hero__actions" data-reveal style="--i:5">
-            <button class="btn btn--primary btn--lg" type="button" data-open-donation>
-              Quero doar para a Cruz Vermelha
-              <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
-            </button>
-            <a class="btn btn--outline-light btn--lg" href="#historia">Conheça nossa história</a>
-          </div>
+    <!-- Hero: dois slides que se alternam (institucional e campanha atual) ------>
+    <!-- O carrossel fica em js/main.js (bloco "Hero: slides"). Para trocar a campanha, edite o slide 2. -->
+    <section class="hero" id="topo" aria-roledescription="carrossel" aria-label="Destaques">
+      <div class="hero-slide hero-slide--main is-active" role="group" aria-roledescription="slide" aria-label="1 de 2: Cruz Vermelha Criciúma">
+        <div class="hero__media" aria-hidden="true">
+          <!-- Foto em baixa resolução (738 px): trocar por uma versão maior quando a filial enviar -->
+          <img class="hero__img" src="assets/voluntarios-doacoes.webp" alt="" width="738" height="415" fetchpriority="high">
         </div>
 
-        <ul class="hero__facts" data-stagger>
-          <li data-reveal>
-            <svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>
-            <span><b>Doações às quintas</b>13h às 17h, na sede</span>
-          </li>
-          <li data-reveal>
-            <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
-            <span><b>Bairro Pinheirinho</b>Criciúma/SC</span>
-          </li>
-          <li data-reveal>
-            <svg class="icon" aria-hidden="true"><use href="#i-users"/></svg>
-            <span><b>4 regiões atendidas</b>AMREC, AMESC, AMUREL e AMURES</span>
-          </li>
-        </ul>
+        <div class="container hero__inner">
+          <div class="hero__content">
+            <span class="tag tag--dark hero__tag" data-reveal="fade">
+              <span class="dot" aria-hidden="true"></span>
+              Cruz Vermelha Brasileira · Filial Criciúma
+            </span>
+            <h1 class="hero__title" data-split>Há 42 anos, Criciúma não enfrenta nada sozinha.</h1>
+            <p class="hero__lead" data-reveal style="--i:4">A Cruz Vermelha Criciúma é feita por voluntários e mantida por doações da comunidade. Fraldas, alimentos, agasalhos e socorro em emergências, sempre de graça para quem precisa.</p>
+            <div class="hero__actions" data-reveal style="--i:5">
+              <button class="btn btn--primary btn--lg" type="button" data-open-donation>
+                Quero doar para a Cruz Vermelha
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+              </button>
+              <a class="btn btn--outline-light btn--lg" href="#historia">Conheça nossa história</a>
+            </div>
+          </div>
+
+          <ul class="hero__facts" data-stagger>
+            <li data-reveal>
+              <svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>
+              <span><b>Doações às quintas</b>13h às 17h, na sede</span>
+            </li>
+            <li data-reveal>
+              <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
+              <span><b>Bairro Pinheirinho</b>Criciúma/SC</span>
+            </li>
+            <li data-reveal>
+              <svg class="icon" aria-hidden="true"><use href="#i-users"/></svg>
+              <span><b>4 regiões atendidas</b>AMREC, AMESC, AMUREL e AMURES</span>
+            </li>
+          </ul>
+        </div>
       </div>
 
-      <a class="hero__scroll" href="#aviso" aria-label="Rolar para o conteúdo">
-        <span>Role</span>
-        <svg class="icon" aria-hidden="true"><use href="#i-down"/></svg>
-      </a>
+      <!-- Slide 2: campanha Abrace uma História (UniSATC) -->
+      <div class="hero-slide hero-slide--abrace" role="group" aria-roledescription="slide" aria-label="2 de 2: campanha Abrace uma História" aria-hidden="true" inert>
+        <img class="hs-star hs-star--1" src="assets/campanhas/abrace/estrela-amarela.webp" alt="" width="220" height="225">
+        <img class="hs-star hs-star--2" src="assets/campanhas/abrace/estrela-rosa.webp" alt="" width="220" height="225">
+        <img class="hs-star hs-star--3" src="assets/campanhas/abrace/estrela-verde.webp" alt="" width="220" height="225">
+        <div class="container hero__inner hs-abrace">
+          <div class="hs-abrace__text">
+            <span class="hs-abrace__badge hs-in">Campanha de Natal 2026 · com a UniSATC</span>
+            <h2 class="hs-abrace__logo hs-in"><img src="assets/campanhas/abrace/logo-branco.webp" alt="Abrace uma História" width="900" height="396"></h2>
+            <p class="hs-abrace__tag hs-in">sua <b>doação</b> faz a <b>diferença!</b></p>
+            <p class="hs-abrace__lead hs-in">Doe alimentos e brinquedos e faça parte da história de uma família neste Natal.</p>
+            <div class="hero__actions hs-in">
+              <a class="btn btn--light btn--lg hs-abrace__cta" href="abrace-uma-historia/">
+                Conhecer a campanha
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+              </a>
+              <button class="btn btn--outline-light btn--lg" type="button" data-open-donation>Quero doar</button>
+            </div>
+          </div>
+          <figure class="hs-abrace__kv">
+            <img src="assets/campanhas/abrace/kv-foto.webp" alt="" width="900" height="1125" loading="lazy">
+          </figure>
+        </div>
+      </div>
+
+      <!-- Controles: escolher o slide e pausar a troca automática -->
+      <div class="hero-pager">
+        <button class="hero-pager__item is-active" type="button" data-slide="0" aria-label="Mostrar destaque 1: Cruz Vermelha Criciúma" aria-current="true">
+          <span class="hero-pager__label">Cruz Vermelha</span>
+          <span class="hero-pager__bar"><span></span></span>
+        </button>
+        <button class="hero-pager__item" type="button" data-slide="1" aria-label="Mostrar destaque 2: campanha Abrace uma História">
+          <span class="hero-pager__label">Campanha de Natal</span>
+          <span class="hero-pager__bar"><span></span></span>
+        </button>
+        <button class="hero-pager__pause" type="button" data-hero-pause aria-label="Pausar a troca automática" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="hero-pager__icon-pause"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="hero-pager__icon-play"><path d="M8 5.5v13l11-6.5z"/></svg>
+        </button>
+      </div>
     </section>
 
     <!-- Faixa contínua com o que dá para doar -->

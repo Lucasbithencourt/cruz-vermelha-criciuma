@@ -168,7 +168,90 @@
     // A foto desce mais devagar que a página; o conteúdo sobe e some
     gsap.to('.hero__media', { yPercent: 22, ease: 'none', scrollTrigger: heroScroll });
     gsap.to('.hero__inner', { yPercent: -12, opacity: 0.15, ease: 'none', scrollTrigger: heroScroll });
-    gsap.to('.hero__scroll', { opacity: 0, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: '15% top', scrub: true } });
+  }
+
+  /* Hero: slides (institucional e campanha) -------------------------------- */
+  // Troca sozinho a cada 7 s, com barra de progresso. Pausa com o mouse em cima, com o foco
+  // dentro ou fora da tela; o botão de pausa para de vez. Com movimento reduzido, não troca sozinho.
+
+  var heroEl = document.querySelector('.hero');
+  var slides = heroEl ? heroEl.querySelectorAll('.hero-slide') : [];
+  if (slides.length > 1) {
+    var pagerItems = heroEl.querySelectorAll('[data-slide]');
+    var pauseBtn = heroEl.querySelector('[data-hero-pause]');
+    var DURACAO = 7000;
+    var atual = 0;
+    var decorrido = 0;
+    var ultimo = null;
+    var pausadoPeloUsuario = reduceMotion;
+    var segurando = false; // mouse em cima, foco dentro ou fora da tela
+
+    var irPara = function (i) {
+      atual = (i + slides.length) % slides.length;
+      decorrido = 0;
+      slides.forEach(function (sl, n) {
+        var ativo = n === atual;
+        sl.classList.toggle('is-active', ativo);
+        sl.setAttribute('aria-hidden', String(!ativo));
+        if (ativo) sl.removeAttribute('inert'); else sl.setAttribute('inert', '');
+      });
+      pagerItems.forEach(function (b, n) {
+        b.classList.toggle('is-active', n === atual);
+        if (n === atual) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+        b.querySelector('.hero-pager__bar span').style.setProperty('--p', n === atual && pausadoPeloUsuario ? 1 : 0);
+      });
+    };
+
+    var tique = function (agora) {
+      if (ultimo === null) ultimo = agora;
+      var dt = agora - ultimo;
+      ultimo = agora;
+      if (!pausadoPeloUsuario && !segurando) {
+        decorrido += dt;
+        var barra = pagerItems[atual].querySelector('.hero-pager__bar span');
+        barra.style.setProperty('--p', Math.min(decorrido / DURACAO, 1).toFixed(3));
+        if (decorrido >= DURACAO) irPara(atual + 1);
+      }
+      requestAnimationFrame(tique);
+    };
+
+    pagerItems.forEach(function (b) {
+      b.addEventListener('click', function () { irPara(Number(b.dataset.slide)); });
+    });
+
+    var marcarPausa = function (pausar) {
+      pausadoPeloUsuario = pausar;
+      pauseBtn.setAttribute('aria-pressed', String(pausar));
+      pauseBtn.setAttribute('aria-label', pausar ? 'Retomar a troca automática' : 'Pausar a troca automática');
+      if (pausar) pagerItems[atual].querySelector('.hero-pager__bar span').style.setProperty('--p', 1);
+    };
+    pauseBtn.addEventListener('click', function () { marcarPausa(!pausadoPeloUsuario); });
+    if (reduceMotion) marcarPausa(true);
+
+    heroEl.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') segurando = true; });
+    heroEl.addEventListener('pointerleave', function () { segurando = false; });
+    heroEl.addEventListener('focusin', function () { segurando = true; });
+    heroEl.addEventListener('focusout', function () { segurando = false; });
+
+    // Arrastar para o lado no celular
+    var toqueX = null;
+    heroEl.addEventListener('touchstart', function (e) { toqueX = e.touches[0].clientX; }, { passive: true });
+    heroEl.addEventListener('touchend', function (e) {
+      if (toqueX === null) return;
+      var dx = e.changedTouches[0].clientX - toqueX;
+      if (Math.abs(dx) > 50) irPara(atual + (dx < 0 ? 1 : -1));
+      toqueX = null;
+    });
+
+    // Fora da tela, não conta tempo
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        segurando = !entries[0].isIntersecting;
+      }, { threshold: 0.3 }).observe(heroEl);
+    }
+
+    irPara(0);
+    requestAnimationFrame(tique);
   }
 
   /* Contadores ------------------------------------------------------------- */

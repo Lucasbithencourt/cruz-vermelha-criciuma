@@ -16,7 +16,7 @@ SITE = 'https://lucasbithencourt.github.io/cruz-vermelha-criciuma/'  # trocar ju
 # Páginas: modelo -> pasta publicada
 PAGINAS = {
     'abrace-uma-historia.html': 'abrace-uma-historia',
-    'entreemcampo.html': 'entreemcampo',  # mesmo endereço do site antigo, para não quebrar links já divulgados
+    # entreemcampo/ não é gerada: é a cópia fiel da página da campanha no site antigo
 }
 
 # Abrace uma História ----------------------------------------------------------
@@ -29,31 +29,6 @@ PARCEIROS_ABRACE = [
 LOGOS_CLAROS = {'engeplus'}  # logo branco: vai em cartão escuro
 EQUIPE_ABRACE = ['Ana Júlia Manarin', 'Jéssica Loureiro', 'Letícia Ghisi', 'Maria Eduarda Anzolin',
                  'Maria Eduarda Neto', 'Nathalia Zanellato', 'Valéria Ferreira']
-
-# Entre em Campo (dados do site antigo) ----------------------------------------
-PARCEIROS_CAMPO = [
-    ('ACICRI', 'acicri', 'acicri', 'https://www.acicri.com.br', 'https://maps.app.goo.gl/pvo9v8aCcS8Xsdd28'),
-    ('Criciúma Esporte Clube', 'criciuma-oficial', 'criciumaoficial', 'https://www.criciuma.com.br', 'https://maps.app.goo.gl/neRSrwTewZhGdS5h8'),
-    ('UniSATC', 'unisatc', None, 'https://unisatc.com.br', 'https://maps.app.goo.gl/41WN1CrykwZ6qEWM8'),
-    ('Alldaya', 'alldaya', 'alldayamarketing', 'https://alldaya.com.br', 'https://maps.app.goo.gl/SAmAP2FGRr6Z1GTC9'),
-    ('Lojas Otomar', 'lojas-otomar', 'lojasotomar1', 'https://www.lojasotomar.com.br', 'https://maps.app.goo.gl/Ma9nbvYUrYcUGoHj8'),
-    ('Gráfica Otomar', 'grafica-otomar', 'graficaotomar', 'https://otomar.uk', 'https://maps.app.goo.gl/SRjzqCEBGvqc4Nr9A'),
-    ('CEDUP', 'cedup', 'cedupoficial', 'https://cedupcriciuma.com.br', 'https://maps.app.goo.gl/yrdnRGtNu78z3MxB8'),
-    ('Zanini Veículos', 'zanini', 'zaniniveiculos', 'https://www.zaniniveiculos.com.br', 'https://maps.app.goo.gl/kV4Dqi1c4ra5UWvX6'),
-    ('Trenare', 'trenare', 'trenare', None, 'https://maps.app.goo.gl/GTTcrg7v1pFiFRPe9'),
-    ('Neybar', 'neybar', 'neybar.copa', None, 'https://maps.app.goo.gl/psupDYWPCgKUPZDe7'),
-    ('Digital Mash', 'digital-mash', 'digitalmash', 'https://digitalmash.com.br', 'https://maps.app.goo.gl/M2ozpzwwWiV75fYd8'),
-    ('CEJA', 'ceja', 'cejacriciuma', 'https://cejacriciuma.blogspot.com', 'https://maps.app.goo.gl/AhdQRxu3jAGav1nP7'),
-    ('Floriva Floricultura', 'floriva', 'floricultura.floriva', 'https://floriculturafloriva.com.br', 'https://maps.app.goo.gl/VkUax9fSgEBmP8SWA'),
-    ('Abimar Supermercados', 'abimar', 'abimarsupermercados', 'https://www.abimarsupermercados.com.br', 'https://share.google/fTTozgP6o3duKfJjH'),
-    ('Na Pedroso', 'na-pedroso', 'napedrosobrows', None, None),
-    ('MB Arquitetura', 'mb-arquitetura', 'mbarquitetas', None, 'https://maps.app.goo.gl/sd2259H1cqde4odt8'),
-]
-EQUIPE_CAMPO = ['Aimée Souza Argemi', 'Bruno de Souza Pedroso', 'Camilly Souza Cardoso', 'Fernanda Rodrigues de Aguiar',
-                'João Antonio Rosso Rodrigues', 'Larissa Lourenço', 'Larissa de Souza Vidal', 'Lívia Zampoli',
-                'Ludmilla Oening Antunes', 'Maria Eduarda de Melo Martinelli', 'Maria Eduarda Martins Casagrande',
-                'Maria Eduarda Porto Cardoso', 'Natália Bitencourt', 'Sabrina Zanini', 'Tainá Pereira Faria',
-                'Vanderson Rosseti', 'Lucas Pereira Damazio']
 
 E = html.escape
 
@@ -91,25 +66,6 @@ def nomes(lista, tag_numero=False):
     return '\n'.join(linhas)
 
 
-def parceiros_campo(base):
-    icone = lambda nome: f'<svg class="icon" aria-hidden="true"><use href="#i-{nome}"/></svg>'
-    linhas = []
-    for nome, arq, insta, site, mapa in PARCEIROS_CAMPO:
-        links = []
-        if mapa:
-            links.append(f'<a href="{E(mapa)}" target="_blank" rel="noopener" aria-label="{E(nome)} no mapa">{icone("pin")}</a>')
-        if insta:
-            links.append(f'<a href="https://www.instagram.com/{E(insta)}/" target="_blank" rel="noopener" aria-label="{E(nome)} no Instagram">{icone("instagram")}</a>')
-        if site:
-            links.append(f'<a href="{E(site)}" target="_blank" rel="noopener" aria-label="Site de {E(nome)}">{icone("external")}</a>')
-        linhas.append(
-            f'          <li class="ec-partner" data-reveal="scale">'
-            f'<span class="ec-partner__logo"><img src="{base}assets/campanhas/entre-em-campo/parceiros/{arq}.webp" alt="" loading="lazy"></span>'
-            f'<span class="ec-partner__name">{E(nome)}</span>'
-            f'<span class="ec-partner__links">{"".join(links)}</span></li>')
-    return '\n'.join(linhas)
-
-
 def ler_modelo(caminho):
     texto = caminho.read_text(encoding='utf-8')
     meta_txt = re.match(r'\s*<!--(.*?)-->', texto, re.S).group(1)
@@ -131,12 +87,13 @@ def main():
         meta, corpo = ler_modelo(ROOT / 'design' / 'paginas' / modelo)
         base = '../'
         url = SITE + pasta + '/'
-        familias = fontes + (('&family=' + meta['fonts']) if meta.get('fonts') else '')
+        extra = meta.get('fonts')
+        familia_extra = extra.split(':')[0] if extra else None
+        familias = fontes + (('&family=' + extra) if extra and ('family=' + familia_extra) not in ('family=' + fontes) else '')
         corpo = (corpo.replace('{{BASE}}', base)
                  .replace('{{PARCEIROS_ABRACE}}', parceiros_abrace(base))
                  .replace('{{EQUIPE_ABRACE}}', nomes(EQUIPE_ABRACE))
-                 .replace('{{EQUIPE_CAMPO}}', nomes(EQUIPE_CAMPO, tag_numero=True))
-                 .replace('{{PARCEIROS_CAMPO}}', parceiros_campo(base)))
+                 )
         assert '{{' not in corpo, f'marcador sem valor em {modelo}'
 
         pagina = f'''<!DOCTYPE html>

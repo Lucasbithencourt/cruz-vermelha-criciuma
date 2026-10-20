@@ -6,7 +6,7 @@ Site estático da Cruz Vermelha Brasileira, Filial Criciúma. HTML, CSS e JS pur
 index.html               página principal (hero, números, história, programas, princípios, sede, mídia, parceiros, como ajudar)
 pontos-de-coleta.html    destino do formulário: agradecimento, lista de pontos, mapa e dicas
 abrace-uma-historia/     página da campanha de Natal 2026 (gerada)
-entreemcampo/            página da campanha Entre em Campo, mesmo endereço do site antigo (gerada)
+entreemcampo/            cópia fiel da página da campanha Entre em Campo do site antigo (WordPress/Elementor), mesmo endereço
 404.html                 página de erro (noindex, caminhos absolutos)
 styleguide.html          guia visual para revisão (não vai para buscadores)
 css/style.css            estilos, mobile first (breakpoints 640px, 960px)
@@ -42,13 +42,18 @@ Siga [supabase/LEIA-ME.md](supabase/LEIA-ME.md): rode o `doadores.sql` no SQL Ed
 Cada contato também vira uma linha numa planilha, com link de WhatsApp e status. Instalação em [planilha/LEIA-ME.md](planilha/LEIA-ME.md).
 
 ### Páginas de campanha (UniSATC)
-As páginas `abrace-uma-historia/` e `entreemcampo/` são **geradas**: o conteúdo fica em `design/paginas/*.html` e o topo, menu, rodapé, chat e formulário vêm do `index.html`. Depois de mudar qualquer um deles, rode:
+A `entreemcampo/` é uma **cópia estática idêntica** da página original (HTML, CSS, imagens e scripts baixados do site antigo, com os endereços apontando para `/entreemcampo/`). Não edite à mão: ela fica como foi publicada pela turma.
+
+A página `abrace-uma-historia/` é **gerada**: o conteúdo fica em `design/paginas/*.html` e o topo, menu, rodapé, chat e formulário vêm do `index.html`. Depois de mudar qualquer um deles, rode:
 
 ```bash
 python3 design/gerar-paginas-campanha.py
 ```
 
 Para uma campanha nova: copie um modelo de `design/paginas/`, inclua a pasta em `PAGINAS` no gerador, coloque as imagens em `assets/campanhas/<nome>/` e adicione um cartão na seção **Campanhas** do `index.html` (a mais recente primeiro). Parceiros e equipe ficam em listas no próprio gerador.
+
+### Banner do topo (hero)
+O topo da página principal alterna dois slides a cada 7 s: o institucional e a campanha atual. Para trocar a campanha, edite o slide 2 em `index.html` (bloco "Slide 2") e o rótulo do botão no `hero-pager`.
 
 ### Incluir ou alterar um ponto de coleta
 Edite `js/pontos.js`. A lista e o mapa se montam sozinhos; com mais de um ponto, o mapa enquadra todos. Coordenadas: no Google Maps, clique com o botão direito no local e copie.
@@ -104,10 +109,7 @@ E no `404.html` troque `/cruz-vermelha-criciuma/` por `/`.
 - [ ] Autorização das 7 alunas para os nomes nos créditos.
 
 **Campanha Entre em Campo**
-- [ ] Datas exatas (hoje: "maio e junho de 2026", pelas datas dos arquivos do site antigo).
-- [ ] Resultado: quanto foi arrecadado.
-- [ ] Fotos reais (as imagens do site antigo parecem ilustrações).
-- [ ] Autorização da equipe para os 17 nomes da escalação.
+- [ ] Datas e resultado para o cartão da página principal (hoje: "maio e junho de 2026", pelas datas dos arquivos do site antigo). A página em si é a cópia fiel do original.
 
 **Geral**
 
