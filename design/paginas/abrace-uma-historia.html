@@ -6,6 +6,7 @@ bodyclass: camp camp--abrace
 fonts: Quicksand:wght@500;600;700
 theme: #DA291C
 mapa: sim
+destino_doacao: #onde-doar
 -->
   <main id="conteudo">
     <!-- Metas, valores arrecadados e pontos de coleta: dados/abrace-uma-historia.json (a equipe edita só esse arquivo).
@@ -29,10 +30,10 @@ mapa: sim
           <p class="ab-tag" data-reveal style="--i:2">a <b>solidariedade</b> é a verdadeira <b>magia</b> deste natal</p>
           <p class="ab-hero__lead" data-reveal style="--i:3">Doe alimentos e brinquedos para a Cruz Vermelha e ajude a levar o espírito de Natal para famílias que também merecem vivê-lo.</p>
           <div class="ab-hero__actions" data-reveal style="--i:4">
-            <a class="btn btn--light btn--lg" href="#onde-doar">
+            <button class="btn btn--light btn--lg" type="button" data-open-donation>
               Ajude também
               <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
-            </a>
+            </button>
             <a class="btn btn--outline-light btn--lg" href="#metas">Ver as metas</a>
           </div>
         </div>
@@ -200,10 +201,10 @@ mapa: sim
       <img class="ab-star ab-star--6" src="{{BASE}}assets/campanhas/abrace/estrela-amarela.webp" alt="" width="220" height="225" data-drift="-30">
       <div class="container">
         <h2 data-split>Neste Natal, faça parte de uma história.</h2>
-        <a class="btn btn--light btn--lg" href="#onde-doar" data-reveal style="--i:3">
+        <button class="btn btn--light btn--lg" type="button" data-open-donation data-reveal style="--i:3">
           Ajude também
           <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
-        </a>
+        </button>
       </div>
     </section>
 

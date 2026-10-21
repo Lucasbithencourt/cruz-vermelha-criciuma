@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
-<body class="camp camp--abrace">
+<body class="camp camp--abrace" data-doacao-destino="#onde-doar">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
   <!-- Ícones (sprite) -->
@@ -196,10 +196,10 @@
           <p class="ab-tag" data-reveal style="--i:2">a <b>solidariedade</b> é a verdadeira <b>magia</b> deste natal</p>
           <p class="ab-hero__lead" data-reveal style="--i:3">Doe alimentos e brinquedos para a Cruz Vermelha e ajude a levar o espírito de Natal para famílias que também merecem vivê-lo.</p>
           <div class="ab-hero__actions" data-reveal style="--i:4">
-            <a class="btn btn--light btn--lg" href="#onde-doar">
+            <button class="btn btn--light btn--lg" type="button" data-open-donation>
               Ajude também
               <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
-            </a>
+            </button>
             <a class="btn btn--outline-light btn--lg" href="#metas">Ver as metas</a>
           </div>
         </div>
@@ -445,10 +445,10 @@
       <img class="ab-star ab-star--6" src="../assets/campanhas/abrace/estrela-amarela.webp" alt="" width="220" height="225" data-drift="-30">
       <div class="container">
         <h2 data-split>Neste Natal, faça parte de uma história.</h2>
-        <a class="btn btn--light btn--lg" href="#onde-doar" data-reveal style="--i:3">
+        <button class="btn btn--light btn--lg" type="button" data-open-donation data-reveal style="--i:3">
           Ajude também
           <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
-        </a>
+        </button>
       </div>
     </section>
 

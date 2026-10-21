@@ -731,6 +731,9 @@
       if (e.target.closest('[data-close-modal]')) closeModal();
     });
 
+    // O chat abre o formulário pela opção "Quero doar"
+    window.CV.openDonation = openModal;
+
     modal.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closeModal();
       if (e.key !== 'Tab') return;
@@ -853,7 +856,20 @@
       // Só o primeiro nome, para a saudação na próxima página (nada vai na URL)
       try { sessionStorage.setItem('cv-nome', nameInput.value.trim().split(/\s+/)[0]); } catch (err) {}
 
-      var goNext = function () { window.location.href = form.getAttribute('action'); };
+      // Página com destino próprio (ex.: campanha → "onde doar"): fecha o formulário e rola até lá
+      var destino = document.body.dataset.doacaoDestino;
+      var goNext = function () {
+        if (destino && document.querySelector(destino)) {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('is-loading');
+          form.reset();
+          closeModal();
+          var alvo = document.querySelector(destino);
+          if (lenis) lenis.scrollTo(alvo, { offset: -80 }); else alvo.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+          return;
+        }
+        window.location.href = form.getAttribute('action');
+      };
 
       // Campo isca preenchido = robô: segue sem gravar
       if (form.elements.site.value) { goNext(); return; }

@@ -73,22 +73,23 @@ def ajustar_caminhos(trecho, base):
     return trecho
 
 
-def sem_formulario(trecho):
-    """Páginas sem o formulário de doação: os botões "Quero doar" levam à lista de pontos de coleta."""
-    return re.sub(r'<button( class="[^"]*")? type="button" data-open-donation>(.*?)</button>',
-                  lambda m: '<a%s href="#pontos">%s</a>' % (m.group(1) or '', m.group(2)), trecho, flags=re.S)
-
-
-def atualizar_pontos(topo_index):
-    """Leva o menu atual do index.html para pontos-de-coleta.html (mesma pasta, sem formulário)."""
+def atualizar_pontos(topo_index, modal_index):
+    """Leva o menu e o formulário de doação do index.html para pontos-de-coleta.html (mesma pasta)."""
     caminho = ROOT / 'pontos-de-coleta.html'
     pagina = caminho.read_text(encoding='utf-8')
     antigo = bloco(pagina, '  <header class="site-header">', '  <main id="conteudo">')
-    novo = sem_formulario(ajustar_caminhos(topo_index, ''))
-    novo = novo.replace('<use href="#i-heart"/></svg>\n          Quero doar', '<use href="#i-pin"/></svg>\n          Pontos de coleta')
-    novo = novo.replace('Quero doar para a Cruz Vermelha', 'Ver pontos de coleta')
-    caminho.write_text(pagina.replace(antigo, novo), encoding='utf-8')
-    print('menu atualizado:', caminho.relative_to(ROOT))
+    pagina = pagina.replace(antigo, ajustar_caminhos(topo_index, ''))
+    # Formulário: troca o bloco se já existir, senão entra antes dos scripts
+    modal = ajustar_caminhos(modal_index, '')
+    if '  <!-- Modal de doação.' in pagina:
+        pagina = pagina.replace(bloco(pagina, '  <!-- Modal de doação.', '  <script src='), modal)
+    else:
+        i = pagina.index('  <script src=')
+        pagina = pagina[:i] + modal + pagina[i:]
+    if 'js/config.js' not in pagina:
+        pagina = pagina.replace('  <script src="js/main.js" defer></script>', '  <script src="js/config.js" defer></script>\n  <script src="js/main.js" defer></script>')
+    caminho.write_text(pagina, encoding='utf-8')
+    print('menu e formulário atualizados:', caminho.relative_to(ROOT))
 
 
 def parceiros_abrace(base):
@@ -132,7 +133,7 @@ def main():
     modal = bloco(index, '  <!-- Modal de doação.', '  <script src=')
     fontes = re.search(r'family=([^"&]+(?:&family=[^"&]+)*)&display=swap', index).group(1)
 
-    atualizar_pontos(topo)
+    atualizar_pontos(topo, modal)
 
     for modelo, pasta in PAGINAS.items():
         meta, corpo = ler_modelo(ROOT / 'design' / 'paginas' / modelo)
@@ -148,6 +149,8 @@ def main():
         assert '{{' not in corpo, f'marcador sem valor em {modelo}'
 
         tem_mapa = meta.get('mapa') == 'sim'
+        # Depois do formulário de doação, a pessoa vai para esta âncora da própria página (senão, pontos de coleta)
+        destino = f' data-doacao-destino="{meta["destino_doacao"]}"' if meta.get('destino_doacao') else ''
         leaflet_css = '\n  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">' if tem_mapa else ''
         leaflet_js = '  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>\n' if tem_mapa else ''
         pagina = f'''<!DOCTYPE html>
@@ -177,7 +180,7 @@ def main():
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family={familias}&display=swap"></noscript>
   <link rel="stylesheet" href="{base}css/style.css">{leaflet_css}
 </head>
-<body class="{meta['bodyclass']}">
+<body class="{meta['bodyclass']}"{destino}>
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
 {ajustar_caminhos(sprite, base).rstrip()}

@@ -99,10 +99,10 @@
               Como ajudar <svg class="icon nav__chevron" aria-hidden="true"><use href="#i-chevron"/></svg>
             </button>
             <div class="nav__drop nav__drop--lista" id="drop-ajudar">
-              <a class="drop-link" href="#pontos">
+              <button class="drop-link" type="button" data-open-donation>
                 <span class="drop-link__icon"><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg></span>
                 <span><b>Quero doar</b>Deixe seu contato e veja onde entregar</span>
-              </a>
+              </button>
               <a class="drop-link" href="pontos-de-coleta.html">
                 <span class="drop-link__icon"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg></span>
                 <span><b>Pontos de coleta</b>Endereço, horário e mapa</span>
@@ -121,10 +121,10 @@
       </nav>
 
       <div class="header-actions">
-        <a class="btn btn--primary btn--sm" href="#pontos">
-          <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
-          Pontos de coleta
-        </a>
+        <button class="btn btn--primary btn--sm" type="button" data-open-donation>
+          <svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg>
+          Quero doar
+        </button>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menu">
           <span class="menu-toggle__bars" aria-hidden="true"><span></span><span></span></span>
         </button>
@@ -157,7 +157,7 @@
         </button>
         <div class="mm-sub" id="mm-ajudar" inert>
           <ul>
-            <li><a href="#pontos">Quero doar</a></li>
+            <li><button type="button" data-open-donation>Quero doar</button></li>
             <li><a href="pontos-de-coleta.html">Pontos de coleta</a></li>
             <li><a href="index.html#como-ajudar">O que doar</a></li>
             <li><a href="https://wa.me/5548999541370?text=Ol%C3%A1!%20Quero%20ser%20volunt%C3%A1rio%20da%20Cruz%20Vermelha%20Crici%C3%BAma." target="_blank" rel="noopener">Seja voluntário</a></li>
@@ -166,10 +166,10 @@
       </li>
     </ul>
     <div class="mobile-menu__foot">
-      <a class="btn btn--primary btn--lg btn--block" href="#pontos">
-        Ver pontos de coleta
+      <button class="btn btn--primary btn--lg btn--block" type="button" data-open-donation>
+        Quero doar para a Cruz Vermelha
         <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
-      </a>
+      </button>
       <p>Rua Antônio Benedet de Angelo, 15, Pinheirinho · Criciúma/SC</p>
     </div>
   </div>
@@ -311,11 +311,51 @@
     </div>
   </footer>
 
+  <!-- Modal de doação. Validação e envio para o Supabase no js/main.js. -->
+  <div class="modal" id="donation-modal" aria-hidden="true">
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="donation-title">
+      <button class="modal__close" type="button" data-close-modal aria-label="Fechar">
+        <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+      </button>
+      <h2 id="donation-title">Que bom que você quer ajudar!</h2>
+      <p class="lead">Deixe seu nome e telefone. Em seguida mostramos onde entregar sua doação.</p>
+      <form id="donation-form" action="pontos-de-coleta.html" novalidate>
+        <div class="field">
+          <label for="f-nome">Nome completo</label>
+          <input id="f-nome" name="nome" type="text" autocomplete="name" required>
+          <span class="field__error" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="f-telefone">Telefone/WhatsApp</label>
+          <input id="f-telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(48) 9____-____" required>
+          <span class="field__error" aria-live="polite"></span>
+        </div>
+        <!-- Campo isca contra robôs: invisível para pessoas -->
+        <div class="hp" aria-hidden="true">
+          <label for="f-site">Não preencha este campo</label>
+          <input id="f-site" name="site" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <label class="check">
+          <input type="checkbox" name="consentimento" required>
+          <span>Autorizo a Cruz Vermelha Criciúma a usar meu nome e telefone para entrar em contato sobre doações e campanhas. Posso pedir a exclusão dos meus dados a qualquer momento.</span>
+        </label>
+        <span class="field__error check__error" aria-live="polite"></span>
+        <button class="btn btn--primary btn--lg btn--block" type="submit">
+          Ver pontos de coleta
+          <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </button>
+        <p class="form-note">Não pedimos doações em dinheiro.</p>
+      </form>
+    </div>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
   <script src="js/pontos.js" defer></script>
+  <script src="js/config.js" defer></script>
   <script src="js/main.js" defer></script>
   <script src="js/pontos-page.js" defer></script>
 </body>

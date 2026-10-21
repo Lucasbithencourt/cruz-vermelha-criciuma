@@ -14,9 +14,9 @@
     {
       id: 'doar',
       label: 'Quero doar para a Cruz Vermelha',
-      replies: ['Que alegria! 💛 Fale com a gente e combinamos o que você pode doar e onde entregar.'],
-      whatsapp: 'Olá! Vim pelo site e quero doar para a Cruz Vermelha Criciúma. Pode me orientar sobre o que doar e onde entregar?',
-      extra: { label: 'Ver pontos de coleta', donation: true }
+      replies: ['Que alegria! 💛 Vou abrir o formulário rapidinho: é só deixar seu nome e WhatsApp e já mostramos onde entregar.'],
+      formulario: true, // abre o formulário de doação do site
+      whatsapp: 'Olá! Vim pelo site e quero doar para a Cruz Vermelha Criciúma. Pode me orientar sobre o que doar e onde entregar?'
     },
     {
       id: 'auxilio',
@@ -244,6 +244,16 @@
     wrap.remove();
     bubble(opt.label, 'user');
     var jaTinha = !!contato;
+    // "Quero doar": o mesmo formulário dos botões do site
+    if (opt.formulario && window.CV && window.CV.openDonation) {
+      sayAll(opt.replies).then(function () { return wait(500); }).then(function () {
+        close();
+        window.CV.openDonation();
+        choices([{ label: 'Escolher outra opção', onPick: function (w) { w.remove(); showOptions(); } }]);
+        busy = false;
+      });
+      return;
+    }
     sayAll(opt.replies)
       .then(pedirContato)
       .then(function () {
