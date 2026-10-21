@@ -7,11 +7,12 @@ Cada página recebe o mesmo topo, menu, rodapé, chat e formulário de doação 
 Rode de novo sempre que mudar o menu, o rodapé ou o chat no index.html.
 """
 import html
+import json
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SITE = 'https://lucasbithencourt.github.io/cruz-vermelha-criciuma/'  # trocar junto com o domínio (README)
+SITE = 'https://www.cruzvermelhacriciuma.org.br/'  # trocar junto com o domínio (README)
 
 # Páginas: modelo -> pasta publicada
 PAGINAS = {
@@ -27,30 +28,62 @@ PARCEIROS_ABRACE = [
     ('Toro Mídia', 'toro-midia'), ('Le Fil Uniformes', 'le-fil'),
 ]
 LOGOS_CLAROS = {'engeplus'}  # logo branco: vai em cartão escuro
-# Turma de Publicidade e Propaganda da UniSATC, por área (lista enviada pela turma)
+# Turma de Publicidade e Propaganda da UniSATC, por área (lista enviada pela turma).
+# (nome, função, perfil): o perfil é "@usuario" do Instagram ou o link completo (LinkedIn etc.). Vazio = nome sem link.
 EQUIPE_ABRACE = [
     ('Coordenação', 'vermelho', [
-        ('Débora', 'captação'), ('Gabriele', 'redes sociais'), ('Júlia Machado', 'design'),
-        ('Júlia Schuter', 'design'), ('Letícia Ghisi', 'redação'), ('Nathalia', 'design'), ('Pietra', 'guerrilha'),
+        ('Débora', 'captação', ''),
+        ('Gabriele Patrício', 'redes sociais', '@gabrielepatriciio'),
+        ('Júlia Machado', 'design', '@juliamgabriel'),
+        ('Júlia Schulter Manique Barreto', 'design', 'https://www.linkedin.com/in/j%C3%BAlia-schulter-manique-barreto-04bb7736a'),
+        ('Karolayn', 'eventos e patrocínio', '@karollmachaado'),
+        ('Letícia Ghisi', 'redação', '@leticia.ghisii'),
+        ('Nathalia Zanellato', 'design', '@nathaliazzanellato'),
+        ('Pietra', 'guerrilha', ''),
     ]),
     ('Design', 'verde', [
-        ('Amanda', ''), ('Beatriz', ''), ('Inaia', ''), ('Jose', ''), ('Lucas de Bithencourt', ''),
-        ('Maria Eduarda Anzolin', ''), ('Nathieli', ''), ('Valeria', ''),
+        ('Amanda Araujo', '', ''),
+        ('Beatriz Topanotti', '', '@beatriztopanotti'),
+        ('Inaiá', '', '@inaia_roncari'),
+        ('Jose', '', ''),
+        ('Julia Gerber', '', '@visuals_byjulia'),
+        ('Lucas de Bithencourt', '', ''),
+        ('Maria Eduarda Anzolin', '', 'https://www.linkedin.com/in/maria-eduarda-anzolin-411075336/'),
+        ('Nathieli Velho Lopes', '', '@nathieli_vl'),
+        ('Valéria Ferreira Mendes', '', 'https://www.linkedin.com/in/val%C3%A9ria-ferreira-mendes-616365348/'),
     ]),
     ('Site', 'rosa', [
-        ('Lucas de Bithencourt', ''),
+        ('Lucas de Bithencourt', '', ''),
     ]),
     ('Redação', 'rosa', [
-        ('Jessica', ''), ('Lara', ''), ('Letícia Diecks', ''), ('Lia', ''), ('Loise', ''), ('Ricardo', ''), ('Vitor', ''),
+        ('Jessica', '', '@jessica.loureiroo'),
+        ('Lara', '', ''),
+        ('Letícia Dieckes', '', ''),
+        ('Lia', '', '@liakouketsu'),
+        ('Loise Ritieri', '', '@loiseritieri'),
+        ('Ricardo', '', '@ricardo.machadoo'),
+        ('Vítor', '', '@ovitorraupp'),
     ]),
     ('Captação e edição de vídeo', 'amarelo', [
-        ('Aguinaldo', 'edição'), ('Ana Clara Ponini', 'captação e edição'), ('Arthur', 'edição'), ('Davi', 'edição'),
-        ('Eduarda', 'captação'), ('Ellen', 'captação'), ('Gabrieli', 'edição'), ('Isabela', 'captação'),
-        ('Júlia Farias', 'captação'), ('Maria Eduarda Colombo', 'edição'), ('Maria Luiza', 'edição'),
-        ('Roberta', 'edição'), ('Tainá', 'edição'),
+        ('Aguinaldo', 'edição', ''),
+        ('Anna Clara Pomini', 'captação e edição', '@annapomini'),
+        ('Arthur', 'edição', ''),
+        ('Davi', 'edição', ''),
+        ('Eduarda Sonemann', 'captação', '@dudasonemann'),
+        ('Elen Maria', 'captação', '@elenmariafs'),
+        ('Gabrieli Pires', 'edição', '@gabip_digital'),
+        ('Bella Machado', 'captação', ''),
+        ('Júlia Farias', 'captação', ''),
+        ('Maria Eduarda Colombo', 'edição', '@dudaa_colomboo'),
+        ('Maria Luiza', 'edição', 'https://www.linkedin.com/in/maria-luiza-b38036334'),
+        ('Roberta', 'edição', '@robertaa_bloemer'),
+        ('Tainá', 'edição', ''),
     ]),
     ('Relacionamento e tecnologia', 'vermelho', [
-        ('Alice', 'RP'), ('Ana Julia', 'WhatsApp'), ('Maria Eduarda Neto', 'WhatsApp'), ('Keila', 'programação'),
+        ('Alice Nava Lenhani', 'RP', '@alicelenhanii'),
+        ('Ana Julia', 'WhatsApp', ''),
+        ('Maria Eduarda Neto', 'WhatsApp', ''),
+        ('Keila Bez', 'programação', '@keilabez_'),
     ]),
 ]
 
@@ -100,13 +133,30 @@ def parceiros_abrace(base):
     return '\n'.join(linhas)
 
 
+def perfil_url(perfil):
+    if not perfil:
+        return ''
+    if perfil.startswith('@'):
+        return 'https://www.instagram.com/' + perfil[1:] + '/'
+    return perfil if perfil.startswith('http') else 'https://' + perfil
+
+
+def total_equipe(grupos):
+    return len({nome for _, _, pessoas in grupos for nome, _, _ in pessoas})
+
+
 def equipe(grupos):
     blocos = []
     for area, cor, pessoas in grupos:
         itens = []
-        for nome, funcao in pessoas:
+        for nome, funcao, perfil in pessoas:
             extra = f'<small>{E(funcao)}</small>' if funcao else ''
-            itens.append(f'              <li>{E(nome)}{extra}</li>')
+            url = perfil_url(perfil)
+            if url:
+                rede = 'LinkedIn' if 'linkedin.com' in url else 'Instagram'
+                itens.append(f'              <li><a href="{E(url)}" target="_blank" rel="noopener" title="{E(nome)} no {rede}">{E(nome)}{extra}<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>')
+            else:
+                itens.append(f'              <li>{E(nome)}{extra}</li>')
         blocos.append(f'''          <div class="camp-team__group camp-team__group--{cor}" data-reveal>
             <h3>{E(area)} <span>{len(pessoas)}</span></h3>
             <ul class="camp-team__names">
@@ -145,9 +195,22 @@ def main():
         corpo = (corpo.replace('{{BASE}}', base)
                  .replace('{{PARCEIROS_ABRACE}}', parceiros_abrace(base))
                  .replace('{{EQUIPE_ABRACE}}', equipe(EQUIPE_ABRACE))
+                 .replace('{{TOTAL_EQUIPE}}', str(total_equipe(EQUIPE_ABRACE)))
                  )
         assert '{{' not in corpo, f'marcador sem valor em {modelo}'
 
+        # Dados estruturados: página, trilha (início > campanha) e ligação com a organização da página inicial
+        dados_estruturados = json.dumps({
+            '@context': 'https://schema.org',
+            '@graph': [
+                {'@type': 'WebPage', '@id': url + '#pagina', 'url': url, 'name': meta['title'],
+                 'description': meta['description'], 'inLanguage': 'pt-BR',
+                 'isPartOf': {'@id': SITE + '#site'}, 'about': {'@id': SITE + '#organizacao'},
+                 'primaryImageOfPage': SITE + meta['og'], 'breadcrumb': {'@id': url + '#trilha'}},
+                {'@type': 'BreadcrumbList', '@id': url + '#trilha', 'itemListElement': [
+                    {'@type': 'ListItem', 'position': 1, 'name': 'Início', 'item': SITE},
+                    {'@type': 'ListItem', 'position': 2, 'name': meta.get('breadcrumb', meta['title']), 'item': url}]},
+            ]}, ensure_ascii=False)
         tem_mapa = meta.get('mapa') == 'sim'
         # Depois do formulário de doação, a pessoa vai para esta âncora da própria página (senão, pontos de coleta)
         destino = f' data-doacao-destino="{meta["destino_doacao"]}"' if meta.get('destino_doacao') else ''
@@ -172,7 +235,19 @@ def main():
   <meta property="og:title" content="{E(meta['title'])}">
   <meta property="og:description" content="{E(meta['description'])}">
   <meta property="og:image" content="{SITE}{meta['og']}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{E(meta.get('og_alt', meta['title']))}">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{E(meta['title'])}">
+  <meta name="twitter:description" content="{E(meta['description'])}">
+  <meta name="twitter:image" content="{SITE}{meta['og']}">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="geo.region" content="BR-SC">
+  <meta name="geo.placename" content="Criciúma">
+  <script type="application/ld+json">
+  {dados_estruturados}
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

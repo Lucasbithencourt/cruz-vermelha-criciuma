@@ -1,0 +1,26 @@
+# Cruz Vermelha Brasileira · Filial Criciúma
+
+> Filial de Criciúma (SC) da Cruz Vermelha Brasileira, fundada em 8 de dezembro de 1984. Instituição humanitária mantida por voluntários e por doações da comunidade. Atende de graça quem precisa com a Fábrica de Fraldas Solidária, alimentos, agasalhos e resposta a emergências no Sul de Santa Catarina. Não pede doações em dinheiro: toda doação é feita em itens.
+
+## Informações principais
+
+- Endereço da sede: Rua Antônio Benedet de Angelo, 15, bairro Pinheirinho, Criciúma/SC
+- Horário para entregar doações: quintas-feiras, das 13h às 17h (exceto feriados)
+- WhatsApp: (48) 99954-1370
+- Instagram: https://www.instagram.com/cruzvermelhacriciuma/
+- CNPJ: 11.408.025/0001-45
+- Doações aceitas: alimentos não perecíveis, fraldas geriátricas (P, M, G e XG), higiene e limpeza, agasalhos, cobertores, roupa de cama, calçados e insumos para a Fábrica de Fraldas (manta, algodão, cola e plástico)
+- Doação em dinheiro: não é aceita. Se alguém pedir dinheiro em nome da filial, é golpe; avise pelo WhatsApp.
+- Voluntariado: pelo WhatsApp, para triagem de doações, Fábrica de Fraldas e campanhas
+- Emergências: ligue 193 (Bombeiros) ou 192 (SAMU)
+
+## Páginas
+
+- [Página inicial](https://www.cruzvermelhacriciuma.org.br/): história desde 1984, o que a filial faz, a sede, presença na mídia e perguntas frequentes
+- [Pontos de coleta](https://www.cruzvermelhacriciuma.org.br/pontos-de-coleta.html): endereço, horário, mapa e itens aceitos
+- [Abrace uma História](https://www.cruzvermelhacriciuma.org.br/abrace-uma-historia/): campanha de Natal 2026 com a UniSATC; arrecada farinha de trigo, farinha de mandioca, café, óleo de soja, leite e brinquedos usados até 20 de dezembro de 2026, com metas por item
+- [Entre em Campo](https://www.cruzvermelhacriciuma.org.br/entreemcampo/): campanha de maio e junho de 2026 com a UniSATC (encerrada)
+
+## Dados da campanha
+
+- [Metas e valores arrecadados da campanha Abrace uma História (JSON)](https://www.cruzvermelhacriciuma.org.br/dados/abrace-uma-historia.json)

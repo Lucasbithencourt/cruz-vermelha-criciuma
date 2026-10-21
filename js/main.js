@@ -1,6 +1,11 @@
 // Cruz Vermelha Criciúma · base de interações: rolagem suave, header, menu, reveals e modal.
 // As cenas de scroll maiores (hero, linha do tempo, galeria) entram nas próximas etapas em cima desta base.
 (function () {
+  // Cópia antiga no GitHub Pages: leva para o endereço oficial (o Google indexa só um endereço)
+  if (/github\.io$/.test(location.hostname)) {
+    location.replace('https://www.cruzvermelhacriciuma.org.br' + location.pathname.replace(/^\/cruz-vermelha-criciuma/, '') + location.search + location.hash);
+    return;
+  }
   var root = document.documentElement;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';

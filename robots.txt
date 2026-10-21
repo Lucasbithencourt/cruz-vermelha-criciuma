@@ -1,3 +1,5 @@
+# Buscadores e assistentes de IA (ChatGPT, Claude, Perplexity, Gemini) podem ler todo o site público.
+# Resumo do site para assistentes de IA: /llms.txt
 User-agent: *
 Allow: /
 Disallow: /styleguide.html
@@ -5,4 +7,4 @@ Disallow: /supabase/
 Disallow: /planilha/
 Disallow: /design/
 
-Sitemap: https://lucasbithencourt.github.io/cruz-vermelha-criciuma/sitemap.xml
+Sitemap: https://www.cruzvermelhacriciuma.org.br/sitemap.xml

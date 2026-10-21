@@ -85,20 +85,17 @@ python3 design/recortar-logo.py && python3 design/gerar-imagens.py
 
 No site o logo fica sobre um disco branco (`.logo__img`), para não sumir nos fundos escuros.
 
-### Publicar no GitHub Pages
-1. Crie o repositório `cruz-vermelha-criciuma` e envie os arquivos.
-2. Em **Settings → Pages**, publique a branch `main` (pasta raiz).
-3. O endereço fica `https://lucasbithencourt.github.io/cruz-vermelha-criciuma/`, que já está no `canonical`, no Open Graph, no JSON-LD, no `robots.txt` e no `sitemap.xml`.
-4. Envie o sitemap pelo Google Search Console (no GitHub Pages sem domínio próprio, o `robots.txt` fica numa subpasta e os buscadores não o leem).
+### Publicação e domínio
+- O site oficial é **https://www.cruzvermelhacriciuma.org.br**, publicado pela Vercel a cada push na branch `main`. O endereço sem `www` redireciona para ele.
+- O DNS do domínio está no Cloudflare (registro no Registro.br). Não troque os servidores DNS sem recriar antes os registros de e-mail (MX, `mail`, `webmail`, `cpanel`, `autodiscover`, SPF e DMARC).
+- `cruz-vermelha-criciuma.vercel.app` redireciona para o domínio (`vercel.json`) e a cópia antiga no GitHub Pages também (início do `js/main.js`).
 
-### Trocar para domínio próprio
-Substitua o endereço em todos os arquivos de uma vez:
-
-```bash
-grep -rl "lucasbithencourt.github.io/cruz-vermelha-criciuma" --include="*.html" --include="*.xml" --include="*.txt" . | xargs sed -i '' 's#https://lucasbithencourt.github.io/cruz-vermelha-criciuma/#https://SEU-DOMINIO/#g'
-```
-
-E no `404.html` troque `/cruz-vermelha-criciuma/` por `/`.
+### SEO e GEO (buscadores e assistentes de IA)
+- Cada página tem título, descrição, `canonical`, Open Graph e dados estruturados (JSON-LD). Na página inicial: organização (NGO), site e perguntas frequentes (FAQPage, o mesmo texto da seção "Perguntas frequentes"). Nas demais: página e trilha de navegação.
+- `sitemap.xml` lista as páginas públicas; atualize o `lastmod` quando mudar uma página.
+- `robots.txt` libera buscadores e assistentes de IA e aponta o sitemap.
+- `llms.txt` é o resumo do site para assistentes de IA (ChatGPT, Claude, Perplexity). Mantenha endereço, horário e contato iguais aos da página.
+- Search Console: propriedade de prefixo de URL `https://www.cruzvermelhacriciuma.org.br/`, verificada pela meta tag `google-site-verification` no `index.html`; envie o `sitemap.xml` em Sitemaps.
 
 ## O que já está feito
 

@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/:caminho*",
+      "has": [{ "type": "host", "value": "cruz-vermelha-criciuma.vercel.app" }],
+      "destination": "https://www.cruzvermelhacriciuma.org.br/:caminho*",
+      "permanent": true
+    }
+  ]
+}
