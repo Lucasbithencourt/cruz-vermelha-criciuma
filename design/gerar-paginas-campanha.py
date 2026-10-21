@@ -32,7 +32,7 @@ LOGOS_CLAROS = {'engeplus'}  # logo branco: vai em cartão escuro
 # (nome, função, perfil): o perfil é "@usuario" do Instagram ou o link completo (LinkedIn etc.). Vazio = nome sem link.
 EQUIPE_ABRACE = [
     ('Coordenação', 'vermelho', [
-        ('Débora', 'captação', ''),
+        ('Débora Casagrande', 'captação', '@debs_casagrande'),
         ('Gabriele Patrício', 'redes sociais', '@gabrielepatriciio'),
         ('Júlia Machado', 'design', '@juliamgabriel'),
         ('Júlia Schulter Manique Barreto', 'design', 'https://www.linkedin.com/in/j%C3%BAlia-schulter-manique-barreto-04bb7736a'),
