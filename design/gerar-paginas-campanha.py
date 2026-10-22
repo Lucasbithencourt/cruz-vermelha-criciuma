@@ -62,7 +62,6 @@ EQUIPE_ABRACE = [
         ('Lia', '', '@liakouketsu'),
         ('Loise Ritieri', '', '@loiseritieri'),
         ('Ricardo', '', '@ricardo.machadoo'),
-        ('Vítor', '', '@ovitorraupp'),
     ]),
     ('Captação e edição de vídeo', 'amarelo', [
         ('Aguinaldo', 'edição', ''),
@@ -81,6 +80,7 @@ EQUIPE_ABRACE = [
     ]),
     ('Relacionamento e tecnologia', 'vermelho', [
         ('Alice Nava Lenhani', 'RP', '@alicelenhanii'),
+        ('Vítor Raupp', 'RP e assessoria', '@ovitorraupp'),
         ('Ana Julia', 'WhatsApp', ''),
         ('Maria Eduarda Neto', 'WhatsApp', ''),
         ('Keila Bez', 'programação', '@keilabez_'),

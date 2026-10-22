@@ -767,7 +767,6 @@ address { font-style: normal; }
   color: var(--on-dark-2);
 }
 .footer-bottom p { margin: 0; }
-.footer-credit b { color: #fff; font-weight: 700; }
 
 /* Marca d'água gigante no fundo do rodapé */
 .footer-mark {
