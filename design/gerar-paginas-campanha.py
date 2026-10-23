@@ -280,6 +280,7 @@ def main():
   <script src="{base}js/config.js" defer></script>
   <script src="{base}js/main.js" defer></script>
   <script src="{base}js/chat.js" defer></script>
+  <script src="https://cruzvermelha-arrecadacao.vercel.app/metas-v1.js" integrity="sha384-wrpi6uuGhlFxLSSNIdnVRuA+UVDXBOTMp+s9M2NRz2BvacPO/I+YkTujN238FAQW" crossorigin="anonymous" defer></script>
 {leaflet_js}  <script src="{base}js/campanha.js" defer></script>
 </body>
 </html>
