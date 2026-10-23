@@ -1,6 +1,6 @@
 # Cruz Vermelha Criciúma · site institucional
 
-Site estático da Cruz Vermelha Brasileira, Filial Criciúma. HTML, CSS e JS puros, sem build. A conversão é o botão **"Quero doar para a Cruz Vermelha"**, que pede nome e telefone, grava no Supabase e leva aos pontos de coleta. A filial não pede doações em dinheiro.
+Site estático da Cruz Vermelha Brasileira, Filial Criciúma. HTML, CSS e JS puros, sem build. A conversão é o botão **"Quero doar para a Cruz Vermelha"**, que pede nome e telefone, grava no Supabase e leva aos pontos de coleta. Doação em dinheiro, só para a Fábrica de Fraldas, pelo Pix oficial (seção "Fábrica de Fraldas" da página inicial).
 
 ```
 index.html               página principal (hero, números, história, programas, princípios, sede, mídia, parceiros, como ajudar)
@@ -60,6 +60,9 @@ Os números da arrecadação e os pontos de coleta da campanha ficam em `dados/a
 
 ### Medição de acessos e UTM
 O site carrega o Vercel Web Analytics (sem cookies) quando está na Vercel. Para ver os dados, ative em Vercel > projeto > Analytics. Os links divulgados devem levar `utm_source`, `utm_medium` e `utm_campaign`, por exemplo `?utm_source=instagram&utm_medium=stories&utm_campaign=abrace`. O canal também vai junto do contato salvo (coluna `origem`). Para usar o Google Analytics 4, coloque o ID em `googleAnalyticsId` no `js/config.js`.
+
+### Página de links (bio do Instagram)
+`links/index.html` substitui o Linktree: `https://www.cruzvermelhacriciuma.org.br/links/`. Página única, sem dependências do resto do site. Para mudar um link, edite a lista no próprio arquivo. Os links internos levam `utm_source=instagram&utm_medium=bio&utm_campaign=links` para a medição de acessos.
 
 ### Banner do topo (hero)
 O topo da página principal abre no banner da campanha atual, que fica 20 s, e depois alterna com o institucional (5 s). O tempo de cada slide fica em `data-duracao` e o slide de abertura é o que tem `data-inicial`. Para trocar a campanha, edite o slide da campanha em `index.html` e o rótulo do botão no `hero-pager`.
@@ -121,7 +124,7 @@ No site o logo fica sobre um disco branco (`.logo__img`), para não sumir nos fu
 
 Detalhes e fontes no `CONTEUDO.md` (documento interno, fora do repositório).
 
-- [ ] **Pix:** uma matéria de 2024 cita Pix no CNPJ para a Fábrica de Fraldas. O site diz "não pedimos doações em dinheiro". Confirmar a regra atual.
+- [x] **Pix:** confirmado pela filial: dinheiro só para a Fábrica de Fraldas, pelo Pix no CNPJ (seção "Fábrica de Fraldas" na página inicial).
 - [x] **Logo:** logo oficial da CVB aplicado (fundo removido).
 - [ ] **Fotos:** fachada, Fábrica de Fraldas, voluntários, triagem, entrega de quinta (sem rostos), comboio do RS e uma foto antiga da filial.
 - [ ] **Pino do mapa:** está no ponto da rua dado pelo OpenStreetMap. Ajustar para o número 15 em `js/pontos.js`.

@@ -31,7 +31,7 @@
       text: 'Levar doação à Cruz Vermelha Criciúma',
       dates: day + 'T130000/' + day + 'T170000',
       ctz: 'America/Sao_Paulo',
-      details: 'Doação de itens (alimentos, fraldas, higiene, agasalhos). A Cruz Vermelha Criciúma não pede doações em dinheiro.',
+      details: 'Doação de itens (alimentos, fraldas, higiene, agasalhos). Doação em dinheiro, só para a Fábrica de Fraldas, pelo Pix oficial da filial (CNPJ 11.408.025/0001-45).',
       location: ponto.endereco + ', ' + ponto.bairro + ', ' + ponto.cidade
     });
     return 'https://calendar.google.com/calendar/render?' + params.toString();

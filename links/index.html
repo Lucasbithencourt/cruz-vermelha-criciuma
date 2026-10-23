@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Página de links da bio do Instagram (substitui o Linktree). Para mudar um link, edite a lista abaixo.
+       Os links internos levam utm_source=instagram&utm_medium=bio para a medição de acessos. -->
+  <title>Links · Cruz Vermelha Criciúma</title>
+  <meta name="description" content="Links da Cruz Vermelha Criciúma: campanha Abrace uma História, onde doar, metas, WhatsApp, voluntariado e localização da sede.">
+  <link rel="canonical" href="https://www.cruzvermelhacriciuma.org.br/links/">
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#DA291C">
+  <link rel="icon" href="../assets/favicon-48.png" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Cruz Vermelha Criciúma">
+  <meta property="og:url" content="https://www.cruzvermelhacriciuma.org.br/links/">
+  <meta property="og:title" content="Cruz Vermelha Criciúma · Links">
+  <meta property="og:description" content="Campanha Abrace uma História, onde doar, WhatsApp e localização da sede.">
+  <meta property="og:image" content="https://www.cruzvermelhacriciuma.org.br/assets/campanhas/abrace/og-abrace.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Archivo:wght@400;600;700&display=swap">
+
+  <style>
+    :root {
+      --red: #DA291C;
+      --red-deep: #B31F14;
+      --green: #00A04E;
+      --green-deep: #00733A;
+      --pink: #FF99BE;
+      --yellow: #FFB100;
+      --ink: #1B1B1B;
+      --graphite: #5A5A5A;
+      --paper: #FFFFFF;
+      --round: "Quicksand", "Archivo", system-ui, sans-serif;
+      --sans: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      min-height: 100svh;
+      overflow-x: hidden;
+      background: var(--red);
+      color: #fff;
+      font-family: var(--sans);
+      line-height: 1.45;
+    }
+    a { color: inherit; }
+    img { display: block; max-width: 100%; height: auto; }
+
+    /* Estrelas de 8 pontas da campanha, girando devagar no fundo */
+    .estrela { position: fixed; z-index: 0; pointer-events: none; animation: girar 26s linear infinite; }
+    .estrela--1 { top: -40px; right: -50px; width: 170px; }
+    .estrela--2 { top: 38%; left: -70px; width: 150px; animation-direction: reverse; animation-duration: 32s; }
+    .estrela--3 { bottom: -90px; right: -90px; width: 170px; animation-duration: 22s; }
+    .estrela--4 { top: 30%; right: -22px; width: 64px; animation-duration: 18s; opacity: 0.9; }
+    @keyframes girar { to { rotate: 360deg; } }
+
+    .pagina { position: relative; z-index: 1; width: min(100%, 480px); margin: 0 auto; padding: 40px 16px 32px; }
+
+    /* Perfil */
+    .perfil { text-align: center; }
+    .perfil__logo {
+      display: grid; place-items: center; width: 96px; height: 96px; margin: 0 auto 14px;
+      border-radius: 50%; background: #fff; box-shadow: 0 14px 30px -12px rgba(80, 0, 0, 0.55);
+    }
+    .perfil__logo img { width: 78px; height: 78px; }
+    .perfil h1 { margin: 0; font-family: var(--round); font-size: 1.45rem; font-weight: 700; letter-spacing: -0.01em; }
+    .perfil p { margin: 4px 0 0; font-size: 0.92rem; opacity: 0.92; }
+    .redes { display: flex; justify-content: center; gap: 10px; margin: 16px 0 26px; padding: 0; list-style: none; }
+    .redes a {
+      display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.16); transition: background 0.25s, transform 0.25s;
+    }
+    .redes svg { width: 21px; height: 21px; }
+
+    /* Destaque da campanha */
+    .destaque {
+      position: relative; display: grid; grid-template-columns: 1fr 104px; gap: 14px; align-items: center;
+      margin-bottom: 14px; padding: 18px; border-radius: 26px; background: #fff; color: var(--ink);
+      text-decoration: none; box-shadow: 0 22px 40px -22px rgba(80, 0, 0, 0.7); transition: transform 0.3s;
+    }
+    .destaque__selo {
+      display: inline-flex; align-items: center; gap: 6px; margin-bottom: 8px; padding: 4px 10px;
+      border-radius: 999px; background: #FFF1C9; color: #5A3B00; font-size: 0.74rem; font-weight: 700;
+    }
+    .destaque__selo::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulso 1.6s ease-out infinite; }
+    @keyframes pulso { 50% { opacity: 0.3; } }
+    .destaque__logo { width: 190px; margin: 0 0 6px; }
+    .destaque__texto { margin: 0; color: var(--graphite); font-size: 0.86rem; }
+    .destaque__texto b { color: var(--red-deep); }
+    .destaque__foto { width: 104px; height: 130px; object-fit: cover; border-radius: 16px; rotate: 3deg; }
+
+    /* Botões de link */
+    .links { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .link {
+      display: flex; align-items: center; gap: 14px; min-height: 64px; padding: 12px 16px 12px 12px;
+      border-radius: 18px; background: #fff; color: var(--ink); text-decoration: none;
+      box-shadow: 0 10px 24px -18px rgba(80, 0, 0, 0.8); transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .link__icone { display: grid; flex: none; place-items: center; width: 42px; height: 42px; border-radius: 12px; color: #fff; }
+    .link__icone svg { width: 22px; height: 22px; }
+    .link__icone--verde { background: var(--green-deep); }
+    .link__icone--vermelho { background: var(--red-deep); }
+    .link__icone--rosa { background: var(--pink); color: #6B1530; }
+    .link__icone--amarelo { background: var(--yellow); color: #4A2E00; }
+    .link__texto { flex: 1; min-width: 0; }
+    .link__texto b { display: block; font-family: var(--round); font-size: 1.04rem; font-weight: 700; line-height: 1.2; }
+    .link__texto small { display: block; margin-top: 2px; color: var(--graphite); font-size: 0.8rem; }
+    .link__seta { flex: none; width: 18px; height: 18px; color: var(--graphite); transition: transform 0.25s; }
+
+    @media (hover: hover) {
+      .redes a:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
+      .destaque:hover { transform: translateY(-3px) rotate(-0.5deg); }
+      .link:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -18px rgba(80, 0, 0, 0.9); }
+      .link:hover .link__seta { transform: translateX(3px); }
+    }
+    a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+    .destaque:focus-visible, .link:focus-visible { outline-color: var(--ink); }
+
+    .aviso { position: relative; margin: 18px 0 0; padding: 12px 14px; border-radius: 14px; background: var(--red-deep); font-size: 0.85rem; text-align: center; }
+    .aviso b { font-weight: 700; }
+
+    /* Marcas */
+    .marcas { display: flex; align-items: flex-end; justify-content: center; gap: 22px; margin-top: 28px; padding-top: 22px; border-top: 1px solid rgba(255, 255, 255, 0.25); }
+    .marcas span { display: block; margin-bottom: 6px; font-family: var(--round); font-size: 0.72rem; font-weight: 700; opacity: 0.85; text-align: center; }
+    .marcas__cvb { display: grid; place-items: center; width: 54px; height: 54px; margin: 0 auto; border-radius: 50%; background: #fff; }
+    .marcas__cvb img { width: 44px; height: 44px; }
+    .marcas__satc { width: 120px; }
+    .rodape { margin: 18px 0 0; font-size: 0.75rem; text-align: center; opacity: 0.8; }
+
+    /* Entrada suave dos itens */
+    .entra { animation: entrar 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(var(--i, 0) * 60ms); }
+    @keyframes entrar { from { opacity: 0; transform: translateY(14px); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .estrela, .destaque__selo::before { animation: none; }
+      .entra { animation: none; }
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <img class="estrela estrela--1" src="../assets/campanhas/abrace/estrela-amarela.webp" alt="" width="220" height="225">
+  <img class="estrela estrela--2" src="../assets/campanhas/abrace/estrela-verde.webp" alt="" width="220" height="225">
+  <img class="estrela estrela--3" src="../assets/campanhas/abrace/estrela-rosa.webp" alt="" width="220" height="225">
+  <img class="estrela estrela--4" src="../assets/campanhas/abrace/estrela-amarela.webp" alt="" width="220" height="225">
+
+  <main class="pagina">
+    <header class="perfil entra">
+      <!-- Emblema: arquivo oficial da filial, sem alterações -->
+      <div class="perfil__logo"><img src="../assets/logo-cruz-vermelha-160.webp" alt="Cruz Vermelha Brasileira · Filial Criciúma" width="160" height="160"></div>
+      <h1>Cruz Vermelha Criciúma</h1>
+      <p>Voluntariado e ajuda humanitária desde 1984</p>
+      <ul class="redes">
+        <li><a href="https://www.instagram.com/cruzvermelhacriciuma/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></li>
+        <li><a href="https://wa.me/5548999541370" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3z"/></svg></a></li>
+        <li><a href="../?utm_source=instagram&amp;utm_medium=bio&amp;utm_campaign=links" aria-label="Site da Cruz Vermelha Criciúma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></a></li>
+      </ul>
+    </header>
+
+    <!-- Destaque: campanha atual -->
+    <a class="destaque entra" style="--i:1" href="../abrace-uma-historia/?utm_source=instagram&amp;utm_medium=bio&amp;utm_campaign=links">
+      <div>
+        <span class="destaque__selo">Acontecendo agora</span>
+        <img class="destaque__logo" src="../assets/campanhas/abrace/logo-vermelho.webp" alt="Abrace uma História" width="900" height="396">
+        <p class="destaque__texto">Campanha de Natal: doe alimentos e brinquedos <b>até 20 de dezembro</b>.</p>
+      </div>
+      <img class="destaque__foto" src="../assets/campanhas/abrace/kv-foto.webp" alt="" width="900" height="1125">
+    </a>
+
+    <ul class="links">
+      <li class="entra" style="--i:2">
+        <a class="link" href="../abrace-uma-historia/?utm_source=instagram&amp;utm_medium=bio&amp;utm_campaign=links#onde-doar">
+          <span class="link__icone link__icone--vermelho"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+          <span class="link__texto"><b>Onde doar</b><small>Pontos de coleta da campanha, com mapa</small></span>
+          <svg class="link__seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+      <li class="entra" style="--i:3">
+        <a class="link" href="../abrace-uma-historia/?utm_source=instagram&amp;utm_medium=bio&amp;utm_campaign=links#metas">
+          <span class="link__icone link__icone--verde"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+          <span class="link__texto"><b>Metas da campanha</b><small>Quanto já chegou de cada item</small></span>
+          <svg class="link__seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+      <li class="entra" style="--i:4">
+        <a class="link" href="https://wa.me/5548999541370?text=Ol%C3%A1!%20Vim%20pelo%20Instagram%20e%20quero%20falar%20com%20a%20Cruz%20Vermelha%20Crici%C3%BAma." target="_blank" rel="noopener">
+          <span class="link__icone link__icone--verde"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></span>
+          <span class="link__texto"><b>Fale com a gente no WhatsApp</b><small>(48) 99954-1370</small></span>
+          <svg class="link__seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+      <li class="entra" style="--i:5">
+        <a class="link" href="https://wa.me/5548999541370?text=Ol%C3%A1!%20Vim%20pelo%20Instagram%20e%20quero%20ser%20volunt%C3%A1rio(a)%20da%20Cruz%20Vermelha%20Crici%C3%BAma." target="_blank" rel="noopener">
+          <span class="link__icone link__icone--rosa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></span>
+          <span class="link__texto"><b>Seja voluntário</b><small>Triagem, Fábrica de Fraldas e campanhas</small></span>
+          <svg class="link__seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+      <li class="entra" style="--i:6">
+        <a class="link" href="https://maps.app.goo.gl/wtD5PDQ51UZV69mSA" target="_blank" rel="noopener">
+          <span class="link__icone link__icone--amarelo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13M10 21v-6h4v6"/></svg></span>
+          <span class="link__texto"><b>Localização da sede</b><small>Rua Antônio Benedet de Angelo, 15 · quintas, 13h às 17h</small></span>
+          <svg class="link__seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+      <li class="entra" style="--i:7">
+        <a class="link" href="../?utm_source=instagram&amp;utm_medium=bio&amp;utm_campaign=links#fabrica-de-fraldas">
+          <span class="link__icone link__icone--verde"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></span>
+          <span class="link__texto"><b>Apoie a Fábrica de Fraldas</b><small>Doe pelo Pix oficial da filial</small></span>
+          <svg class="link__seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+      <li class="entra" style="--i:8">
+        <a class="link" href="../?utm_source=instagram&amp;utm_medium=bio&amp;utm_campaign=links">
+          <span class="link__icone link__icone--vermelho"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
+          <span class="link__texto"><b>Site da Cruz Vermelha Criciúma</b><small>História, o que fazemos e como ajudar</small></span>
+          <svg class="link__seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+    </ul>
+
+    <p class="aviso entra" style="--i:9"><b>Doação em dinheiro, só pelo Pix oficial</b> da Fábrica de Fraldas (CNPJ 11.408.025/0001-45). Desconfie de qualquer outro pedido.</p>
+
+    <footer class="entra" style="--i:9">
+      <div class="marcas">
+        <div><span>realização</span><div class="marcas__cvb"><img src="../assets/logo-cruz-vermelha-160.webp" alt="Cruz Vermelha Brasileira" width="160" height="160"></div></div>
+        <div><span>parceria</span><img class="marcas__satc" src="../assets/campanhas/unisatc-branco.webp" alt="UniSATC" width="600" height="159"></div>
+      </div>
+      <p class="rodape">Cruz Vermelha Brasileira · Filial Criciúma</p>
+    </footer>
+  </main>
+
+  <script>
+    // Medição de acessos (Vercel Web Analytics, sem cookies): só no endereço oficial
+    if (/\.vercel\.app$|cruzvermelhacriciuma\.org\.br$/.test(location.hostname)) {
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+      var s = document.createElement('script'); s.defer = true; s.src = '/_vercel/insights/script.js'; document.head.appendChild(s);
+    }
+  </script>
+</body>
+</html>

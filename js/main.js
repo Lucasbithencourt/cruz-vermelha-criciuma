@@ -892,6 +892,46 @@
     });
   }
 
+  /* Copiar a chave Pix da Fábrica de Fraldas -------------------------------- */
+
+  document.querySelectorAll('[data-copiar]').forEach(function (btn) {
+    var rotulo = btn.querySelector('[data-copiar-texto]');
+    var original = rotulo ? rotulo.textContent : '';
+    var avisar = function (texto) {
+      if (!rotulo) return;
+      rotulo.textContent = texto;
+      setTimeout(function () { rotulo.textContent = original; }, 2500);
+    };
+    // Sem acesso à área de transferência (navegador antigo ou página sem https)
+    var copiarAntigo = function (valor) {
+      var campo = document.createElement('textarea');
+      campo.value = valor;
+      campo.setAttribute('readonly', '');
+      campo.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(campo);
+      campo.select();
+      try { document.execCommand('copy'); avisar('Chave copiada!'); } catch (err) { avisar('Copie a chave acima'); }
+      campo.remove();
+    };
+    btn.addEventListener('click', function () {
+      var valor = btn.getAttribute('data-copiar');
+      if (navigator.clipboard && window.isSecureContext) {
+        // Se o navegador não responder em 1 s (sem permissão, por exemplo), usa o jeito antigo
+        var resolvido = false;
+        var reserva = setTimeout(function () { if (!resolvido) { resolvido = true; copiarAntigo(valor); } }, 1000);
+        navigator.clipboard.writeText(valor).then(function () {
+          if (resolvido) return;
+          resolvido = true; clearTimeout(reserva); avisar('Chave copiada!');
+        }, function () {
+          if (resolvido) return;
+          resolvido = true; clearTimeout(reserva); copiarAntigo(valor);
+        });
+      } else {
+        copiarAntigo(valor);
+      }
+    });
+  });
+
   /* Ano do rodapé ---------------------------------------------------------- */
 
   var year = document.querySelector('[data-ano-atual]'); // não usar data-year: é o atributo dos eventos da linha do tempo

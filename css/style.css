@@ -598,6 +598,32 @@ address { font-style: normal; }
 }
 .drop-link:focus-visible, .drop-camp:focus-visible, .drop-all:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
 
+/* Fábrica de Fraldas: doação pelo Pix --------------------------------------- */
+.fabrica { background: var(--paper-2); }
+.fabrica__grid { display: grid; gap: 36px; align-items: start; }
+.fabrica__texto p:not(.lead) { max-width: 36em; color: var(--graphite); }
+.fabrica__foto { margin: 24px 0 0; overflow: hidden; border-radius: var(--radius-l); box-shadow: var(--shadow); }
+.fabrica__foto img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.pix { padding: clamp(22px, 4vw, 34px); border-radius: var(--radius-l); background: #fff; box-shadow: inset 0 0 0 1px var(--line), var(--shadow); }
+.pix h3 { margin-bottom: 18px; font-size: clamp(1.5rem, 3vw, 2rem); }
+.pix__rotulo { margin: 0 0 6px; color: var(--graphite); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.pix__chave {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 14px 14px 18px; border-radius: var(--radius); background: var(--red-soft);
+}
+.pix__chave > span { font-size: clamp(1.25rem, 3.4vw, 1.6rem); font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
+.pix__banco { display: grid; gap: 10px; margin: 22px 0 0; }
+.pix__banco div { display: grid; grid-template-columns: 120px 1fr; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.pix__banco dt { color: var(--graphite); font-size: 0.92rem; }
+.pix__banco dd { margin: 0; font-weight: 700; }
+.pix__seguro { display: flex; gap: 10px; margin: 20px 0 0; color: var(--graphite); font-size: 0.9rem; }
+.pix__seguro .icon { flex: none; width: 20px; height: 20px; margin-top: 2px; color: var(--red); }
+@media (min-width: 960px) {
+  .fabrica__grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 64px; }
+  .pix { position: sticky; top: calc(var(--header-h) + 32px); }
+}
+.notice__pix { display: block; text-align: center; margin-top: 14px; color: #fff; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+
 /* Perguntas frequentes ------------------------------------------------------ */
 .faq__grid { display: grid; gap: 8px; }
 .faq__list { display: grid; gap: 10px; }
