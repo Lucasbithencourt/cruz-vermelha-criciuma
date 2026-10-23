@@ -3,12 +3,43 @@
   "atualizado_em": "20/10/2026",
   "prazo": "20/12/2026",
   "itens": [
-    { "item": "Farinha de trigo", "unidade": "kg", "meta": 600, "arrecadado": 0 },
-    { "item": "Farinha de mandioca", "unidade": "kg", "meta": 600, "arrecadado": 0 },
-    { "item": "Café", "unidade": "kg", "meta": 100, "arrecadado": 0 },
-    { "item": "Óleo de soja", "unidade": "litros", "meta": 500, "arrecadado": 0 },
-    { "item": "Leite em caixa", "unidade": "litros", "meta": 600, "arrecadado": 0 },
-    { "item": "Brinquedos usados", "detalhe": "em bom estado", "unidade": "unidades", "meta": 500, "arrecadado": 0 }
+    {
+      "item": "Farinha de trigo",
+      "unidade": "kg",
+      "meta": 600,
+      "arrecadado": 0
+    },
+    {
+      "item": "Farinha de mandioca",
+      "unidade": "kg",
+      "meta": 600,
+      "arrecadado": 0
+    },
+    {
+      "item": "Café",
+      "unidade": "kg",
+      "meta": 100,
+      "arrecadado": 0
+    },
+    {
+      "item": "Óleo de soja",
+      "unidade": "litros",
+      "meta": 500,
+      "arrecadado": 0
+    },
+    {
+      "item": "Leite em caixa",
+      "unidade": "litros",
+      "meta": 600,
+      "arrecadado": 0
+    },
+    {
+      "item": "Brinquedos usados",
+      "detalhe": "em bom estado",
+      "unidade": "unidades",
+      "meta": 500,
+      "arrecadado": 0
+    }
   ],
   "pontos_de_coleta": [
     {
@@ -18,6 +49,121 @@
       "confirmado": true,
       "lat": -28.696419,
       "lng": -49.398611
+    },
+    {
+      "nome": "SATC",
+      "endereco": "Rodovia Governador Jorge Lacerda · Universitário · Criciúma",
+      "horario": "No horário de funcionamento do local",
+      "confirmado": true,
+      "lat": -28.7031637,
+      "lng": -49.4067755
+    },
+    {
+      "nome": "Criciúma Shopping",
+      "endereco": "Avenida Gabriel Zanette · Próspera · Criciúma",
+      "horario": "No horário de funcionamento do local",
+      "confirmado": true,
+      "lat": -28.6819901,
+      "lng": -49.3481966
+    },
+    {
+      "nome": "Zanette Saúde Visual",
+      "endereco": "Travessa Padre Pedro Baldoncini · Centro · Criciúma",
+      "horario": "No horário de funcionamento do local",
+      "confirmado": true,
+      "lat": -28.6785149,
+      "lng": -49.3706313
+    },
+    {
+      "nome": "Supermercado Minatto · Nova Veneza",
+      "endereco": "Rodovia Monsenhor Quinto Davide Baldessar · Nova Veneza",
+      "horario": "No horário de funcionamento do local",
+      "confirmado": true,
+      "lat": -28.7095062,
+      "lng": -49.5095812
+    },
+    {
+      "nome": "Supermercado Minatto · Criciúma",
+      "endereco": "Criciúma",
+      "horario": "No horário de funcionamento do local",
+      "confirmado": true
+    },
+    {
+      "nome": "Supermercado Minatto · Forquilhinha",
+      "endereco": "Centro · Forquilhinha",
+      "horario": "No horário de funcionamento do local",
+      "confirmado": true,
+      "lat": -28.7502778,
+      "lng": -49.4719444
+    },
+    {
+      "nome": "Super Moniari · Rio Maina",
+      "endereco": "Avenida Luiz Lazzarin, 300 · Rio Maina · Criciúma",
+      "horario": "No horário de funcionamento do local",
+      "confirmado": true,
+      "lat": -28.676927,
+      "lng": -49.4138294
+    },
+    {
+      "nome": "Super Moniari · São Luiz",
+      "endereco": "Avenida Santos Dumont · São Luiz · Criciúma",
+      "horario": "No horário de funcionamento do local",
+      "confirmado": true,
+      "lat": -28.6924351,
+      "lng": -49.376205
+    },
+    {
+      "nome": "Pátio do estádio nos jogos do Criciúma",
+      "endereco": "Estádio Heriberto Hülse · Rua 13 de Maio, 3522 · Comerciário · Criciúma",
+      "horario": "Em dias de jogo do Criciúma",
+      "confirmado": true,
+      "lat": -28.6843232,
+      "lng": -49.3676706
+    },
+    {
+      "nome": "Escala Hiper Rio Maina",
+      "endereco": "Avenida dos Imigrantes, 795 · Rio Maina · Criciúma",
+      "horario": "No horário de funcionamento do local",
+      "confirmado": true,
+      "lat": -28.6710234,
+      "lng": -49.4203193
+    },
+    {
+      "nome": "Giassi · Içara",
+      "endereco": "Rua João Lodeti, 150 · Centro · Içara",
+      "horario": "No horário de funcionamento do local",
+      "confirmado": true,
+      "lat": -28.7142053,
+      "lng": -49.2980329
+    },
+    {
+      "nome": "Giassi · Santa Bárbara",
+      "endereco": "Rua Henrique Lage, 1251 · Santa Bárbara · Criciúma",
+      "horario": "No horário de funcionamento do local",
+      "confirmado": true,
+      "lat": -28.6837006,
+      "lng": -49.3804857
+    },
+    {
+      "nome": "Combo Atacadista · Centro",
+      "horario": "No horário de funcionamento do local",
+      "confirmado": true
+    },
+    {
+      "nome": "Combo Atacadista · Içara",
+      "endereco": "Rodovia SC-445 · Nossa Senhora de Fátima · Içara",
+      "horario": "No horário de funcionamento do local",
+      "confirmado": true,
+      "lat": -28.7039464,
+      "lng": -49.3026313
+    },
+    {
+      "nome": "Shopping Della",
+      "endereco": "Travessa Padre Pedro Baldoncini · Centro · Criciúma",
+      "horario": "No horário de funcionamento do local",
+      "confirmado": true,
+      "lat": -28.6785794,
+      "lng": -49.369971
     }
   ]
 }

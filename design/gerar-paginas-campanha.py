@@ -21,11 +21,12 @@ PAGINAS = {
 }
 
 # Abrace uma História ----------------------------------------------------------
-PARCEIROS_ABRACE = [
-    ('AGM Móveis', 'agm-moveis'), ('Criciúma EC', 'criciuma-ec'), ('Day Art', 'day-art'),
-    ('Engeplus', 'engeplus'), ('Gráfica Padrão', 'grafica-padrao'), ('SATC', 'satc'),
-    ('Silti Construtora', 'silti'), ('Zanette Centro de Saúde Visual', 'tiago-zanette'),
-    ('Toro Mídia', 'toro-midia'), ('Le Fil Uniformes', 'le-fil'),
+PARCEIROS_ABRACE = [  # (nome, arquivo do logo em assets/campanhas/abrace/parceiros/ ou None = só o nome)
+    ('AGM Móveis Sob Medida', 'agm-moveis'), ('Day Art', 'day-art'), ('Le Fil Uniformes', 'le-fil'),
+    ('Toro Outdoors', 'toro-midia'), ('Gráfica Padrão', 'grafica-padrao'), ('Mais Cor Comunicação Visual', 'mais-cor'),
+    ('Criciúma Esporte Clube', 'criciuma-ec'), ('Gráfica Exterval', None), ('Impacto LED', None),
+    ('Silti Construtora', 'silti'), ('Ney Lopes Outdoor', None), ('Criciúma Shopping', 'criciuma-shopping'),
+    ('Engeplus', 'engeplus'),
 ]
 LOGOS_CLAROS = {'engeplus'}  # logo branco: vai em cartão escuro
 # Turma de Publicidade e Propaganda da UniSATC, por área (lista enviada pela turma).
@@ -128,6 +129,9 @@ def atualizar_pontos(topo_index, modal_index):
 def parceiros_abrace(base):
     linhas = []
     for nome, arq in PARCEIROS_ABRACE:
+        if not arq:  # logo ainda não enviado: cartão com o nome
+            linhas.append(f'          <li class="logo-grid__item logo-grid__item--nome" data-reveal="scale"><span>{E(nome)}</span></li>')
+            continue
         extra = ' logo-grid__item--escuro' if arq in LOGOS_CLAROS else ''
         linhas.append(f'          <li class="logo-grid__item{extra}" data-reveal="scale"><img src="{base}assets/campanhas/abrace/parceiros/{arq}.webp" alt="{E(nome)}" loading="lazy"></li>')
     return '\n'.join(linhas)

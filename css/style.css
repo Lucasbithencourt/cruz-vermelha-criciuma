@@ -2922,7 +2922,7 @@ img.tl-event__media { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; borde
 @media (min-width: 720px) { .ab-onde__mapa { height: 420px; } }
 @media (min-width: 960px) {
   .ab-onde__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 24px; }
-  .ab-onde__mapa { height: auto; min-height: 420px; }
+  .ab-onde__mapa { position: sticky; top: calc(var(--header-h) + 24px); height: 520px; }
 }
 
 /* Marcas no fim da página */
@@ -2994,6 +2994,7 @@ img.tl-event__media { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; borde
   border-radius: var(--radius); background: #fff; box-shadow: 0 0 0 1px var(--line);
   transition: transform 0.4s var(--ease-out), box-shadow 0.4s;
 }
+.logo-grid__item--nome span { font-family: var(--ab-font, var(--font-sans)); font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 700; line-height: 1.2; text-align: center; color: var(--ink); }
 .logo-grid__item img { max-height: 80px; width: auto; object-fit: contain; }
 .logo-grid__item--escuro { background: var(--ink); }
 @media (hover: hover) { .logo-grid__item:hover { transform: translateY(-4px); box-shadow: 0 0 0 1px var(--line), var(--shadow); } }
