@@ -274,17 +274,44 @@
       setTimeout(function () { map.invalidateSize(); }, 400);
     };
 
-    fetch(metas.dataset.src, { cache: 'no-cache' })
-      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    // Dois endereços: data-src-local é o arquivo do site (dados/abrace-uma-historia.json) e data-src é de onde
+    // vêm os números. O sistema de arrecadação (metas-v1.js) troca o data-src pelo endereço dele.
+    // Números: do sistema quando ele responde; se cair ou demorar, do arquivo do site.
+    // Pontos de coleta: sempre do arquivo do site, que é quem a equipe do site mantém.
+    var srcLocal = metas.dataset.srcLocal || metas.dataset.src;
+    var srcNumeros = metas.dataset.src;
+    var buscar = function (url, limite) {
+      var controle = limite && 'AbortController' in window ? new AbortController() : null;
+      var timer = controle && setTimeout(function () { controle.abort(); }, limite);
+      return fetch(url, { cache: 'no-cache', signal: controle ? controle.signal : undefined })
+        .then(function (r) {
+          if (timer) clearTimeout(timer);
+          if (!r.ok) throw new Error(r.status);
+          return r.json();
+        }, function (err) { if (timer) clearTimeout(timer); throw err; });
+    };
+    var local = buscar(srcLocal);
+    var numeros = srcNumeros === srcLocal ? local : buscar(srcNumeros, 6000).catch(function (err) {
+      console.warn('Sistema de arrecadação não respondeu; usando os números do arquivo do site.', err);
+      return local;
+    });
+
+    numeros
       .then(function (dados) {
         desenharMetas(dados);
-        desenharPontos(dados.pontos_de_coleta);
         if (window.ScrollTrigger) window.ScrollTrigger.refresh();
       })
       .catch(function (err) {
         console.error('Medidor da campanha não carregou:', err);
         metas.querySelector('[data-metas-data]').textContent = 'Não foi possível carregar os números agora.';
       });
+
+    local
+      .then(function (dados) {
+        desenharPontos(dados.pontos_de_coleta);
+        if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+      })
+      .catch(function (err) { console.error('Pontos de coleta não carregaram:', err); });
   }
 
   /* Vídeos em loop só tocam quando estão na tela (economiza bateria e dados) */
