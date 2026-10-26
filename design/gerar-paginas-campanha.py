@@ -55,6 +55,8 @@ EQUIPE_ABRACE = [
     ]),
     ('Site', 'rosa', [
         ('Lucas de Bithencourt', '', ''),
+        ('Vinicius Raupp', '', ''),
+        ('Vítor Raupp', '', '@ovitorraupp'),
     ]),
     ('Redação', 'rosa', [
         ('Jessica', '', '@jessica.loureiroo'),
@@ -145,8 +147,11 @@ def perfil_url(perfil):
     return perfil if perfil.startswith('http') else 'https://' + perfil
 
 
+FORA_DA_TURMA = {'Vinicius Raupp'}  # aparecem nos créditos, mas não contam no "turma de N estudantes"
+
+
 def total_equipe(grupos):
-    return len({nome for _, _, pessoas in grupos for nome, _, _ in pessoas})
+    return len({nome for _, _, pessoas in grupos for nome, _, _ in pessoas} - FORA_DA_TURMA)
 
 
 def equipe(grupos):
